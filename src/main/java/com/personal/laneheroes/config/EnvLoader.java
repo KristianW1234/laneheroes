@@ -10,6 +10,6 @@ public class EnvLoader {
         System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
         System.setProperty("IMG_DIR", dotenv.get("IMG_DIR"));
         System.setProperty("FRONTEND_URL", dotenv.get("FRONTEND_URL"));
-        System.setProperty("EP_PASSWORD", dotenv.get("EP_PASSWORD"));
+
     }
 }

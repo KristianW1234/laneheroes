@@ -22,8 +22,6 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseWrapper<LoginResponse> authenticate(LoginRequest request) {
@@ -41,6 +39,8 @@ public class LoginServiceImpl implements LoginService {
                     ResponseMessages.FAIL_STATUS, null);
         }
 
-        return null;
+        LoginResponse response = new LoginResponse(user.getId(), user.getUserName(), user.getUserRole().toString(), user.getIsActive());
+
+        return new ResponseWrapper<>("Login successful", ResponseMessages.SUCCESS_STATUS, response);
     }
 }

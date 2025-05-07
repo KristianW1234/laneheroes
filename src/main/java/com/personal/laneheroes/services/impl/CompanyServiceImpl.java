@@ -42,7 +42,7 @@ public class CompanyServiceImpl implements CompanyService {
             successMsg = ResponseMessages.UPDATE_SUCCESS;
             failMsg = ResponseMessages.UPDATE_FAIL;
             Optional<Company> companyPresence = companyRepository.findById(company.getId());
-            if (!companyPresence.isPresent()){
+            if (companyPresence.isEmpty()){
                 return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
                         + failMsg,
                         ResponseMessages.FAIL_STATUS, null);

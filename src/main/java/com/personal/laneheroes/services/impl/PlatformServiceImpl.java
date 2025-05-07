@@ -40,7 +40,7 @@ public class PlatformServiceImpl implements PlatformService {
             successMsg = ResponseMessages.UPDATE_SUCCESS;
             failMsg = ResponseMessages.UPDATE_FAIL;
             Optional<Platform> platformPresence = platformRepository.findById(platform.getId());
-            if (!platformPresence.isPresent()){
+            if (platformPresence.isEmpty()){
                 return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
                         + failMsg,
                         ResponseMessages.FAIL_STATUS, null);

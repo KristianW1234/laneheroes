@@ -12,7 +12,6 @@ import com.personal.laneheroes.repositories.GameRepository;
 import com.personal.laneheroes.repositories.PlatformRepository;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.GameService;
-import com.personal.laneheroes.specifications.CompanySpecification;
 import com.personal.laneheroes.specifications.GameSpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
@@ -31,7 +30,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +65,7 @@ public class GameServiceImpl implements GameService {
             failMsg = ResponseMessages.UPDATE_FAIL;
 
             Optional<Game> gamePresence = gameRepository.findById(game.getId());
-            if (!gamePresence.isPresent()){
+            if (gamePresence.isEmpty()){
                 return new ResponseWrapper<>(ResponseMessages.GAME_SINGLE + " "
                         + failMsg,
                         ResponseMessages.FAIL_STATUS, null);

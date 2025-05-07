@@ -40,7 +40,7 @@ public class CallsignServiceImpl implements CallsignService {
             failMsg = ResponseMessages.UPDATE_FAIL;
 
             Optional<Callsign> callsignPresence = callsignRepository.findById(callsign.getId());
-            if (!callsignPresence.isPresent()){
+            if (callsignPresence.isEmpty()){
                 return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
                         + failMsg,
                         ResponseMessages.FAIL_STATUS, null);

@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
             successMsg = ResponseMessages.UPDATE_SUCCESS;
             failMsg = ResponseMessages.UPDATE_FAIL;
             Optional<User> userPresence = userRepository.findById(user.getId());
-            if (!userPresence.isPresent()){
+            if (userPresence.isEmpty()){
                 return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
                         + failMsg,
                         ResponseMessages.FAIL_STATUS, null);

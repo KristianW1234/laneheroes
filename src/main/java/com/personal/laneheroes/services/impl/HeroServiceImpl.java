@@ -56,7 +56,7 @@ public class HeroServiceImpl implements HeroService {
             failMsg = ResponseMessages.UPDATE_FAIL;
 
             Optional<Hero> heroPresence = heroRepository.findById(hero.getId());
-            if (!heroPresence.isPresent()){
+            if (heroPresence.isEmpty()){
                 return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
                         + failMsg,
                         ResponseMessages.FAIL_STATUS, null);

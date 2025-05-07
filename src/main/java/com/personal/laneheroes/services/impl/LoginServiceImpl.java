@@ -29,7 +29,7 @@ public class LoginServiceImpl implements LoginService {
     public ResponseWrapper<LoginResponse> authenticate(LoginRequest request) {
         Optional<User> dbUser = userRepository.findByUserName(request.getUsername());
 
-        if (!dbUser.isPresent()) {
+        if (dbUser.isEmpty()) {
             return new ResponseWrapper<>("User not found!",
                     ResponseMessages.FAIL_STATUS, null);
         }

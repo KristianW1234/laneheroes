@@ -5,5 +5,5 @@ import com.personal.laneheroes.dto.LoginResponse;
 import com.personal.laneheroes.response.ResponseWrapper;
 
 public interface LoginService {
-    public ResponseWrapper<LoginResponse> authenticate(LoginRequest request);
+    ResponseWrapper<LoginResponse> authenticate(LoginRequest request);
 }

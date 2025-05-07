@@ -68,7 +68,7 @@ public class GameServiceImpl implements GameService {
 
             Optional<Game> gamePresence = gameRepository.findById(game.getId());
             if (!gamePresence.isPresent()){
-                return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+                return new ResponseWrapper<>(ResponseMessages.GAME_SINGLE + " "
                         + failMsg,
                         ResponseMessages.FAIL_STATUS, null);
             }
@@ -189,10 +189,10 @@ public class GameServiceImpl implements GameService {
     public ResponseWrapper<Game> getGameById(Long id) {
         Optional<Game> gamePresence = gameRepository.findById(id);
         return gamePresence.map(
-                        company -> new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE
+                        game -> new ResponseWrapper<>(ResponseMessages.GAME_SINGLE
                                 + " " + ResponseMessages.FOUND,
-                                ResponseMessages.SUCCESS_STATUS, company))
-                .orElseGet(() -> new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE
+                                ResponseMessages.SUCCESS_STATUS, game))
+                .orElseGet(() -> new ResponseWrapper<>(ResponseMessages.GAME_SINGLE
                         + " " + ResponseMessages.NOT_FOUND,
                         ResponseMessages.FAIL_STATUS, null));
     }

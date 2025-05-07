@@ -19,7 +19,7 @@ public class CallsignController {
     CallsignService callsignService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<ResponseWrapper<List<Callsign>>> getAllCompanies() {
+    public ResponseEntity<ResponseWrapper<List<Callsign>>> getAllCallsigns() {
         ResponseWrapper<List<Callsign>> response = callsignService.getAllCallsigns();
         return ResponseEntity.ok(response);
     }

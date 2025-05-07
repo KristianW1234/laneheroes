@@ -11,6 +11,8 @@ public class ResponseMessages {
     public static final String GAME_PLURAL = "Games";
     public static final String HERO_SINGLE = "Hero";
     public static final String HERO_PLURAL = "Heroes";
+    public static final String USER_SINGLE = "User";
+    public static final String USER_PLURAL = "Users";
 
 
     public static final String FOUND = "found";

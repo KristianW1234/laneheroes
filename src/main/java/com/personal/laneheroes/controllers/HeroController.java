@@ -32,6 +32,12 @@ public class HeroController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<ResponseWrapper<Long>> getHeroCount() {
+        ResponseWrapper<Long> response = heroService.getHeroCount();
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseWrapper<Hero>> addHero(
             @RequestPart("hero") Hero hero,

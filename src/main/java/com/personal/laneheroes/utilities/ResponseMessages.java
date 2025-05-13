@@ -33,4 +33,7 @@ public class ResponseMessages {
 
     public static final String BATCH_SUCCESS = "Batch uploading succeeds";
     public static final String BATCH_FAIL = "Batch uploading fails";
+
+    public static final String COUNT_SUCCESS = "Row counting succeeds";
+    public static final String COUNT_FAIL = "Row counting fails";
 }

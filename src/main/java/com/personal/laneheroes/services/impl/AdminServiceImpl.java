@@ -1,6 +1,8 @@
 package com.personal.laneheroes.services.impl;
 
+import com.personal.laneheroes.dto.CountDTO;
 import com.personal.laneheroes.dto.UploadResult;
+import com.personal.laneheroes.repositories.*;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.*;
 import jakarta.transaction.Transactional;
@@ -25,6 +27,24 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private HeroService heroService;
+
+    @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
+    private CallsignRepository callsignRepository;
+
+    @Autowired
+    private PlatformRepository platformRepository;
+
+    @Autowired
+    private GameRepository gameRepository;
+
+    @Autowired
+    private HeroRepository heroRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public String uploadAllData(String companyPath, String callsignPath, String platformPath, String gamePath, String heroPath) {
@@ -61,5 +81,17 @@ public class AdminServiceImpl implements AdminService {
                 "%d companies, %d callsigns, %d platforms, %d games, %d heroes saved.",
                 companyTotal, callsignTotal, platformTotal, gameTotal, heroTotal
         );
+    }
+
+    @Override
+    public CountDTO getAllCounts() {
+        CountDTO dto = new CountDTO();
+        dto.setCallsigns(callsignRepository.count());
+        dto.setCompanies(companyRepository.count());
+        dto.setPlatforms(platformRepository.count());
+        dto.setGames(gameRepository.count());
+        dto.setHeroes(heroRepository.count());
+        dto.setUsers(userRepository.count());
+        return dto;
     }
 }

@@ -1,5 +1,6 @@
 package com.personal.laneheroes.controllers;
 
+import com.personal.laneheroes.dto.CountDTO;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
 import com.personal.laneheroes.response.ResponseWrapper;
@@ -8,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -50,6 +48,13 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseWrapper<>("Upload failed: " + e.getMessage(), ResponseMessages.FAIL_STATUS, null));
         }
+    }
+
+    @GetMapping(value = "/getStats")
+    public ResponseEntity<ResponseWrapper<CountDTO>> getStats() {
+        CountDTO dto = adminService.getAllCounts();
+        return ResponseEntity.ok(new ResponseWrapper<>("Stat Search complete", ResponseMessages.SUCCESS_STATUS, dto));
+
     }
 }
 

@@ -235,6 +235,12 @@ public class HeroServiceImpl implements HeroService {
         return new ResponseWrapper<>(ResponseMessages.BATCH_SUCCESS , ResponseMessages.SUCCESS_STATUS, UploadResult.success(totalAdded));
     }
 
+    @Override
+    public ResponseWrapper<Long> getHeroCount() {
+        Long count = heroRepository.count();
+        return new ResponseWrapper<>(ResponseMessages.COUNT_SUCCESS , ResponseMessages.SUCCESS_STATUS, count);
+    }
+
     private boolean heroCopyCheck(Iterable<Hero> heroes, String code) {
         for (Hero hero : heroes) {
             if (hero.getHeroCode().equals(code)) {

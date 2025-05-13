@@ -21,4 +21,6 @@ public interface HeroService {
     ResponseWrapper<PagedResponse<Hero>> searchHeroes(String name, String title, String alternateName, Long gameId, Pageable pageable);
 
     ResponseWrapper<UploadResult> uploadHeroesFromExcel(String excelFile);
+
+    ResponseWrapper<Long> getHeroCount();
 }

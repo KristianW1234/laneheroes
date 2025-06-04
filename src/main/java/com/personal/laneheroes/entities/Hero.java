@@ -1,15 +1,18 @@
 package com.personal.laneheroes.entities;
 
+import com.personal.laneheroes.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Entity
 @Table(name="hero")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 public class Hero {
     @Id
     @Basic(optional = false)
@@ -23,6 +26,10 @@ public class Hero {
 
     @Column(name = "HERO_NAME")
     private String heroName;
+
+    @Column(name = "HERO_GENDER")
+    @Enumerated(EnumType.STRING)
+    private Gender heroGender;
 
     @Column(name = "HERO_TITLE")
     private String heroTitle;

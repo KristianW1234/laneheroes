@@ -264,6 +264,9 @@ public class GameServiceImpl implements GameService {
                         case 4:
                             game.setGameCode(nextCell.getStringCellValue());
                             break;
+                        case 5:
+                            game.setImgIcon(nextCell.getStringCellValue());
+                            break;
                     }
                 }
                 if (!gameCopyCheck(games, game.getGameName())) {

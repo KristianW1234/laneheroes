@@ -2,6 +2,7 @@ package com.personal.laneheroes.controllers;
 
 import com.personal.laneheroes.dto.PagedResponse;
 import com.personal.laneheroes.entities.Hero;
+import com.personal.laneheroes.enums.Gender;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.HeroService;
 import com.personal.laneheroes.utilities.Utility;
@@ -66,6 +67,7 @@ public class HeroController {
     public ResponseEntity<ResponseWrapper<PagedResponse<Hero>>> searchHeroes(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String title,
+            @RequestParam(required = false) Gender gender,
             @RequestParam(required = false) String alternateName,
             @RequestParam(required = false) Long gameId,
             @RequestParam(defaultValue = "0") int page,
@@ -74,7 +76,7 @@ public class HeroController {
             @RequestParam(defaultValue = "asc") String sortOrder
     ) {
 
-        ResponseWrapper<PagedResponse<Hero>> response = heroService.searchHeroes(name, title, alternateName, gameId, Utility.setupPageable(page, size, sortBy, sortOrder));
+        ResponseWrapper<PagedResponse<Hero>> response = heroService.searchHeroes(name, title, gender, alternateName, gameId, Utility.setupPageable(page, size, sortBy, sortOrder));
         return ResponseEntity.ok(response);
     }
 }

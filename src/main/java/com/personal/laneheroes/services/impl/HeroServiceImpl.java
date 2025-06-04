@@ -3,6 +3,7 @@ package com.personal.laneheroes.services.impl;
 import com.personal.laneheroes.dto.PagedResponse;
 import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.*;
+import com.personal.laneheroes.enums.Gender;
 import com.personal.laneheroes.repositories.*;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.HeroService;
@@ -157,8 +158,9 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public ResponseWrapper<PagedResponse<Hero>> searchHeroes(String name, String title, String alternateName, Long gameId, Pageable pageable) {
-        Specification<Hero> spec = HeroSpecification.withFilters(name, title, gameId, alternateName);
+    public ResponseWrapper<PagedResponse<Hero>> searchHeroes(String name, String title, Gender gender, String alternateName, Long gameId, Pageable pageable) {
+
+        Specification<Hero> spec = HeroSpecification.withFilters(name, title, gender, gameId, alternateName);
         Page<Hero> resultPage = heroRepository.findAll(spec, pageable);
         PagedResponse<Hero> pagedResponse = new PagedResponse<>(resultPage);
 
@@ -206,6 +208,9 @@ public class HeroServiceImpl implements HeroService {
                             hero.setHeroTitle(nextCell.getStringCellValue());
                             break;
                         case 3:
+                            hero.setHeroGender(Gender.valueOf(nextCell.getStringCellValue()));
+                            break;
+                        case 4:
                             Optional<Game> game = gameRepository.findByGameNameIgnoreCase(nextCell.getStringCellValue());
                             if (game.isPresent()){
                                 hero.setGame(game.get());
@@ -213,10 +218,10 @@ public class HeroServiceImpl implements HeroService {
                                 throw new RuntimeException("Game not found");
                             }
                             break;
-                        case 4:
+                        case 5:
                             hero.setAlternateName(nextCell.getStringCellValue());
                             break;
-                        case 5:
+                        case 6:
                             hero.setImgIcon(nextCell.getStringCellValue());
                             break;
                     }

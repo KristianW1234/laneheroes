@@ -6,7 +6,7 @@ import com.personal.laneheroes.enums.Gender;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.HeroService;
 import com.personal.laneheroes.utilities.Utility;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/hero")
+@RequiredArgsConstructor
 public class HeroController {
 
-    @Autowired
-    HeroService heroService;
+    private final HeroService heroService;
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<Hero>>> getAllHeroes() {
@@ -44,7 +44,7 @@ public class HeroController {
             @RequestPart("hero") Hero hero,
             @RequestPart("imgFile") MultipartFile imgFile) {
 
-        ResponseWrapper<Hero> result = heroService.addOrUpdateHero(hero, imgFile, false);
+        ResponseWrapper<Hero> result = heroService.addHero(hero, imgFile);
         return ResponseEntity.ok(result);
     }
 
@@ -53,7 +53,7 @@ public class HeroController {
             @RequestPart("hero") Hero hero,
             @RequestPart(value="imgFile", required = false) MultipartFile imgFile) {
 
-        ResponseWrapper<Hero> result = heroService.addOrUpdateHero(hero, imgFile, true);
+        ResponseWrapper<Hero> result = heroService.updateHero(hero, imgFile);
         return ResponseEntity.ok(result);
     }
 

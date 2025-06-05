@@ -7,7 +7,9 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import java.util.List;
 
 public interface CallsignService {
-    ResponseWrapper<Callsign> addOrUpdateCallsign(Callsign callsign, boolean isUpdate);
+    ResponseWrapper<Callsign> addCallsign(Callsign callsign);
+
+    ResponseWrapper<Callsign> updateCallsign(Callsign callsign);
 
     ResponseWrapper<Callsign> deleteCallsign(Long id);
 

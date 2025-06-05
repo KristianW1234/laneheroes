@@ -4,6 +4,7 @@ import com.personal.laneheroes.dto.PagedResponse;
 import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.*;
 import com.personal.laneheroes.enums.Gender;
+import com.personal.laneheroes.exception.EntityNotFoundException;
 import com.personal.laneheroes.repositories.*;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.HeroService;
@@ -11,12 +12,9 @@ import com.personal.laneheroes.specifications.HeroSpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
 import jakarta.transaction.Transactional;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,51 +27,91 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-@Service("HeroServiceImpl")
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class HeroServiceImpl implements HeroService {
 
-    @Autowired
-    HeroRepository heroRepository;
 
-    @Autowired
-    GameRepository gameRepository;
+    private final HeroRepository heroRepository;
+
+
+    private final GameRepository gameRepository;
 
 
     @Value("${image-dir}")
     private String imageDir;
 
     @Override
-    @SuppressWarnings("unchecked")
-    public ResponseWrapper<Hero> addOrUpdateHero(Hero hero, MultipartFile imgFile, boolean isUpdate) {
+    public ResponseWrapper<Hero> addHero(Hero hero, MultipartFile imgFile) {
         Hero dbHero = new Hero();
         Game dbGame = new Game();
-        String successMsg = ResponseMessages.ADD_SUCCESS;
-        String failMsg = ResponseMessages.ADD_FAIL;
-        if (isUpdate) {
+        ResponseWrapper<?>[] responseHolder = new ResponseWrapper<?>[1];
 
-            successMsg = ResponseMessages.UPDATE_SUCCESS;
-            failMsg = ResponseMessages.UPDATE_FAIL;
+        // Validate Game
+        if (hero.getGame() != null){
+            Optional<Game> game = Utility.getValidEntityById(
+                    gameRepository,
+                    hero.getGame().getId(),
+                    ResponseMessages.GAME_SINGLE,
+                    ResponseMessages.ADD_FAIL,
+                    responseHolder
+            );
+            if (game.isEmpty()) return (ResponseWrapper<Hero>) responseHolder[0];
 
-            Optional<Hero> heroPresence = heroRepository.findById(hero.getId());
-            if (heroPresence.isEmpty()){
-                return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
-                        + failMsg,
-                        ResponseMessages.FAIL_STATUS, null);
-            }
-            dbHero = heroPresence.get();
+            dbGame = game.get();
+            dbHero.setGame(dbGame);
+
         }
+        dbHero.setHeroName(hero.getHeroName());
+        dbHero.setHeroCode(setupHeroCode(hero.getHeroName(), dbGame));
+        dbHero.setHeroTitle(hero.getHeroTitle());
+        dbHero.setHeroGender(hero.getHeroGender());
+        if (hero.getAlternateName() != null){
+            dbHero.setAlternateName(hero.getAlternateName());
+        }
+        if (hero.getHeroDescription() != null){
+            dbHero.setHeroDescription(hero.getHeroDescription());
+        }
+
+        if (hero.getHeroLore() != null){
+            dbHero.setHeroDescription(hero.getHeroLore());
+        }
+
+        if (imgFile != null && !imgFile.isEmpty()){
+            ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "hero");
+            if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
+                dbHero.setImgIcon(uploadResult.getData());
+            }
+
+        }
+        heroRepository.save(dbHero);
+        return new ResponseWrapper<>(ResponseMessages.HERO_SINGLE + " "
+                + ResponseMessages.ADD_SUCCESS,
+                ResponseMessages.SUCCESS_STATUS, dbHero);
+    }
+
+    @Override
+    public ResponseWrapper<Hero> updateHero(Hero hero, MultipartFile imgFile) {
+        Game dbGame = new Game();
+        Optional<Hero> heroPresence = heroRepository.findById(hero.getId());
+        if (heroPresence.isEmpty()){
+            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+                    + ResponseMessages.UPDATE_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+        Hero dbHero = heroPresence.get();
 
 
         ResponseWrapper<?>[] responseHolder = new ResponseWrapper<?>[1];
 
         // Validate Game
-        if (!isUpdate || hero.getGame() != null){
+        if (hero.getGame() != null){
             Optional<Game> game = Utility.getValidEntityById(
                     gameRepository,
                     hero.getGame().getId(),
                     ResponseMessages.GAME_SINGLE,
-                    failMsg,
+                    ResponseMessages.UPDATE_FAIL,
                     responseHolder
             );
             if (game.isEmpty()) return (ResponseWrapper<Hero>) responseHolder[0];
@@ -84,22 +122,32 @@ public class HeroServiceImpl implements HeroService {
         }
 
 
-        if (!isUpdate || hero.getHeroName() != null){
+        if (hero.getHeroName() != null){
             dbHero.setHeroName(hero.getHeroName());
             dbHero.setHeroCode(setupHeroCode(hero.getHeroName(), dbGame));
         }
 
-        if (!isUpdate || hero.getHeroTitle() != null){
+        if (hero.getHeroTitle() != null){
             dbHero.setHeroTitle(hero.getHeroTitle());
         }
 
-        if (!isUpdate || hero.getAlternateName() != null){
+        if (hero.getHeroGender() != null){
+            dbHero.setHeroGender(hero.getHeroGender());
+        }
+
+        if (hero.getAlternateName() != null){
             dbHero.setAlternateName(hero.getAlternateName());
         }
 
+        if (hero.getHeroDescription() != null){
+            dbHero.setHeroDescription(hero.getHeroDescription());
+        }
 
+        if (hero.getHeroLore() != null){
+            dbHero.setHeroDescription(hero.getHeroLore());
+        }
 
-        if (!isUpdate || (imgFile != null && !imgFile.isEmpty())){
+        if (imgFile != null && !imgFile.isEmpty()){
             ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "hero");
             if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
                 dbHero.setImgIcon(uploadResult.getData());
@@ -108,7 +156,7 @@ public class HeroServiceImpl implements HeroService {
         }
         heroRepository.save(dbHero);
         return new ResponseWrapper<>(ResponseMessages.HERO_SINGLE + " "
-                + successMsg,
+                + ResponseMessages.ADD_SUCCESS,
                 ResponseMessages.SUCCESS_STATUS, dbHero);
     }
 
@@ -180,52 +228,17 @@ public class HeroServiceImpl implements HeroService {
     @Override
     public ResponseWrapper<UploadResult> uploadHeroesFromExcel(String excelFile) {
         int totalAdded = 0;
-        try {
+        try (
+                FileInputStream inputStream = new FileInputStream(excelFile);
+                Workbook workbook = new XSSFWorkbook(inputStream);
+        ){
             Iterable<Hero> heroes = heroRepository.findAll();
-            FileInputStream inputStream = new FileInputStream(excelFile);
-            Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = firstSheet.iterator();
             rowIterator.next(); // skip the header row
-            Hero hero;
-
             while (rowIterator.hasNext()) {
                 Row nextRow = rowIterator.next();
-                hero = new Hero();
-                hero.setImgIcon("nophoto.jpg");
-                Iterator<Cell> cellIterator = nextRow.cellIterator();
-                while (cellIterator.hasNext()) {
-                    Cell nextCell = cellIterator.next();
-                    int columnIndex = nextCell.getColumnIndex();
-                    switch (columnIndex) {
-                        case 0:
-                            hero.setHeroCode(nextCell.getStringCellValue());
-                            break;
-                        case 1:
-                            hero.setHeroName(nextCell.getStringCellValue());
-                            break;
-                        case 2:
-                            hero.setHeroTitle(nextCell.getStringCellValue());
-                            break;
-                        case 3:
-                            hero.setHeroGender(Gender.valueOf(nextCell.getStringCellValue()));
-                            break;
-                        case 4:
-                            Optional<Game> game = gameRepository.findByGameNameIgnoreCase(nextCell.getStringCellValue());
-                            if (game.isPresent()){
-                                hero.setGame(game.get());
-                            } else {
-                                throw new RuntimeException("Game not found");
-                            }
-                            break;
-                        case 5:
-                            hero.setAlternateName(nextCell.getStringCellValue());
-                            break;
-                        case 6:
-                            hero.setImgIcon(nextCell.getStringCellValue());
-                            break;
-                    }
-                }
+                Hero hero = mapRowToHero(nextRow);
                 if (!heroCopyCheck(heroes, hero.getHeroCode())) {
                     totalAdded++;
                     heroRepository.save(hero);
@@ -263,7 +276,6 @@ public class HeroServiceImpl implements HeroService {
         String[] arr = heroName.split("[ ,&']");
         String part = "";
         StringBuilder nameCode = new StringBuilder();
-        ;
         for (int i = 0; i < arr.length; i++) {
             if (!arr[i].isEmpty() && !arr[i].equalsIgnoreCase("and")) {
                 part = arr[i].toUpperCase();
@@ -276,6 +288,38 @@ public class HeroServiceImpl implements HeroService {
         }
         return nameCode.toString() + "_" + game.getGameCode();
     }
+
+    private Hero mapRowToHero(Row row) {
+        Hero hero = new Hero();
+        hero.setImgIcon("nophoto.jpg");
+
+        for (Cell cell : row) {
+            int index = cell.getColumnIndex();
+            String value = cell.getCellType() == CellType.STRING ? cell.getStringCellValue() : "";
+
+            switch (index) {
+                case 0 -> hero.setHeroCode(value);
+                case 1 -> hero.setHeroName(value);
+                case 2 -> hero.setHeroTitle(value);
+                case 3 -> hero.setHeroGender(Gender.valueOf(value));
+                case 4 -> hero.setGame(fetchGame(value));
+                case 5 -> hero.setAlternateName(value);
+                case 6 -> hero.setImgIcon(value);
+                case 7 -> hero.setHeroDescription(value);
+                case 8 -> hero.setHeroLore(value);
+                default -> {
+                    //Nothing
+                }
+            }
+        }
+        return hero;
+    }
+
+    private Game fetchGame(String name) {
+        return gameRepository.findByGameNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Game", name));
+    }
+
 
 
 }

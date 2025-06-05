@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface HeroService {
-    ResponseWrapper<Hero> addOrUpdateHero(Hero hero, MultipartFile imgFile, boolean isUpdate);
+    ResponseWrapper<Hero> addHero(Hero hero, MultipartFile imgFile);
+
+    ResponseWrapper<Hero> updateHero(Hero hero, MultipartFile imgFile);
 
     ResponseWrapper<Hero> deleteHero(Long id);
 

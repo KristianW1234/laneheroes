@@ -6,7 +6,9 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import java.util.List;
 
 public interface UserService {
-    ResponseWrapper<User> addOrUpdateUser(User user, Boolean isUpdate);
+    ResponseWrapper<User> addUser(User user);
+
+    ResponseWrapper<User> updateUser(User user);
 
     ResponseWrapper<User> deleteUser(Long id);
 

@@ -10,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface GameService {
-    ResponseWrapper<Game> addOrUpdateGame(Game game, MultipartFile imgFile, boolean isUpdate);
+    ResponseWrapper<Game> addGame(Game game, MultipartFile imgFile);
+
+    ResponseWrapper<Game> updateGame(Game game, MultipartFile imgFile);
 
     ResponseWrapper<Game> deleteGame(Long id);
 

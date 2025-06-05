@@ -1,12 +1,10 @@
 package com.personal.laneheroes.controllers;
 
-import com.personal.laneheroes.dto.PagedResponse;
 import com.personal.laneheroes.entities.Platform;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.PlatformService;
-import com.personal.laneheroes.utilities.Utility;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +12,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/platform")
+@RequiredArgsConstructor
 public class PlatformController {
-    @Autowired
-    PlatformService platformService;
+    private final PlatformService platformService;
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<Platform>>> getAllPlatforms() {
@@ -32,13 +30,13 @@ public class PlatformController {
 
     @PostMapping("/add")
     public ResponseEntity<ResponseWrapper<Platform>> addPlatform(@Valid @RequestBody Platform platform) {
-        ResponseWrapper<Platform> response = platformService.addOrUpdatePlatform(platform, false);
+        ResponseWrapper<Platform> response = platformService.addPlatform(platform);
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/update")
     public ResponseEntity<ResponseWrapper<Platform>> updatePlatform(@Valid @RequestBody Platform platform) {
-        ResponseWrapper<Platform> response = platformService.addOrUpdatePlatform(platform, true);
+        ResponseWrapper<Platform> response = platformService.updatePlatform(platform);
         return ResponseEntity.ok(response);
     }
 

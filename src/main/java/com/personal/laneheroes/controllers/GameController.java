@@ -1,12 +1,11 @@
 package com.personal.laneheroes.controllers;
 
 import com.personal.laneheroes.dto.PagedResponse;
-import com.personal.laneheroes.entities.Company;
 import com.personal.laneheroes.entities.Game;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.GameService;
 import com.personal.laneheroes.utilities.Utility;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/game")
+@RequiredArgsConstructor
 public class GameController {
 
-    @Autowired
-    GameService gameService;
+    private final GameService gameService;
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<Game>>> getAllGames() {
@@ -38,7 +37,7 @@ public class GameController {
             @RequestPart("game") Game game,
             @RequestPart("imgFile") MultipartFile imgFile) {
 
-        ResponseWrapper<Game> result = gameService.addOrUpdateGame(game, imgFile, false);
+        ResponseWrapper<Game> result = gameService.addGame(game, imgFile);
         return ResponseEntity.ok(result);
     }
 
@@ -47,7 +46,7 @@ public class GameController {
             @RequestPart("game") Game game,
             @RequestPart(value="imgFile", required = false) MultipartFile imgFile) {
 
-        ResponseWrapper<Game> result = gameService.addOrUpdateGame(game, imgFile, true);
+        ResponseWrapper<Game> result = gameService.updateGame(game, imgFile);
         return ResponseEntity.ok(result);
     }
 

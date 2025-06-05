@@ -7,12 +7,12 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.PlatformService;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -20,40 +20,50 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-@Service("PlatformServiceImpl")
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class PlatformServiceImpl implements PlatformService {
 
-    @Autowired
-    PlatformRepository platformRepository;
+    private final PlatformRepository platformRepository;
 
 
     @Override
-    public ResponseWrapper<Platform> addOrUpdatePlatform(Platform platform, boolean isUpdate) {
+    public ResponseWrapper<Platform> addPlatform(Platform platform) {
         Platform dbPlat = new Platform();
-        String successMsg = ResponseMessages.ADD_SUCCESS;
-        String failMsg = ResponseMessages.ADD_FAIL;
-        if (isUpdate) {
 
-            successMsg = ResponseMessages.UPDATE_SUCCESS;
-            failMsg = ResponseMessages.UPDATE_FAIL;
-            Optional<Platform> platformPresence = platformRepository.findById(platform.getId());
-            if (platformPresence.isEmpty()){
-                return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
-                        + failMsg,
-                        ResponseMessages.FAIL_STATUS, null);
-            }
-            dbPlat = platformPresence.get();
-        }
         try {
             dbPlat.setPlatformName(platform.getPlatformName());
             platformRepository.save(dbPlat);
             return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
-                    + successMsg,
+                    + ResponseMessages.ADD_SUCCESS,
                     ResponseMessages.SUCCESS_STATUS, dbPlat);
         } catch (Exception ex){
             return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
-                    + failMsg,
+                    + ResponseMessages.ADD_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+
+    }
+
+    @Override
+    public ResponseWrapper<Platform> updatePlatform(Platform platform) {
+        Optional<Platform> platformPresence = platformRepository.findById(platform.getId());
+        if (platformPresence.isEmpty()){
+            return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
+                    + ResponseMessages.UPDATE_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+        Platform dbPlat = platformPresence.get();
+        try {
+            dbPlat.setPlatformName(platform.getPlatformName());
+            platformRepository.save(dbPlat);
+            return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
+                    + ResponseMessages.UPDATE_SUCCESS,
+                    ResponseMessages.SUCCESS_STATUS, dbPlat);
+        } catch (Exception ex){
+            return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
+                    + ResponseMessages.UPDATE_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
 
@@ -108,10 +118,11 @@ public class PlatformServiceImpl implements PlatformService {
     @Override
     public ResponseWrapper<UploadResult> uploadPlatformsFromExcel(String excelFile) {
         int totalAdded = 0;
-        try {
+        try (
+                FileInputStream inputStream = new FileInputStream(excelFile);
+                Workbook workbook = new XSSFWorkbook(inputStream);
+        ){
             List<Platform> platforms = platformRepository.findAll();
-            FileInputStream inputStream = new FileInputStream(excelFile);
-            Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = firstSheet.iterator();
             rowIterator.next(); // skip the header row
@@ -123,10 +134,9 @@ public class PlatformServiceImpl implements PlatformService {
                 while (cellIterator.hasNext()) {
                     Cell nextCell = cellIterator.next();
                     int columnIndex = nextCell.getColumnIndex();
-                    switch (columnIndex) {
-                        case 0:
-                            plat.setPlatformName(nextCell.getStringCellValue());
-                            break;
+                    if (columnIndex == 0){
+                        plat.setPlatformName(nextCell.getStringCellValue());
+
                     }
                 }
                 if (!platformCopyCheck(platforms, plat.getPlatformName())) {

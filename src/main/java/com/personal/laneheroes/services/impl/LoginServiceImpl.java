@@ -9,18 +9,17 @@ import com.personal.laneheroes.services.LoginService;
 import com.personal.laneheroes.utilities.PasswordUtil;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service("LoginServiceImpl")
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
 
     @Override

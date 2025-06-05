@@ -7,12 +7,12 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.CallsignService;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -20,47 +20,58 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-@Service("CallsignServiceImpl")
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class CallsignServiceImpl implements CallsignService {
 
-    @Autowired
-    CallsignRepository callsignRepository;
+    private final CallsignRepository callsignRepository;
 
 
     @Override
-    public ResponseWrapper<Callsign> addOrUpdateCallsign(Callsign callsign, boolean isUpdate) {
+    public ResponseWrapper<Callsign> addCallsign(Callsign callsign) {
         Callsign dbCalSn = new Callsign();
-        String successMsg = ResponseMessages.ADD_SUCCESS;
-        String failMsg = ResponseMessages.ADD_FAIL;
-        if (isUpdate){
-
-            successMsg = ResponseMessages.UPDATE_SUCCESS;
-            failMsg = ResponseMessages.UPDATE_FAIL;
-
-            Optional<Callsign> callsignPresence = callsignRepository.findById(callsign.getId());
-            if (callsignPresence.isEmpty()){
-                return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
-                        + failMsg,
-                        ResponseMessages.FAIL_STATUS, null);
-            }
-            dbCalSn = callsignPresence.get();
+        try {
+            dbCalSn.setCallsign(callsign.getCallsign());
+            dbCalSn.setCallsignPlural(callsign.getCallsignPlural());
+            callsignRepository.save(dbCalSn);
+            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+                    + ResponseMessages.ADD_SUCCESS,
+                    ResponseMessages.SUCCESS_STATUS, dbCalSn);
+        } catch (Exception ex){
+            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+                    + ResponseMessages.ADD_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
         }
 
+    }
+
+    @Override
+    public ResponseWrapper<Callsign> updateCallsign(Callsign callsign) {
+
+        Optional<Callsign> callsignPresence = callsignRepository.findById(callsign.getId());
+        if (callsignPresence.isEmpty()){
+            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+                + ResponseMessages.UPDATE_FAIL,
+                ResponseMessages.FAIL_STATUS, null);
+        }
+        Callsign dbCalSn = callsignPresence.get();
+
+
         try {
-            if (!isUpdate || callsign.getCallsign() != null){
+            if (callsign.getCallsign() != null){
                 dbCalSn.setCallsign(callsign.getCallsign());
             }
-            if (!isUpdate || callsign.getCallsignPlural() != null){
+            if (callsign.getCallsignPlural() != null){
                 dbCalSn.setCallsignPlural(callsign.getCallsignPlural());
             }
             callsignRepository.save(dbCalSn);
             return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
-                    + successMsg,
+                    + ResponseMessages.UPDATE_SUCCESS,
                     ResponseMessages.SUCCESS_STATUS, dbCalSn);
         } catch (Exception ex){
             return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
-                    + failMsg,
+                    + ResponseMessages.UPDATE_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
 
@@ -113,10 +124,11 @@ public class CallsignServiceImpl implements CallsignService {
     @Override
     public ResponseWrapper<UploadResult> uploadCallsignsFromExcel(String excelFile) {
         int totalAdded = 0;
-        try {
+        try (
+                FileInputStream inputStream = new FileInputStream(excelFile);
+                Workbook workbook = new XSSFWorkbook(inputStream);
+        ){
             List<Callsign> callsigns = callsignRepository.findAll();
-            FileInputStream inputStream = new FileInputStream(excelFile);
-            Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = firstSheet.iterator();
             rowIterator.next(); // skip the header row
@@ -128,14 +140,12 @@ public class CallsignServiceImpl implements CallsignService {
                 while (cellIterator.hasNext()) {
                     Cell nextCell = cellIterator.next();
                     int columnIndex = nextCell.getColumnIndex();
-                    switch (columnIndex) {
-                        case 0:
-                            cs.setCallsign(nextCell.getStringCellValue());
-                            break;
-                        case 1:
-                            cs.setCallsignPlural(nextCell.getStringCellValue());
-                            break;
+                    if (columnIndex == 0){
+                        cs.setCallsign(nextCell.getStringCellValue());
+                    } else if (columnIndex == 1){
+                        cs.setCallsignPlural(nextCell.getStringCellValue());
                     }
+
                 }
 
                 if (!callsignCopyCheck(callsigns, cs.getCallsign())) {

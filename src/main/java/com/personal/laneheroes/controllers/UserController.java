@@ -4,7 +4,7 @@ import com.personal.laneheroes.entities.User;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/user")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<User>>> getAllUsers() {
@@ -30,13 +30,13 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<ResponseWrapper<User>> addUser(@Valid @RequestBody User user) {
-        ResponseWrapper<User> response = userService.addOrUpdateUser(user, false);
+        ResponseWrapper<User> response = userService.addUser(user);
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/update")
     public ResponseEntity<ResponseWrapper<User>> updateUser(@RequestBody User user) {
-        ResponseWrapper<User> response = userService.addOrUpdateUser(user, true);
+        ResponseWrapper<User> response = userService.updateUser(user);
         return ResponseEntity.ok(response);
     }
 

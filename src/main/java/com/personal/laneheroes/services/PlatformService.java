@@ -7,7 +7,9 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import java.util.List;
 
 public interface PlatformService {
-    ResponseWrapper<Platform> addOrUpdatePlatform(Platform callsign, boolean isUpdate);
+    ResponseWrapper<Platform> addPlatform(Platform platform);
+
+    ResponseWrapper<Platform> updatePlatform(Platform platform);
 
     ResponseWrapper<Platform> deletePlatform(Long id);
 

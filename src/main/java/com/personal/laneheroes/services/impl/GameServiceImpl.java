@@ -6,6 +6,7 @@ import com.personal.laneheroes.entities.Callsign;
 import com.personal.laneheroes.entities.Company;
 import com.personal.laneheroes.entities.Game;
 import com.personal.laneheroes.entities.Platform;
+import com.personal.laneheroes.exception.EntityNotFoundException;
 import com.personal.laneheroes.repositories.CallsignRepository;
 import com.personal.laneheroes.repositories.CompanyRepository;
 import com.personal.laneheroes.repositories.GameRepository;
@@ -16,12 +17,9 @@ import com.personal.laneheroes.specifications.GameSpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
 import jakarta.transaction.Transactional;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,110 +32,46 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-@Service("GameServiceImpl")
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class GameServiceImpl implements GameService {
 
-    @Autowired
-    GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
-    @Autowired
-    CallsignRepository callsignRepository;
+    private final CallsignRepository callsignRepository;
 
-    @Autowired
-    PlatformRepository platformRepository;
+    private final PlatformRepository platformRepository;
 
-    @Autowired
-    CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
     @Value("${image-dir}")
     private String imageDir;
 
     @Override
-    @SuppressWarnings("unchecked")
-    public ResponseWrapper<Game> addOrUpdateGame(Game game, MultipartFile imgFile, boolean isUpdate) {
+    public ResponseWrapper<Game> addGame(Game game, MultipartFile imgFile) {
         Game dbGame = new Game();
-        String successMsg = ResponseMessages.ADD_SUCCESS;
-        String failMsg = ResponseMessages.ADD_FAIL;
-        if (isUpdate) {
-
-            successMsg = ResponseMessages.UPDATE_SUCCESS;
-            failMsg = ResponseMessages.UPDATE_FAIL;
-
-            Optional<Game> gamePresence = gameRepository.findById(game.getId());
-            if (gamePresence.isEmpty()){
-                return new ResponseWrapper<>(ResponseMessages.GAME_SINGLE + " "
-                        + failMsg,
-                        ResponseMessages.FAIL_STATUS, null);
-            }
-            dbGame = gamePresence.get();
-        }
-
-
         ResponseWrapper<?>[] responseHolder = new ResponseWrapper<?>[1];
-
-
-
-
-        // Validate Callsign
-        if (!isUpdate || game.getCallsign() != null){
+        if (game.getCallsign() != null){
             Optional<Callsign> callsign = Utility.getValidEntityById(
                     callsignRepository,
                     game.getCallsign().getId(),
                     ResponseMessages.CALLSIGN_SINGLE,
-                    failMsg,
+                    ResponseMessages.ADD_FAIL,
                     responseHolder
             );
             if (callsign.isEmpty()) return (ResponseWrapper<Game>) responseHolder[0];
-
             dbGame.setCallsign(callsign.get());
         }
 
-
-        // Validate Platform
-        if (!isUpdate || game.getPlatform() != null){
-            Optional<Platform> platform = Utility.getValidEntityById(
-                    platformRepository,
-                    game.getPlatform().getId(),
-                    ResponseMessages.PLATFORM_SINGLE,
-                    failMsg,
-                    responseHolder
-            );
-            if (platform.isEmpty()) return (ResponseWrapper<Game>) responseHolder[0];
-
-            dbGame.setPlatform(platform.get());
+        if (!assignRelatedEntities(game, dbGame, ResponseMessages.ADD_FAIL, responseHolder)) {
+            return (ResponseWrapper<Game>) responseHolder[0];
         }
 
+        dbGame.setGameName(game.getGameName());
+        dbGame.setGameCode(game.getGameCode());
 
-        // Validate Company
-
-        if (!isUpdate || game.getCompany() != null){
-            Optional<Company> company = Utility.getValidEntityById(
-                    companyRepository,
-                    game.getCompany().getId(),
-                    ResponseMessages.COMPANY_SINGLE,
-                    failMsg,
-                    responseHolder
-            );
-            if (company.isEmpty()) return (ResponseWrapper<Game>) responseHolder[0];
-
-            dbGame.setCompany(company.get());
-
-        }
-
-        if (!isUpdate || game.getGameName() != null){
-            dbGame.setGameName(game.getGameName());
-        }
-
-        if (!isUpdate || game.getGameCode() != null){
-            dbGame.setGameCode(game.getGameCode());
-        }
-
-
-
-
-
-        if (!isUpdate || (imgFile != null && !imgFile.isEmpty())){
+        if (imgFile != null && !imgFile.isEmpty()){
             ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "game");
             if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
                 dbGame.setImgIcon(uploadResult.getData());
@@ -146,7 +80,50 @@ public class GameServiceImpl implements GameService {
         }
         gameRepository.save(dbGame);
         return new ResponseWrapper<>(ResponseMessages.GAME_SINGLE + " "
-                + successMsg,
+                + ResponseMessages.ADD_SUCCESS,
+                ResponseMessages.SUCCESS_STATUS, dbGame);
+    }
+
+    @Override
+    public ResponseWrapper<Game> updateGame(Game game, MultipartFile imgFile){
+        Optional<Game> gamePresence = gameRepository.findById(game.getId());
+        if (gamePresence.isEmpty()){
+            return new ResponseWrapper<>(ResponseMessages.GAME_SINGLE + " "
+                    + ResponseMessages.UPDATE_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+        Game dbGame  = gamePresence.get();
+        ResponseWrapper<?>[] responseHolder = new ResponseWrapper<?>[1];
+
+
+
+
+        if (!assignRelatedEntities(game, dbGame, ResponseMessages.UPDATE_FAIL, responseHolder)) {
+            return (ResponseWrapper<Game>) responseHolder[0];
+        }
+
+        if (game.getGameName() != null){
+            dbGame.setGameName(game.getGameName());
+        }
+
+        if (game.getGameCode() != null){
+            dbGame.setGameCode(game.getGameCode());
+        }
+
+
+
+
+
+        if (imgFile != null && !imgFile.isEmpty()){
+            ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "game");
+            if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
+                dbGame.setImgIcon(uploadResult.getData());
+            }
+
+        }
+        gameRepository.save(dbGame);
+        return new ResponseWrapper<>(ResponseMessages.GAME_SINGLE + " "
+                + ResponseMessages.UPDATE_SUCCESS,
                 ResponseMessages.SUCCESS_STATUS, dbGame);
     }
 
@@ -217,69 +194,29 @@ public class GameServiceImpl implements GameService {
     @Override
     public ResponseWrapper<UploadResult> uploadGamesFromExcel(String excelFile) {
         int totalAdded = 0;
-        try {
+        try (
+                FileInputStream inputStream = new FileInputStream(excelFile);
+                Workbook workbook = new XSSFWorkbook(inputStream)
+        ) {
             List<Game> games = gameRepository.findAll();
-            FileInputStream inputStream = new FileInputStream(excelFile);
-            Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = firstSheet.iterator();
-            rowIterator.next(); // skip the header row
-            Game game;
+            rowIterator.next(); // skip header
+
             while (rowIterator.hasNext()) {
-                Row nextRow = rowIterator.next();
-                game = new Game();
-                game.setImgIcon("noimage.png");
-                Iterator<Cell> cellIterator = nextRow.cellIterator();
-                while (cellIterator.hasNext()) {
-                    Cell nextCell = cellIterator.next();
-                    int columnIndex = nextCell.getColumnIndex();
-                    switch (columnIndex) {
-                        case 0:
-                            game.setGameName(nextCell.getStringCellValue());
-                            break;
-                        case 1:
-                            Optional<Callsign> callsign = callsignRepository.findByCallsignIgnoreCase(nextCell.getStringCellValue());
-                            if (callsign.isPresent()){
-                                game.setCallsign(callsign.get());
-                            } else {
-                                throw new RuntimeException("Callsign not found");
-                            }
-                            break;
-                        case 2:
-                            Optional<Company> company = companyRepository.findByCompanyNameIgnoreCase(nextCell.getStringCellValue());
-                            if (company.isPresent()){
-                                game.setCompany(company.get());
-                            } else {
-                                throw new RuntimeException("Company not found");
-                            }
-                            break;
-                        case 3:
-                            Optional<Platform> platform = platformRepository.findByPlatformNameIgnoreCase(nextCell.getStringCellValue());
-                            if (platform.isPresent()){
-                                game.setPlatform(platform.get());
-                            } else {
-                                throw new RuntimeException("Platform not found");
-                            }
-                            break;
-                        case 4:
-                            game.setGameCode(nextCell.getStringCellValue());
-                            break;
-                        case 5:
-                            game.setImgIcon(nextCell.getStringCellValue());
-                            break;
-                    }
-                }
+                Row row = rowIterator.next();
+                Game game = mapRowToGame(row);
+
                 if (!gameCopyCheck(games, game.getGameName())) {
                     totalAdded++;
                     gameRepository.save(game);
                 }
-
             }
-
-        } catch (Exception ex){
-            return new ResponseWrapper<>(ResponseMessages.BATCH_FAIL , ResponseMessages.FAIL_STATUS, UploadResult.error(ex.getMessage()));
+        } catch (Exception ex) {
+            return new ResponseWrapper<>(ResponseMessages.BATCH_FAIL, ResponseMessages.FAIL_STATUS, UploadResult.error(ex.getMessage()));
         }
-        return new ResponseWrapper<>(ResponseMessages.BATCH_SUCCESS , ResponseMessages.SUCCESS_STATUS, UploadResult.success(totalAdded));
+
+        return new ResponseWrapper<>(ResponseMessages.BATCH_SUCCESS, ResponseMessages.SUCCESS_STATUS, UploadResult.success(totalAdded));
     }
 
     private boolean gameCopyCheck(List<Game> games, String name) {
@@ -289,5 +226,71 @@ public class GameServiceImpl implements GameService {
             }
         }
         return false;
+    }
+
+    private boolean assignRelatedEntities(Game source, Game target, String failMsg, ResponseWrapper<?>[] responseHolder) {
+        if (source.getCallsign() != null) {
+            Optional<Callsign> callsign = Utility.getValidEntityById(
+                    callsignRepository, source.getCallsign().getId(),
+                    ResponseMessages.CALLSIGN_SINGLE, failMsg, responseHolder);
+            if (callsign.isEmpty()) return false;
+            target.setCallsign(callsign.get());
+        }
+
+        if (source.getPlatform() != null) {
+            Optional<Platform> platform = Utility.getValidEntityById(
+                    platformRepository, source.getPlatform().getId(),
+                    ResponseMessages.PLATFORM_SINGLE, failMsg, responseHolder);
+            if (platform.isEmpty()) return false;
+            target.setPlatform(platform.get());
+        }
+
+        if (source.getCompany() != null) {
+            Optional<Company> company = Utility.getValidEntityById(
+                    companyRepository, source.getCompany().getId(),
+                    ResponseMessages.COMPANY_SINGLE, failMsg, responseHolder);
+            if (company.isEmpty()) return false;
+            target.setCompany(company.get());
+        }
+
+        return true;
+    }
+
+    private Game mapRowToGame(Row row) {
+        Game game = new Game();
+        game.setImgIcon("noimage.png");
+
+        for (Cell cell : row) {
+            int index = cell.getColumnIndex();
+            String value = cell.getCellType() == CellType.STRING ? cell.getStringCellValue() : "";
+
+            switch (index) {
+                case 0 -> game.setGameName(value);
+                case 1 -> game.setCallsign(fetchCallsign(value));
+                case 2 -> game.setCompany(fetchCompany(value));
+                case 3 -> game.setPlatform(fetchPlatform(value));
+                case 4 -> game.setGameCode(value);
+                case 5 -> game.setImgIcon(value);
+                default -> {
+                    //Nothing
+                }
+            }
+        }
+        return game;
+    }
+
+    private Callsign fetchCallsign(String name) {
+        return callsignRepository.findByCallsignIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Callsign", name));
+    }
+
+    private Company fetchCompany(String name) {
+        return companyRepository.findByCompanyNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Company", name));
+    }
+
+    private Platform fetchPlatform(String name) {
+        return platformRepository.findByPlatformNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Platform", name));
     }
 }

@@ -7,90 +7,103 @@ import com.personal.laneheroes.services.UserService;
 import com.personal.laneheroes.utilities.PasswordUtil;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Service("UserServiceImpl")
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
 
     
     @Override
-    public ResponseWrapper<User> addOrUpdateUser(User user, Boolean isUpdate) {
+    public ResponseWrapper<User> addUser(User user) {
         User dbUser = new User();
-        String successMsg = ResponseMessages.ADD_SUCCESS;
-        String failMsg = ResponseMessages.ADD_FAIL;
-        if (isUpdate){
-            successMsg = ResponseMessages.UPDATE_SUCCESS;
-            failMsg = ResponseMessages.UPDATE_FAIL;
-            Optional<User> userPresence = userRepository.findById(user.getId());
-            if (userPresence.isEmpty()){
-                return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                        + failMsg,
-                        ResponseMessages.FAIL_STATUS, null);
-            }
-            dbUser = userPresence.get();
-        }
 
         try {
-            if (!isUpdate || user.getUserName() != null){
+            dbUser.setUserName(user.getUserName());
+            dbUser.setUserPassword(PasswordUtil.encode(user.getUserPassword()));
+            dbUser.setUserRole(user.getUserRole());
+            dbUser.setUserEmail(user.getUserEmail());
+            dbUser.setIsActive(user.getIsActive());
+            dbUser.setCreatedAt(LocalDateTime.now());
+            userRepository.save(dbUser);
+            return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
+                    + ResponseMessages.ADD_SUCCESS,
+                    ResponseMessages.SUCCESS_STATUS, dbUser);
+        } catch (Exception ex){
+            return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
+                    + ResponseMessages.ADD_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+        
+    }
+
+    @Override
+    public ResponseWrapper<User> updateUser(User user) {
+
+        Optional<User> userPresence = userRepository.findById(user.getId());
+        if (userPresence.isEmpty()){
+            return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
+                    + ResponseMessages.UPDATE_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+        User dbUser = userPresence.get();
+
+        try {
+            if (user.getUserName() != null){
                 dbUser.setUserName(user.getUserName());
             } else {
                 return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                        + failMsg,
+                        + ResponseMessages.UPDATE_FAIL,
                         ResponseMessages.FAIL_STATUS, null);
             }
 
-            if (!isUpdate || user.getUserPassword() != null){
+            if (user.getUserPassword() != null){
 
                 dbUser.setUserPassword(PasswordUtil.encode(user.getUserPassword()));
             } else {
                 return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                        + failMsg,
+                        + ResponseMessages.UPDATE_FAIL,
                         ResponseMessages.FAIL_STATUS, null);
             }
 
-            if (!isUpdate || user.getUserRole() != null){
+            if (user.getUserRole() != null){
                 dbUser.setUserRole(user.getUserRole());
             } else {
                 return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                        + failMsg,
+                        + ResponseMessages.UPDATE_FAIL,
                         ResponseMessages.FAIL_STATUS, null);
             }
 
-            if (!isUpdate || user.getUserEmail() != null){
+            if (user.getUserEmail() != null){
                 dbUser.setUserEmail(user.getUserEmail());
             }
 
 
-            if (isUpdate || user.getIsActive() != null){
+            if (user.getIsActive() != null){
                 dbUser.setIsActive(user.getIsActive());
             }
 
-            if (isUpdate){
-                dbUser.setUpdatedAt(LocalDateTime.now());
-            } else {
-                dbUser.setCreatedAt(LocalDateTime.now());
-            }
+            dbUser.setUpdatedAt(LocalDateTime.now());
 
             userRepository.save(dbUser);
             return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                    + successMsg,
+                    + ResponseMessages.UPDATE_SUCCESS,
                     ResponseMessages.SUCCESS_STATUS, dbUser);
         } catch (Exception ex){
             return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                    + failMsg,
+                    + ResponseMessages.UPDATE_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
-        
+
     }
 
     @Override

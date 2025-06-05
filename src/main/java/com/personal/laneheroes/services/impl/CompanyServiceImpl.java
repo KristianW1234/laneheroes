@@ -9,12 +9,12 @@ import com.personal.laneheroes.services.CompanyService;
 import com.personal.laneheroes.specifications.CompanySpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,46 +25,62 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-@Service("CompanyServiceImpl")
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
 
-    @Autowired
-    CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
     @Override
-    public ResponseWrapper<Company> addOrUpdateCompany(Company company, boolean isUpdate) {
+    public ResponseWrapper<Company> addCompany(Company company) {
         Company dbCom = new Company();
-        String successMsg = ResponseMessages.ADD_SUCCESS;
-        String failMsg = ResponseMessages.ADD_FAIL;
-        if (isUpdate){
-            successMsg = ResponseMessages.UPDATE_SUCCESS;
-            failMsg = ResponseMessages.UPDATE_FAIL;
-            Optional<Company> companyPresence = companyRepository.findById(company.getId());
-            if (companyPresence.isEmpty()){
+        try {
+            if (company.getCompanyName() != null){
+                dbCom.setCompanyName(company.getCompanyName());
+            } else {
                 return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                        + failMsg,
+                        + ResponseMessages.ADD_FAIL,
                         ResponseMessages.FAIL_STATUS, null);
             }
-            dbCom = companyPresence.get();
+            companyRepository.save(dbCom);
+            return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
+                    + ResponseMessages.ADD_SUCCESS,
+                    ResponseMessages.SUCCESS_STATUS, dbCom);
+        } catch (Exception ex){
+            return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
+                    + ResponseMessages.ADD_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
         }
+
+    }
+
+    @Override
+    public ResponseWrapper<Company> updateCompany(Company company) {
+        Optional<Company> companyPresence = companyRepository.findById(company.getId());
+        if (companyPresence.isEmpty()){
+            return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
+                + ResponseMessages.UPDATE_FAIL,
+                ResponseMessages.FAIL_STATUS, null);
+        }
+        Company dbCom = companyPresence.get();
 
         try {
             if (company.getCompanyName() != null){
                 dbCom.setCompanyName(company.getCompanyName());
             } else {
                 return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                        + failMsg,
+                        + ResponseMessages.UPDATE_FAIL,
                         ResponseMessages.FAIL_STATUS, null);
             }
 
             companyRepository.save(dbCom);
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                    + successMsg,
+                    + ResponseMessages.UPDATE_SUCCESS,
                     ResponseMessages.SUCCESS_STATUS, dbCom);
         } catch (Exception ex){
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                    + failMsg,
+                    + ResponseMessages.UPDATE_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
 
@@ -137,10 +153,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public ResponseWrapper<UploadResult> uploadCompaniesFromExcel(String excelFile) {
         int totalAdded = 0;
-        try {
+        try (
+                FileInputStream inputStream = new FileInputStream(excelFile);
+                Workbook workbook = new XSSFWorkbook(inputStream);
+        ) {
             List<Company> comps = companyRepository.findAll();
-            FileInputStream inputStream = new FileInputStream(excelFile);
-            Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = firstSheet.iterator();
             rowIterator.next(); // skip the header row
@@ -153,10 +170,8 @@ public class CompanyServiceImpl implements CompanyService {
                 while (cellIterator.hasNext()) {
                     Cell nextCell = cellIterator.next();
                     int columnIndex = nextCell.getColumnIndex();
-                    switch (columnIndex) {
-                        case 0:
-                            comp.setCompanyName(nextCell.getStringCellValue());
-                            break;
+                    if (columnIndex == 0){
+                        comp.setCompanyName(nextCell.getStringCellValue());
                     }
                 }
 

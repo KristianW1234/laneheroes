@@ -6,45 +6,35 @@ import com.personal.laneheroes.repositories.*;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.*;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service("AdminServiceImpl")
+@Service
 @Transactional
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
-    @Autowired
-    private CompanyService companyService;
+    private final CompanyService companyService;
 
-    @Autowired
-    private CallsignService callsignService;
+    private final CallsignService callsignService;
 
-    @Autowired
-    private PlatformService platformService;
+    private final PlatformService platformService;
 
-    @Autowired
-    private GameService gameService;
+    private final GameService gameService;
 
-    @Autowired
-    private HeroService heroService;
+    private final HeroService heroService;
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private CallsignRepository callsignRepository;
+    private final CallsignRepository callsignRepository;
 
-    @Autowired
-    private PlatformRepository platformRepository;
+    private final PlatformRepository platformRepository;
 
-    @Autowired
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
-    @Autowired
-    private HeroRepository heroRepository;
+    private final HeroRepository heroRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public String uploadAllData(String companyPath, String callsignPath, String platformPath, String gamePath, String heroPath) {

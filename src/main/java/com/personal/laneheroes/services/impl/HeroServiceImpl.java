@@ -65,8 +65,13 @@ public class HeroServiceImpl implements HeroService {
         }
         dbHero.setHeroName(hero.getHeroName());
         dbHero.setHeroCode(setupHeroCode(hero.getHeroName(), dbGame));
-        dbHero.setHeroTitle(hero.getHeroTitle());
+        if(hero.getHeroTitle() != null){
+            dbHero.setHeroTitle(hero.getHeroTitle());
+        }
+
+
         dbHero.setHeroGender(hero.getHeroGender());
+        dbHero.setDisplayByTitle(hero.getDisplayByTitle());
         if (hero.getAlternateName() != null){
             dbHero.setAlternateName(hero.getAlternateName());
         }
@@ -144,7 +149,11 @@ public class HeroServiceImpl implements HeroService {
         }
 
         if (hero.getHeroLore() != null){
-            dbHero.setHeroDescription(hero.getHeroLore());
+            dbHero.setHeroLore(hero.getHeroLore());
+        }
+
+        if (hero.getDisplayByTitle() != null){
+            dbHero.setDisplayByTitle(hero.getDisplayByTitle());
         }
 
         if (imgFile != null && !imgFile.isEmpty()){
@@ -307,6 +316,7 @@ public class HeroServiceImpl implements HeroService {
                 case 6 -> hero.setImgIcon(value);
                 case 7 -> hero.setHeroDescription(value);
                 case 8 -> hero.setHeroLore(value);
+                case 9 -> hero.setDisplayByTitle(value);
                 default -> {
                     //Nothing
                 }
@@ -319,7 +329,6 @@ public class HeroServiceImpl implements HeroService {
         return gameRepository.findByGameNameIgnoreCase(name)
                 .orElseThrow(() -> new EntityNotFoundException("Game", name));
     }
-
 
 
 }

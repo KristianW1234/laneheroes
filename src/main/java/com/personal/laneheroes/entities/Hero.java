@@ -44,14 +44,17 @@ public class Hero {
     @Column(name = "ALTERNATE_NAME")
     private String alternateName;
 
-    @Lob
-    @Column(columnDefinition = "TEXT")
+    //@Lob
+    @Column(name = "HERO_DESCRIPTION", columnDefinition = "TEXT")
     private String heroDescription;
 
-    @Lob
-    @Column(columnDefinition = "TEXT")
+    //@Lob
+    @Column(name = "HERO_LORE", columnDefinition = "TEXT")
     private String heroLore;
 
     @Column(name = "IMG_ICON")
     private String imgIcon;
+
+    @Column(name= "TITLE_DISPLAY")
+    private String displayByTitle;
 }

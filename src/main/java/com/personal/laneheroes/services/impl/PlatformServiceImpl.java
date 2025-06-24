@@ -1,5 +1,7 @@
 package com.personal.laneheroes.services.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.Platform;
 import com.personal.laneheroes.repositories.PlatformRepository;
@@ -16,6 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +30,8 @@ import java.util.Optional;
 public class PlatformServiceImpl implements PlatformService {
 
     private final PlatformRepository platformRepository;
+
+    private final ObjectMapper objectMapper;
 
 
     @Override
@@ -150,6 +156,16 @@ public class PlatformServiceImpl implements PlatformService {
             return new ResponseWrapper<>(ResponseMessages.BATCH_FAIL , ResponseMessages.FAIL_STATUS, UploadResult.error(ex.getMessage()));
         }
         return new ResponseWrapper<>(ResponseMessages.BATCH_SUCCESS , ResponseMessages.SUCCESS_STATUS, UploadResult.success(totalAdded));
+    }
+
+    @Override
+    public void uploadInitPlatformsFromJSON() throws IOException {
+        if (platformRepository.count() > 0) return;
+
+        InputStream input = getClass().getClassLoader().getResourceAsStream("data/initPlatforms.json");
+        List<Platform> platforms = objectMapper.readValue(input, new TypeReference<>() {});
+        platformRepository.saveAll(platforms);
+
     }
 
     private boolean platformCopyCheck(List<Platform> comps, String name) {

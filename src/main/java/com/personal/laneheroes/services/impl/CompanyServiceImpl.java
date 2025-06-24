@@ -1,5 +1,7 @@
 package com.personal.laneheroes.services.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.personal.laneheroes.dto.PagedResponse;
 import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.Company;
@@ -8,6 +10,7 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.CompanyService;
 import com.personal.laneheroes.specifications.CompanySpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
+import com.personal.laneheroes.utilities.Utility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,12 +18,16 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +39,13 @@ public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
 
+    private final ObjectMapper objectMapper;
+
+    @Value("${image-dir}")
+    private String imageDir;
+
     @Override
-    public ResponseWrapper<Company> addCompany(Company company) {
+    public ResponseWrapper<Company> addCompany(Company company, MultipartFile imgFile) {
         Company dbCom = new Company();
         try {
             if (company.getCompanyName() != null){
@@ -43,6 +55,15 @@ public class CompanyServiceImpl implements CompanyService {
                         + ResponseMessages.ADD_FAIL,
                         ResponseMessages.FAIL_STATUS, null);
             }
+
+            if (imgFile != null && !imgFile.isEmpty()){
+                ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "company");
+                if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
+                    dbCom.setImgIcon(uploadResult.getData());
+                }
+
+            }
+
             companyRepository.save(dbCom);
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
                     + ResponseMessages.ADD_SUCCESS,
@@ -56,7 +77,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public ResponseWrapper<Company> updateCompany(Company company) {
+    public ResponseWrapper<Company> updateCompany(Company company, MultipartFile imgFile) {
         Optional<Company> companyPresence = companyRepository.findById(company.getId());
         if (companyPresence.isEmpty()){
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
@@ -72,6 +93,14 @@ public class CompanyServiceImpl implements CompanyService {
                 return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
                         + ResponseMessages.UPDATE_FAIL,
                         ResponseMessages.FAIL_STATUS, null);
+            }
+
+            if (imgFile != null && !imgFile.isEmpty()){
+                ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "company");
+                if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
+                    dbCom.setImgIcon(uploadResult.getData());
+                }
+
             }
 
             companyRepository.save(dbCom);
@@ -172,6 +201,8 @@ public class CompanyServiceImpl implements CompanyService {
                     int columnIndex = nextCell.getColumnIndex();
                     if (columnIndex == 0){
                         comp.setCompanyName(nextCell.getStringCellValue());
+                    } else if (columnIndex == 1){
+                        comp.setImgIcon(nextCell.getStringCellValue());
                     }
                 }
 
@@ -184,6 +215,16 @@ public class CompanyServiceImpl implements CompanyService {
             return new ResponseWrapper<>(ResponseMessages.BATCH_FAIL , ResponseMessages.FAIL_STATUS, UploadResult.error(ex.getMessage()));
         }
         return new ResponseWrapper<>(ResponseMessages.BATCH_SUCCESS , ResponseMessages.SUCCESS_STATUS, UploadResult.success(totalAdded));
+    }
+
+    @Override
+    public void uploadInitCompaniesFromJSON() throws IOException {
+        if (companyRepository.count() > 0) return;
+
+        InputStream input = getClass().getClassLoader().getResourceAsStream("data/initCompanies.json");
+        List<Company> companies = objectMapper.readValue(input, new TypeReference<>() {});
+        companyRepository.saveAll(companies);
+
     }
 
     private boolean companyCopyCheck(List<Company> comps, String name) {

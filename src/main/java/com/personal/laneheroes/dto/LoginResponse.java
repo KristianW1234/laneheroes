@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginResponse {
     private Long userId;
-    private String username;
+    private String userName;
     private String role;
     private boolean active;
 }

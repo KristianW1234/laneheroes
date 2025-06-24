@@ -35,7 +35,7 @@ public class GameController {
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseWrapper<Game>> addGame(
             @RequestPart("game") Game game,
-            @RequestPart("imgFile") MultipartFile imgFile) {
+            @RequestPart(value="imgFile", required = false) MultipartFile imgFile) {
 
         ResponseWrapper<Game> result = gameService.addGame(game, imgFile);
         return ResponseEntity.ok(result);

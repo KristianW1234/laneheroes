@@ -1,5 +1,8 @@
 package com.personal.laneheroes.services.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.personal.laneheroes.dto.HeroJsonDTO;
 import com.personal.laneheroes.dto.PagedResponse;
 import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.*;
@@ -23,6 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +43,9 @@ public class HeroServiceImpl implements HeroService {
 
 
     private final GameRepository gameRepository;
+
+    private final ObjectMapper objectMapper;
+
 
 
     @Value("${image-dir}")
@@ -266,6 +275,38 @@ public class HeroServiceImpl implements HeroService {
     public ResponseWrapper<Long> getHeroCount() {
         Long count = heroRepository.count();
         return new ResponseWrapper<>(ResponseMessages.COUNT_SUCCESS , ResponseMessages.SUCCESS_STATUS, count);
+    }
+
+    @Override
+    public void uploadInitHeroesFromJSON() throws IOException {
+        if (heroRepository.count() > 0) return;
+
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/initHeroes.json");
+
+        List<HeroJsonDTO> heroDTOs = objectMapper.readValue(inputStream, new TypeReference<>() {});
+
+        List<Hero> heroes = new ArrayList<>();
+
+        for (HeroJsonDTO dto : heroDTOs) {
+            Game game = gameRepository.findByGameNameIgnoreCase(dto.game)
+                    .orElseThrow(() -> new RuntimeException("Game not found: " + dto.game));
+
+            Hero hero = new Hero();
+            hero.setHeroCode(dto.heroCode);
+            hero.setHeroName(dto.heroName);
+            hero.setHeroTitle(dto.heroTitle);
+            hero.setHeroGender(dto.heroGender);
+            hero.setGame(game);
+            hero.setImgIcon(dto.imgIcon);
+            hero.setHeroDescription(dto.heroDescription);
+            hero.setHeroLore(dto.heroLore);
+            hero.setDisplayByTitle(dto.displayByTitle);
+
+            heroes.add(hero);
+        }
+
+        heroRepository.saveAll(heroes);
+
     }
 
     private boolean heroCopyCheck(Iterable<Hero> heroes, String code) {

@@ -7,6 +7,7 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface GameService {
@@ -23,4 +24,6 @@ public interface GameService {
     ResponseWrapper<PagedResponse<Game>> searchGames(String name, String code, Long companyId, Long platformId, Long callsignId, Pageable pageable);
 
     ResponseWrapper<UploadResult> uploadGamesFromExcel(String excelFile);
+
+    void uploadInitGamesFromJSON() throws IOException;
 }

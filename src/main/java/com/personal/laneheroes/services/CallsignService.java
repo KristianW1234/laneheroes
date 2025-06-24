@@ -4,6 +4,7 @@ import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.Callsign;
 import com.personal.laneheroes.response.ResponseWrapper;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface CallsignService {
@@ -19,5 +20,5 @@ public interface CallsignService {
 
     ResponseWrapper<UploadResult> uploadCallsignsFromExcel(String excelFile);
 
-
+    void uploadInitCallsignsFromJSON() throws IOException;
 }

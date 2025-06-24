@@ -1,11 +1,11 @@
 package com.personal.laneheroes.services.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.personal.laneheroes.dto.GameJsonDTO;
 import com.personal.laneheroes.dto.PagedResponse;
 import com.personal.laneheroes.dto.UploadResult;
-import com.personal.laneheroes.entities.Callsign;
-import com.personal.laneheroes.entities.Company;
-import com.personal.laneheroes.entities.Game;
-import com.personal.laneheroes.entities.Platform;
+import com.personal.laneheroes.entities.*;
 import com.personal.laneheroes.exception.EntityNotFoundException;
 import com.personal.laneheroes.repositories.CallsignRepository;
 import com.personal.laneheroes.repositories.CompanyRepository;
@@ -28,6 +28,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +47,8 @@ public class GameServiceImpl implements GameService {
     private final PlatformRepository platformRepository;
 
     private final CompanyRepository companyRepository;
+
+    private final ObjectMapper objectMapper;
 
     @Value("${image-dir}")
     private String imageDir;
@@ -217,6 +222,42 @@ public class GameServiceImpl implements GameService {
         }
 
         return new ResponseWrapper<>(ResponseMessages.BATCH_SUCCESS, ResponseMessages.SUCCESS_STATUS, UploadResult.success(totalAdded));
+    }
+
+    @Override
+    public void uploadInitGamesFromJSON() throws IOException {
+        if (gameRepository.count() > 0) return;
+
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/initGames.json");
+
+        List<GameJsonDTO> gameDTOs = objectMapper.readValue(inputStream, new TypeReference<>() {});
+
+        List<Game> games = new ArrayList<>();
+
+        for (GameJsonDTO dto : gameDTOs) {
+            Company company = companyRepository.findByCompanyNameIgnoreCase(dto.company)
+                    .orElseThrow(() -> new RuntimeException("Company not found: " + dto.company));
+
+            Callsign callsign = callsignRepository.findByCallsignIgnoreCase(dto.callsign)
+                    .orElseThrow(() -> new RuntimeException("Callsign not found: " + dto.callsign));
+
+            Platform platform = platformRepository.findByPlatformNameIgnoreCase(dto.platform)
+                    .orElseThrow(() -> new RuntimeException("Platform not found: " + dto.platform));
+
+            Game game = new Game();
+            game.setGameCode(dto.gameCode);
+            game.setGameName(dto.gameName);
+            game.setImgIcon(dto.imgIcon);
+            game.setCompany(company);
+            game.setCallsign(callsign);
+            game.setPlatform(platform);
+
+
+            games.add(game);
+        }
+
+        gameRepository.saveAll(games);
+
     }
 
     private boolean gameCopyCheck(List<Game> games, String name) {

@@ -24,7 +24,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ResponseWrapper<LoginResponse> authenticate(LoginRequest request) {
-        Optional<User> dbUser = userRepository.findByUserName(request.getUsername());
+        Optional<User> dbUser = userRepository.findByUserName(request.getUserName());
 
         if (dbUser.isEmpty()) {
             return new ResponseWrapper<>("User not found!",
@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
 
         User user = dbUser.get();
 
-        if (!PasswordUtil.matches(request.getPassword(), user.getUserPassword())) {
+        if (!PasswordUtil.matches(request.getUserPassword(), user.getUserPassword())) {
             return new ResponseWrapper<>("Invalid Password!",
                     ResponseMessages.FAIL_STATUS, null);
         }

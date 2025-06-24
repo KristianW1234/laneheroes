@@ -17,11 +17,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/laneHeroes/images/hero/**")
-                .addResourceLocations("file:///" + imageDir + "hero/");
-
-        registry.addResourceHandler("/laneHeroes/images/game/**")
-                .addResourceLocations("file:///" + imageDir + "game/");
+        registry.addResourceHandler("/laneHeroes/images/**")
+                .addResourceLocations("file:///" + imageDir + "/");
     }
 
 
@@ -29,7 +26,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(allowedOrigins)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }

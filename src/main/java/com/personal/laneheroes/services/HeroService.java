@@ -8,6 +8,7 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface HeroService {
@@ -26,4 +27,6 @@ public interface HeroService {
     ResponseWrapper<UploadResult> uploadHeroesFromExcel(String excelFile);
 
     ResponseWrapper<Long> getHeroCount();
+
+    void uploadInitHeroesFromJSON() throws IOException;
 }

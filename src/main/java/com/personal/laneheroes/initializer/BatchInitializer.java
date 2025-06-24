@@ -1,0 +1,38 @@
+package com.personal.laneheroes.initializer;
+
+import com.personal.laneheroes.services.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+
+@Component
+@RequiredArgsConstructor
+public class BatchInitializer implements CommandLineRunner {
+
+
+    private final HeroService heroService;
+    private final GameService gameService;
+    private final CompanyService companyService;
+    private final PlatformService platformService;
+    private final CallsignService callsignService;
+
+    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String ddlMode;
+
+    @Override
+    public void run(String... args) throws Exception {
+        if ("none".equalsIgnoreCase(ddlMode)) {
+            companyService.uploadInitCompaniesFromJSON();
+            platformService.uploadInitPlatformsFromJSON();
+            callsignService.uploadInitCallsignsFromJSON();
+            gameService.uploadInitGamesFromJSON();
+            heroService.uploadInitHeroesFromJSON();
+
+            
+        }
+
+
+    }
+}

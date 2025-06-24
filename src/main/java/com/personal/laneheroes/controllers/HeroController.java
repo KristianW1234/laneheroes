@@ -42,7 +42,7 @@ public class HeroController {
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseWrapper<Hero>> addHero(
             @RequestPart("hero") Hero hero,
-            @RequestPart("imgFile") MultipartFile imgFile) {
+            @RequestPart(value="imgFile", required = false) MultipartFile imgFile) {
 
         ResponseWrapper<Hero> result = heroService.addHero(hero, imgFile);
         return ResponseEntity.ok(result);

@@ -25,4 +25,7 @@ public class Company {
     @Column(name = "COMPANY_NAME")
     @NotBlank
     private String companyName;
+
+    @Column(name = "IMG_ICON")
+    private String imgIcon;
 }

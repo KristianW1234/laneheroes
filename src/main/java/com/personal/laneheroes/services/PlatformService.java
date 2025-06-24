@@ -4,6 +4,7 @@ import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.Platform;
 import com.personal.laneheroes.response.ResponseWrapper;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface PlatformService {
@@ -18,5 +19,7 @@ public interface PlatformService {
     ResponseWrapper<Platform> getPlatformById(Long id);
 
     ResponseWrapper<UploadResult> uploadPlatformsFromExcel(String excelFile);
+
+    void uploadInitPlatformsFromJSON() throws IOException;
 
 }

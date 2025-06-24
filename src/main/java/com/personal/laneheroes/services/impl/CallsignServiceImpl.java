@@ -1,5 +1,7 @@
 package com.personal.laneheroes.services.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.Callsign;
 import com.personal.laneheroes.repositories.CallsignRepository;
@@ -16,6 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +30,8 @@ import java.util.Optional;
 public class CallsignServiceImpl implements CallsignService {
 
     private final CallsignRepository callsignRepository;
+
+    private final ObjectMapper objectMapper;
 
 
     @Override
@@ -159,6 +165,16 @@ public class CallsignServiceImpl implements CallsignService {
             return new ResponseWrapper<>(ResponseMessages.BATCH_FAIL , ResponseMessages.FAIL_STATUS, UploadResult.error(ex.getMessage()));
         }
         return new ResponseWrapper<>(ResponseMessages.BATCH_SUCCESS , ResponseMessages.SUCCESS_STATUS, UploadResult.success(totalAdded));
+    }
+
+    @Override
+    public void uploadInitCallsignsFromJSON() throws IOException {
+        if (callsignRepository.count() > 0) return;
+
+        InputStream input = getClass().getClassLoader().getResourceAsStream("data/initCallsigns.json");
+        List<Callsign> callsigns = objectMapper.readValue(input, new TypeReference<>() {});
+        callsignRepository.saveAll(callsigns);
+
     }
 
     private boolean callsignCopyCheck(List<Callsign> callsigns, String name) {

@@ -1,0 +1,34 @@
+[
+ {
+  "companyName": "Valve Corporation",
+  "imgIcon": "valve-icon.png"
+ },
+ {
+  "companyName": "Riot Games",
+  "imgIcon": "riotgames-icon.png"
+ },
+ {
+  "companyName": "Hi-Rez Studios",
+  "imgIcon": "hirez-icon.png"
+ },
+ {
+  "companyName": "Blizzard Entertainment",
+  "imgIcon": "blizzard-icon.png"
+ },
+ {
+  "companyName": "Tencent Games",
+  "imgIcon": "tencent-icon.png"
+ },
+ {
+  "companyName": "Shanghai Moonton",
+  "imgIcon": "moonton-icon.png"
+ },
+ {
+  "companyName": "NetEase Games",
+  "imgIcon": "netease-icon.png"
+ },
+ {
+  "companyName": "S2 Games",
+  "imgIcon": "s2games-icon.png"
+ }
+]

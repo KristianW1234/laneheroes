@@ -5,10 +5,11 @@ import com.personal.laneheroes.entities.Company;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.CompanyService;
 import com.personal.laneheroes.utilities.Utility;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,15 +31,19 @@ public class CompanyController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<ResponseWrapper<Company>> addCompany(@Valid @RequestBody Company company) {
-        ResponseWrapper<Company> response = companyService.addCompany(company);
+    @PostMapping(value="/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseWrapper<Company>> addCompany(
+            @RequestPart("company") Company company,
+            @RequestPart(value="imgFile", required = false) MultipartFile imgFile) {
+        ResponseWrapper<Company> response = companyService.addCompany(company, imgFile);
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/update")
-    public ResponseEntity<ResponseWrapper<Company>> updateCompany(@Valid @RequestBody Company company) {
-        ResponseWrapper<Company> response = companyService.updateCompany(company);
+    @PatchMapping(value="/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseWrapper<Company>> updateCompany(
+            @RequestPart("company") Company company,
+            @RequestPart(value="imgFile", required = false) MultipartFile imgFile) {
+        ResponseWrapper<Company> response = companyService.updateCompany(company,imgFile);
         return ResponseEntity.ok(response);
     }
 

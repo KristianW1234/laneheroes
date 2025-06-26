@@ -1,13 +1,21 @@
 package com.personal.laneheroes.services.impl;
 
+import com.personal.laneheroes.dto.PagedResponse;
+import com.personal.laneheroes.entities.Hero;
 import com.personal.laneheroes.entities.User;
+import com.personal.laneheroes.enums.Role;
 import com.personal.laneheroes.repositories.UserRepository;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.UserService;
+import com.personal.laneheroes.specifications.HeroSpecification;
+import com.personal.laneheroes.specifications.UserSpecification;
 import com.personal.laneheroes.utilities.PasswordUtil;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -148,5 +156,24 @@ public class UserServiceImpl implements UserService {
                 .orElseGet(() -> new ResponseWrapper<>(ResponseMessages.USER_SINGLE
                         + " " + ResponseMessages.NOT_FOUND,
                         ResponseMessages.FAIL_STATUS, null));
+    }
+
+    @Override
+    public ResponseWrapper<PagedResponse<User>> searchUsers(String name, Role role, Pageable pageable) {
+        Specification<User> spec = UserSpecification.withFilters(name, role);
+        Page<User> resultPage = userRepository.findAll(spec, pageable);
+        PagedResponse<User> pagedResponse = new PagedResponse<>(resultPage);
+
+        if (resultPage.hasContent()) {
+            String successMessage = ResponseMessages.SEARCH_RESULTS + ": " + resultPage.getNumberOfElements() + " ";
+            if (resultPage.getNumberOfElements() > 1) {
+                successMessage += ResponseMessages.USER_PLURAL.toLowerCase() + " out of " + resultPage.getTotalElements() + " " + ResponseMessages.USER_PLURAL.toLowerCase();
+            } else {
+                successMessage += ResponseMessages.USER_SINGLE.toLowerCase() + " out of " + resultPage.getTotalElements() + " " + ResponseMessages.USER_SINGLE.toLowerCase();
+            }
+            return new ResponseWrapper<>(successMessage, ResponseMessages.SUCCESS_STATUS, pagedResponse);
+        } else {
+            return new ResponseWrapper<>(ResponseMessages.NO_RESULTS, ResponseMessages.SUCCESS_STATUS, pagedResponse);
+        }
     }
 }

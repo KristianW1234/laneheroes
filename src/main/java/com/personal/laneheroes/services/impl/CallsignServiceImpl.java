@@ -168,10 +168,10 @@ public class CallsignServiceImpl implements CallsignService {
     }
 
     @Override
-    public void uploadInitCallsignsFromJSON() throws IOException {
+    public void uploadInitCallsignsFromJSON(String path) throws IOException {
         if (callsignRepository.count() > 0) return;
 
-        InputStream input = getClass().getClassLoader().getResourceAsStream("data/initCallsigns.json");
+        InputStream input = getClass().getClassLoader().getResourceAsStream(path);
         List<Callsign> callsigns = objectMapper.readValue(input, new TypeReference<>() {});
         callsignRepository.saveAll(callsigns);
 

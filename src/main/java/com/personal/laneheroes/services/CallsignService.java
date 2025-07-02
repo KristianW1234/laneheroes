@@ -20,5 +20,5 @@ public interface CallsignService {
 
     ResponseWrapper<UploadResult> uploadCallsignsFromExcel(String excelFile);
 
-    void uploadInitCallsignsFromJSON() throws IOException;
+    void uploadInitCallsignsFromJSON(String path) throws IOException;
 }

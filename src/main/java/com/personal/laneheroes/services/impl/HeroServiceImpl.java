@@ -51,6 +51,7 @@ public class HeroServiceImpl implements HeroService {
     @Value("${image-dir}")
     private String imageDir;
 
+
     @Override
     public ResponseWrapper<Hero> addHero(Hero hero, MultipartFile imgFile) {
         Hero dbHero = new Hero();
@@ -110,7 +111,7 @@ public class HeroServiceImpl implements HeroService {
         Game dbGame = new Game();
         Optional<Hero> heroPresence = heroRepository.findById(hero.getId());
         if (heroPresence.isEmpty()){
-            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+            return new ResponseWrapper<>(ResponseMessages.HERO_SINGLE + " "
                     + ResponseMessages.UPDATE_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
@@ -278,10 +279,11 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public void uploadInitHeroesFromJSON() throws IOException {
+    public void uploadInitHeroesFromJSON(String path) throws IOException {
         if (heroRepository.count() > 0) return;
 
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data/initHeroes.json");
+        //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+        InputStream inputStream = new FileInputStream(path);
 
         List<HeroJsonDTO> heroDTOs = objectMapper.readValue(inputStream, new TypeReference<>() {});
 

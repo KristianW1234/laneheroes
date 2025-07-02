@@ -25,5 +25,5 @@ public interface GameService {
 
     ResponseWrapper<UploadResult> uploadGamesFromExcel(String excelFile);
 
-    void uploadInitGamesFromJSON() throws IOException;
+    void uploadInitGamesFromJSON(String path) throws IOException;
 }

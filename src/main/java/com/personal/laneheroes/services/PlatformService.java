@@ -20,6 +20,6 @@ public interface PlatformService {
 
     ResponseWrapper<UploadResult> uploadPlatformsFromExcel(String excelFile);
 
-    void uploadInitPlatformsFromJSON() throws IOException;
+    void uploadInitPlatformsFromJSON(String path) throws IOException;
 
 }

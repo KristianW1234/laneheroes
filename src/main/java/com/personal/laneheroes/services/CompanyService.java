@@ -25,5 +25,5 @@ public interface CompanyService {
 
     ResponseWrapper<UploadResult> uploadCompaniesFromExcel(String excelFile);
 
-    void uploadInitCompaniesFromJSON () throws IOException;
+    void uploadInitCompaniesFromJSON (String path) throws IOException;
 }

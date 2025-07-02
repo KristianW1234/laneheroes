@@ -159,10 +159,10 @@ public class PlatformServiceImpl implements PlatformService {
     }
 
     @Override
-    public void uploadInitPlatformsFromJSON() throws IOException {
+    public void uploadInitPlatformsFromJSON(String path) throws IOException {
         if (platformRepository.count() > 0) return;
 
-        InputStream input = getClass().getClassLoader().getResourceAsStream("data/initPlatforms.json");
+        InputStream input = getClass().getClassLoader().getResourceAsStream(path);
         List<Platform> platforms = objectMapper.readValue(input, new TypeReference<>() {});
         platformRepository.saveAll(platforms);
 

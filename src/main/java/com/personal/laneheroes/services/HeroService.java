@@ -28,5 +28,5 @@ public interface HeroService {
 
     ResponseWrapper<Long> getHeroCount();
 
-    void uploadInitHeroesFromJSON() throws IOException;
+    void uploadInitHeroesFromJSON(String path) throws IOException;
 }

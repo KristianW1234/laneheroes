@@ -273,16 +273,9 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public ResponseWrapper<Long> getHeroCount() {
-        Long count = heroRepository.count();
-        return new ResponseWrapper<>(ResponseMessages.COUNT_SUCCESS , ResponseMessages.SUCCESS_STATUS, count);
-    }
-
-    @Override
     public void uploadInitHeroesFromJSON(String path) throws IOException {
         if (heroRepository.count() > 0) return;
 
-        //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
         InputStream inputStream = new FileInputStream(path);
 
         List<HeroJsonDTO> heroDTOs = objectMapper.readValue(inputStream, new TypeReference<>() {});

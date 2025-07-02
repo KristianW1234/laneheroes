@@ -221,7 +221,7 @@ public class CompanyServiceImpl implements CompanyService {
     public void uploadInitCompaniesFromJSON(String path) throws IOException {
         if (companyRepository.count() > 0) return;
 
-        InputStream input = getClass().getClassLoader().getResourceAsStream(path);
+        InputStream input = new FileInputStream(path);
         List<Company> companies = objectMapper.readValue(input, new TypeReference<>() {});
         companyRepository.saveAll(companies);
 

@@ -57,17 +57,6 @@ public class GameServiceImpl implements GameService {
     public ResponseWrapper<Game> addGame(Game game, MultipartFile imgFile) {
         Game dbGame = new Game();
         ResponseWrapper<?>[] responseHolder = new ResponseWrapper<?>[1];
-        if (game.getCallsign() != null){
-            Optional<Callsign> callsign = Utility.getValidEntityById(
-                    callsignRepository,
-                    game.getCallsign().getId(),
-                    ResponseMessages.CALLSIGN_SINGLE,
-                    ResponseMessages.ADD_FAIL,
-                    responseHolder
-            );
-            if (callsign.isEmpty()) return (ResponseWrapper<Game>) responseHolder[0];
-            dbGame.setCallsign(callsign.get());
-        }
 
         if (!assignRelatedEntities(game, dbGame, ResponseMessages.ADD_FAIL, responseHolder)) {
             return (ResponseWrapper<Game>) responseHolder[0];
@@ -228,7 +217,7 @@ public class GameServiceImpl implements GameService {
     public void uploadInitGamesFromJSON(String path) throws IOException {
         if (gameRepository.count() > 0) return;
 
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+        InputStream inputStream = new FileInputStream(path);
 
         List<GameJsonDTO> gameDTOs = objectMapper.readValue(inputStream, new TypeReference<>() {});
 

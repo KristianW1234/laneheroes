@@ -1,10 +1,7 @@
 package com.personal.laneheroes.services;
 
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.personal.laneheroes.config.TestMockConfig;
-import com.personal.laneheroes.dto.HeroJsonDTO;
 import com.personal.laneheroes.dto.PagedResponse;
 import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.Game;
@@ -21,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +27,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -454,7 +449,7 @@ class HeroServiceTest {
 
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
 
-        ResponseWrapper<Hero> trial = heroService.getHeroById(any());
+        ResponseWrapper<Hero> trial = heroService.getHeroById(hero.getId());
 
         verify(heroRepository).findById(any());
         assertNotNull(trial);
@@ -552,7 +547,7 @@ class HeroServiceTest {
      * */
 
     @Test
-    void uploadHeroesFromExcel_test() throws URISyntaxException {
+    void uploadHeroesFromExcel_test_1() throws URISyntaxException {
         Game game = setupGame();
         Hero hero = setupHero(game);
 
@@ -607,8 +602,6 @@ class HeroServiceTest {
         Path path = Paths.get(getClass().getClassLoader().getResource("data/test-heroes.xlsx").toURI());
 
         when(heroRepository.findAll()).thenThrow(new QueryTimeoutException("DB timed out"));
-        when(gameRepository.findByGameNameIgnoreCase(any())).thenReturn(Optional.of(game));
-        when(heroRepository.save(any(Hero.class))).thenReturn(hero);
         ResponseWrapper<UploadResult> response = heroService.uploadHeroesFromExcel(path.toString());
 
         verify(heroRepository).findAll();
@@ -618,23 +611,13 @@ class HeroServiceTest {
 
     /*
      *
-     * GET HERO COUNT TESTS
+     * UPLOAD INIT HEROES FROM JSON TESTS
      *
      * */
 
     @Test
-    void getHeroCount_test(){
-        when(heroRepository.count()).thenReturn(1L);
-        ResponseWrapper<Long> trial = heroService.getHeroCount();
-        verify(heroRepository).count();
-        assertNotNull(trial);
-        assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
-    }
-
-    @Test
     void uploadInitHeroesFromJSON_test_1() throws URISyntaxException, IOException {
         Game game = setupGame();
-        Hero hero = setupHero(game);
 
         List<Hero> heroes = new ArrayList<>();
 
@@ -655,12 +638,6 @@ class HeroServiceTest {
 
     @Test
     void uploadInitHeroesFromJSON_test_2() throws URISyntaxException, IOException {
-        Game game = setupGame();
-        Hero hero = setupHero(game);
-
-        List<Hero> heroes = new ArrayList<>();
-
-        heroes.add(hero);
 
 
         Path path = Paths.get(getClass().getClassLoader().getResource("data/test-initHeroes.json").toURI());

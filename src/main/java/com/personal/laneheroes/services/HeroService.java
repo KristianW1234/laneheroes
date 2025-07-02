@@ -26,7 +26,5 @@ public interface HeroService {
 
     ResponseWrapper<UploadResult> uploadHeroesFromExcel(String excelFile);
 
-    ResponseWrapper<Long> getHeroCount();
-
     void uploadInitHeroesFromJSON(String path) throws IOException;
 }

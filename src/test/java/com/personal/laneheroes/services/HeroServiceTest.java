@@ -650,5 +650,4 @@ class HeroServiceTest {
 
     }
 
-    // Add tests for update, get, delete, findByGame, etc.
 }

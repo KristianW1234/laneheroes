@@ -47,33 +47,26 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public ResponseWrapper<Company> addCompany(Company company, MultipartFile imgFile) {
         Company dbCom = new Company();
-        try {
-            if (company.getCompanyName() != null){
-                dbCom.setCompanyName(company.getCompanyName());
-            } else {
-                return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                        + ResponseMessages.ADD_FAIL,
-                        ResponseMessages.FAIL_STATUS, null);
-            }
 
-            if (imgFile != null && !imgFile.isEmpty()){
-                ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "company");
-                if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
-                    dbCom.setImgIcon(uploadResult.getData());
-                }
-
-            }
-
-            companyRepository.save(dbCom);
-            return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                    + ResponseMessages.ADD_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbCom);
-        } catch (Exception ex){
+        if (company.getCompanyName() != null){
+            dbCom.setCompanyName(company.getCompanyName());
+        } else {
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
                     + ResponseMessages.ADD_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
 
+        if (imgFile != null && !imgFile.isEmpty()){
+            ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "company");
+            if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
+                dbCom.setImgIcon(uploadResult.getData());
+            }
+        }
+
+        companyRepository.save(dbCom);
+        return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
+                + ResponseMessages.ADD_SUCCESS,
+                ResponseMessages.SUCCESS_STATUS, dbCom);
     }
 
     @Override
@@ -86,32 +79,28 @@ public class CompanyServiceImpl implements CompanyService {
         }
         Company dbCom = companyPresence.get();
 
-        try {
-            if (company.getCompanyName() != null){
-                dbCom.setCompanyName(company.getCompanyName());
-            } else {
-                return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                        + ResponseMessages.UPDATE_FAIL,
-                        ResponseMessages.FAIL_STATUS, null);
-            }
 
-            if (imgFile != null && !imgFile.isEmpty()){
-                ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "company");
-                if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
-                    dbCom.setImgIcon(uploadResult.getData());
-                }
-
-            }
-
-            companyRepository.save(dbCom);
-            return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                    + ResponseMessages.UPDATE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbCom);
-        } catch (Exception ex){
+        if (company.getCompanyName() != null){
+            dbCom.setCompanyName(company.getCompanyName());
+        } else {
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
                     + ResponseMessages.UPDATE_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
+
+        if (imgFile != null && !imgFile.isEmpty()){
+            ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "company");
+            if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
+                dbCom.setImgIcon(uploadResult.getData());
+            }
+
+        }
+
+        companyRepository.save(dbCom);
+        return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
+                + ResponseMessages.UPDATE_SUCCESS,
+                ResponseMessages.SUCCESS_STATUS, dbCom);
+
 
     }
 
@@ -167,7 +156,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         if (resultPage.hasContent()) {
             String successMessage = ResponseMessages.SEARCH_RESULTS + ": " + resultPage.getSize() + " ";
-            if (resultPage.getSize() > 1) {
+            if (resultPage.getNumberOfElements() > 1) {
                 successMessage += ResponseMessages.COMPANY_PLURAL.toLowerCase();
             } else {
                 successMessage += ResponseMessages.COMPANY_SINGLE.toLowerCase();

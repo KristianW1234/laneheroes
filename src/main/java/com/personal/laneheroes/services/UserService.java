@@ -1,6 +1,7 @@
 package com.personal.laneheroes.services;
 
 import com.personal.laneheroes.dto.PagedResponse;
+import com.personal.laneheroes.dto.UserDTO;
 import com.personal.laneheroes.entities.User;
 import com.personal.laneheroes.enums.Role;
 import com.personal.laneheroes.response.ResponseWrapper;
@@ -9,9 +10,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface UserService {
-    ResponseWrapper<User> addUser(User user);
+    ResponseWrapper<User> addUser(UserDTO user);
 
-    ResponseWrapper<User> updateUser(User user);
+    ResponseWrapper<User> updateUser(UserDTO user);
 
     ResponseWrapper<User> deleteUser(Long id);
 

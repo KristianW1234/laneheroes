@@ -21,11 +21,11 @@ public class HeroSpecification {
 
             Predicate p = cb.conjunction(); // Start with WHERE 1=1
 
-            if (heroName != null && !heroName.isEmpty()) {
+            if (heroName != null && !heroName.isBlank()) {
                 p = cb.and(p, cb.like(cb.lower(root.get("heroName")), "%" + heroName.toLowerCase() + "%"));
             }
 
-            if (heroTitle != null && !heroTitle.isEmpty()) {
+            if (heroTitle != null && !heroTitle.isBlank()) {
                 p = cb.and(p, cb.like(cb.lower(root.get("heroTitle")), "%" + heroTitle.toLowerCase() + "%"));
             }
 
@@ -33,7 +33,7 @@ public class HeroSpecification {
                 p = cb.and(p, cb.equal(root.get("heroGender"), heroGender)); // now uses enum
             }
 
-            if (alternateName != null && !alternateName.isEmpty()) {
+            if (alternateName != null && !alternateName.isBlank()) {
                 p = cb.and(p, cb.like(cb.lower(root.get("alternateName")), "%" + alternateName.toLowerCase() + "%"));
             }
 

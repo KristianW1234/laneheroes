@@ -36,12 +36,13 @@ This project is meant as a **proof of backend engineering skill**, focusing on:
 - Global CORS configuration
 - Clean separation of Entity, DTO, Service, Controller
 - Pagination & filtering
+- Unit tests using **Mockito** (From July 4th)
 
 ---
 
 ##  Planned Improvements
 
-- Unit tests using **Mockito**
+
 - Secure login (JWT + password encoding)
 - Swagger/OpenAPI documentation
 - Role-based endpoint access (full authorization control)
@@ -133,6 +134,10 @@ laneheroes/backend/
     "role": "ADMIN",
     "active": true
     }
+   
+## **Notes**
+
+   My earlier commit messages can look messy. For the commits until July 3th, please refer to NOTES.MD
 
 ## **Frontend Integration**
     

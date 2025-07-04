@@ -16,7 +16,7 @@ public class CompanySpecification {
 
             Predicate p = cb.conjunction(); // Start with WHERE 1=1
 
-            if (companyName != null && !companyName.isEmpty()) {
+            if (companyName != null && !companyName.isBlank()) {
                 p = cb.and(p, cb.like(cb.lower(root.get("companyName")), "%" + companyName.toLowerCase() + "%"));
             }
 

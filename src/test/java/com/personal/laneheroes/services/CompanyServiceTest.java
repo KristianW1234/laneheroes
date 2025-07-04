@@ -100,6 +100,15 @@ public class CompanyServiceTest {
 
     @Test
     void addCompany_test_3(){
+        Company company = setupCompany();
+        company.setCompanyName("");
+        ResponseWrapper<Company> trial = companyService.addCompany(company, null);
+        assertNotNull(trial);
+        assertEquals(ResponseMessages.FAIL_STATUS, trial.getStatus());
+    }
+
+    @Test
+    void addCompany_test_4(){
 
         Company company = setupCompany();
         when(companyRepository.save(any(Company.class))).thenReturn(company);
@@ -110,7 +119,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void addCompany_test_4(){
+    void addCompany_test_5(){
         MockMultipartFile mockFile = setupFile("", new byte[0]);
         Company company = setupCompany();
         when(companyRepository.save(any(Company.class))).thenReturn(company);
@@ -121,7 +130,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void addCompany_test_5(){
+    void addCompany_test_6(){
         MockMultipartFile mockFile = setupFile("company-icon.doc", "fake image content".getBytes());
         Company company = setupCompany();
         when(companyRepository.save(any(Company.class))).thenReturn(company);
@@ -164,9 +173,7 @@ public class CompanyServiceTest {
     void updateCompany_test_3(){
         Company company = setupCompany();
         company.setCompanyName(null);
-        when(companyRepository.findById(any())).thenReturn(Optional.of(company));
         ResponseWrapper<Company> trial = companyService.updateCompany(company, null);
-        verify(companyRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.FAIL_STATUS, trial.getStatus());
     }
@@ -207,6 +214,17 @@ public class CompanyServiceTest {
         verify(companyRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
+    }
+
+
+
+    @Test
+    void updateCompany_test_7(){
+        Company company = setupCompany();
+        company.setCompanyName("");
+        ResponseWrapper<Company> trial = companyService.updateCompany(company, null);
+        assertNotNull(trial);
+        assertEquals(ResponseMessages.FAIL_STATUS, trial.getStatus());
     }
 
     /*

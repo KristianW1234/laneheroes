@@ -17,11 +17,11 @@ public class GameSpecification {
 
             Predicate p = cb.conjunction(); // Start with WHERE 1=1
 
-            if (gameName != null && !gameName.isEmpty()) {
+            if (gameName != null && !gameName.isBlank()) {
                 p = cb.and(p, cb.like(cb.lower(root.get("gameName")), "%" + gameName.toLowerCase() + "%"));
             }
 
-            if (gameCode != null && !gameCode.isEmpty()) {
+            if (gameCode != null && !gameCode.isBlank()) {
                 p = cb.and(p, cb.like(cb.lower(root.get("gameCode")), "%" + gameCode.toLowerCase() + "%"));
             }
 

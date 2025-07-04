@@ -36,25 +36,28 @@ public class CallsignServiceImpl implements CallsignService {
 
     @Override
     public ResponseWrapper<Callsign> addCallsign(Callsign callsign) {
-        Callsign dbCalSn = new Callsign();
-        try {
-            dbCalSn.setCallsign(callsign.getCallsign());
-            dbCalSn.setCallsignPlural(callsign.getCallsignPlural());
-            callsignRepository.save(dbCalSn);
-            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
-                    + ResponseMessages.ADD_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbCalSn);
-        } catch (Exception ex){
+        if (callsign.getCallsign() == null || callsign.getCallsign().isBlank()
+        || callsign.getCallsignPlural() == null || callsign.getCallsignPlural().isBlank()){
             return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
                     + ResponseMessages.ADD_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
-
+        Callsign dbCalSn = new Callsign();
+        dbCalSn.setCallsign(callsign.getCallsign());
+        dbCalSn.setCallsignPlural(callsign.getCallsignPlural());
+        callsignRepository.save(dbCalSn);
+        return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+                + ResponseMessages.ADD_SUCCESS,
+                ResponseMessages.SUCCESS_STATUS, dbCalSn);
     }
 
     @Override
     public ResponseWrapper<Callsign> updateCallsign(Callsign callsign) {
-
+        if (callsign.getCallsign() == null && callsign.getCallsignPlural() == null){
+            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+                    + ResponseMessages.UPDATE_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
         Optional<Callsign> callsignPresence = callsignRepository.findById(callsign.getId());
         if (callsignPresence.isEmpty()){
             return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
@@ -64,22 +67,16 @@ public class CallsignServiceImpl implements CallsignService {
         Callsign dbCalSn = callsignPresence.get();
 
 
-        try {
-            if (callsign.getCallsign() != null){
-                dbCalSn.setCallsign(callsign.getCallsign());
-            }
-            if (callsign.getCallsignPlural() != null){
-                dbCalSn.setCallsignPlural(callsign.getCallsignPlural());
-            }
-            callsignRepository.save(dbCalSn);
-            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
-                    + ResponseMessages.UPDATE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbCalSn);
-        } catch (Exception ex){
-            return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
-                    + ResponseMessages.UPDATE_FAIL,
-                    ResponseMessages.FAIL_STATUS, null);
+        if (callsign.getCallsign() != null){
+            dbCalSn.setCallsign(callsign.getCallsign());
         }
+        if (callsign.getCallsignPlural() != null){
+            dbCalSn.setCallsignPlural(callsign.getCallsignPlural());
+        }
+        callsignRepository.save(dbCalSn);
+        return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
+                + ResponseMessages.UPDATE_SUCCESS,
+                ResponseMessages.SUCCESS_STATUS, dbCalSn);
 
     }
 

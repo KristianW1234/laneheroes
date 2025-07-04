@@ -46,16 +46,15 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public ResponseWrapper<Company> addCompany(Company company, MultipartFile imgFile) {
-        Company dbCom = new Company();
 
-        if (company.getCompanyName() != null){
-            dbCom.setCompanyName(company.getCompanyName());
-        } else {
-            return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
+        if (company.getCompanyName() == null || company.getCompanyName().isBlank()){
+                return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
                     + ResponseMessages.ADD_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
 
+        Company dbCom = new Company();
+        dbCom.setCompanyName(company.getCompanyName());
         if (imgFile != null && !imgFile.isEmpty()){
             ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "company");
             if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
@@ -71,6 +70,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public ResponseWrapper<Company> updateCompany(Company company, MultipartFile imgFile) {
+        if (company.getCompanyName() == null || company.getCompanyName().isBlank()){
+            return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
+                    + ResponseMessages.UPDATE_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+
         Optional<Company> companyPresence = companyRepository.findById(company.getId());
         if (companyPresence.isEmpty()){
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
@@ -78,15 +83,7 @@ public class CompanyServiceImpl implements CompanyService {
                 ResponseMessages.FAIL_STATUS, null);
         }
         Company dbCom = companyPresence.get();
-
-
-        if (company.getCompanyName() != null){
-            dbCom.setCompanyName(company.getCompanyName());
-        } else {
-            return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
-                    + ResponseMessages.UPDATE_FAIL,
-                    ResponseMessages.FAIL_STATUS, null);
-        }
+        dbCom.setCompanyName(company.getCompanyName());
 
         if (imgFile != null && !imgFile.isEmpty()){
             ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, "company");

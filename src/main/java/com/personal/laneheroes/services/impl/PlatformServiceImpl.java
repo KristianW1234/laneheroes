@@ -36,24 +36,29 @@ public class PlatformServiceImpl implements PlatformService {
 
     @Override
     public ResponseWrapper<Platform> addPlatform(Platform platform) {
-        Platform dbPlat = new Platform();
-
-        try {
-            dbPlat.setPlatformName(platform.getPlatformName());
-            platformRepository.save(dbPlat);
-            return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
-                    + ResponseMessages.ADD_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbPlat);
-        } catch (Exception ex){
+        if (platform.getPlatformName() == null || platform.getPlatformName().isBlank()) {
             return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
                     + ResponseMessages.ADD_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
 
+        Platform dbPlat = new Platform();
+        dbPlat.setPlatformName(platform.getPlatformName());
+            platformRepository.save(dbPlat);
+            return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
+                    + ResponseMessages.ADD_SUCCESS,
+                    ResponseMessages.SUCCESS_STATUS, dbPlat);
+
     }
 
     @Override
     public ResponseWrapper<Platform> updatePlatform(Platform platform) {
+        if (platform.getPlatformName() == null || platform.getPlatformName().isBlank()) {
+            return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
+                    + ResponseMessages.UPDATE_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+
         Optional<Platform> platformPresence = platformRepository.findById(platform.getId());
         if (platformPresence.isEmpty()){
             return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
@@ -61,17 +66,11 @@ public class PlatformServiceImpl implements PlatformService {
                     ResponseMessages.FAIL_STATUS, null);
         }
         Platform dbPlat = platformPresence.get();
-        try {
-            dbPlat.setPlatformName(platform.getPlatformName());
-            platformRepository.save(dbPlat);
-            return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
-                    + ResponseMessages.UPDATE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbPlat);
-        } catch (Exception ex){
-            return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
-                    + ResponseMessages.UPDATE_FAIL,
-                    ResponseMessages.FAIL_STATUS, null);
-        }
+        dbPlat.setPlatformName(platform.getPlatformName());
+        platformRepository.save(dbPlat);
+        return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
+                + ResponseMessages.UPDATE_SUCCESS,
+                ResponseMessages.SUCCESS_STATUS, dbPlat);
 
     }
 
@@ -139,11 +138,7 @@ public class PlatformServiceImpl implements PlatformService {
                 Iterator<Cell> cellIterator = nextRow.cellIterator();
                 while (cellIterator.hasNext()) {
                     Cell nextCell = cellIterator.next();
-                    int columnIndex = nextCell.getColumnIndex();
-                    if (columnIndex == 0){
-                        plat.setPlatformName(nextCell.getStringCellValue());
-
-                    }
+                    plat.setPlatformName(nextCell.getStringCellValue());
                 }
                 if (!platformCopyCheck(platforms, plat.getPlatformName())) {
                     totalAdded++;

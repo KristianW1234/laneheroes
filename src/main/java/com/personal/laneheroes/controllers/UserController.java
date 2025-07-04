@@ -1,9 +1,8 @@
 package com.personal.laneheroes.controllers;
 
 import com.personal.laneheroes.dto.PagedResponse;
-import com.personal.laneheroes.entities.Hero;
+import com.personal.laneheroes.dto.UserDTO;
 import com.personal.laneheroes.entities.User;
-import com.personal.laneheroes.enums.Gender;
 import com.personal.laneheroes.enums.Role;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.UserService;
@@ -34,13 +33,13 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ResponseWrapper<User>> addUser(@Valid @RequestBody User user) {
+    public ResponseEntity<ResponseWrapper<User>> addUser(@Valid @RequestBody UserDTO user) {
         ResponseWrapper<User> response = userService.addUser(user);
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<ResponseWrapper<User>> updateUser(@RequestBody User user) {
+    public ResponseEntity<ResponseWrapper<User>> updateUser(@RequestBody UserDTO user) {
         ResponseWrapper<User> response = userService.updateUser(user);
         return ResponseEntity.ok(response);
     }

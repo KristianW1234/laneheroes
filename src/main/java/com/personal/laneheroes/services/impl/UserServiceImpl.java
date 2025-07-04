@@ -1,13 +1,12 @@
 package com.personal.laneheroes.services.impl;
 
 import com.personal.laneheroes.dto.PagedResponse;
-import com.personal.laneheroes.entities.Hero;
+import com.personal.laneheroes.dto.UserDTO;
 import com.personal.laneheroes.entities.User;
 import com.personal.laneheroes.enums.Role;
 import com.personal.laneheroes.repositories.UserRepository;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.UserService;
-import com.personal.laneheroes.specifications.HeroSpecification;
 import com.personal.laneheroes.specifications.UserSpecification;
 import com.personal.laneheroes.utilities.PasswordUtil;
 import com.personal.laneheroes.utilities.ResponseMessages;
@@ -32,30 +31,48 @@ public class UserServiceImpl implements UserService {
 
     
     @Override
-    public ResponseWrapper<User> addUser(User user) {
-        User dbUser = new User();
-
-        try {
-            dbUser.setUserName(user.getUserName());
-            dbUser.setUserPassword(PasswordUtil.encode(user.getUserPassword()));
-            dbUser.setUserRole(user.getUserRole());
-            dbUser.setUserEmail(user.getUserEmail());
-            dbUser.setIsActive(user.getIsActive());
-            dbUser.setCreatedAt(LocalDateTime.now());
-            userRepository.save(dbUser);
-            return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                    + ResponseMessages.ADD_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbUser);
-        } catch (Exception ex){
+    public ResponseWrapper<User> addUser(UserDTO user) {
+        if (user.getUserName() == null || user.getUserName().isBlank() ||
+                user.getUserPassword() == null || user.getUserPassword().isBlank() ||
+                user.getUserRole() == null ||
+                user.getUserEmail() == null || user.getUserEmail().isBlank()){
             return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
                     + ResponseMessages.ADD_FAIL,
                     ResponseMessages.FAIL_STATUS, null);
         }
-        
+
+        User dbUser = new User();
+
+        dbUser.setUserName(user.getUserName());
+        dbUser.setUserPassword(PasswordUtil.encode(user.getUserPassword()));
+        try {
+            dbUser.setUserRole(Role.valueOf(user.getUserRole().toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            return new ResponseWrapper<>(
+                    "Invalid role: " + user.getUserRole(),
+                    ResponseMessages.FAIL_STATUS,
+                    null
+                );
+            }
+
+        dbUser.setUserEmail(user.getUserEmail());
+        dbUser.setIsActive(Boolean.TRUE.equals(user.getIsActive()));
+        dbUser.setCreatedAt(LocalDateTime.now());
+        userRepository.save(dbUser);
+        return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
+                + ResponseMessages.ADD_SUCCESS,
+                ResponseMessages.SUCCESS_STATUS, dbUser);
+
     }
 
     @Override
-    public ResponseWrapper<User> updateUser(User user) {
+    public ResponseWrapper<User> updateUser(UserDTO user) {
+
+        if (hasNoUpdatableFields(user)) {
+            return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
+                    + ResponseMessages.ADD_FAIL,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
 
         Optional<User> userPresence = userRepository.findById(user.getId());
         if (userPresence.isEmpty()){
@@ -65,30 +82,14 @@ public class UserServiceImpl implements UserService {
         }
         User dbUser = userPresence.get();
 
-        try {
+
             if (user.getUserName() != null){
                 dbUser.setUserName(user.getUserName());
-            } else {
-                return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                        + ResponseMessages.UPDATE_FAIL,
-                        ResponseMessages.FAIL_STATUS, null);
             }
 
             if (user.getUserPassword() != null){
 
                 dbUser.setUserPassword(PasswordUtil.encode(user.getUserPassword()));
-            } else {
-                return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                        + ResponseMessages.UPDATE_FAIL,
-                        ResponseMessages.FAIL_STATUS, null);
-            }
-
-            if (user.getUserRole() != null){
-                dbUser.setUserRole(user.getUserRole());
-            } else {
-                return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                        + ResponseMessages.UPDATE_FAIL,
-                        ResponseMessages.FAIL_STATUS, null);
             }
 
             if (user.getUserEmail() != null){
@@ -100,17 +101,27 @@ public class UserServiceImpl implements UserService {
                 dbUser.setIsActive(user.getIsActive());
             }
 
+            if (user.getUserRole() != null) {
+                try {
+                    dbUser.setUserRole(parseRole(user.getUserRole()));
+                } catch (IllegalArgumentException e) {
+                    return new ResponseWrapper<>(
+                            "Invalid role: " + user.getUserRole(),
+                            ResponseMessages.FAIL_STATUS,
+                            null
+                    );
+                }
+            }
+
+
+
             dbUser.setUpdatedAt(LocalDateTime.now());
 
             userRepository.save(dbUser);
             return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
                     + ResponseMessages.UPDATE_SUCCESS,
                     ResponseMessages.SUCCESS_STATUS, dbUser);
-        } catch (Exception ex){
-            return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
-                    + ResponseMessages.UPDATE_FAIL,
-                    ResponseMessages.FAIL_STATUS, null);
-        }
+
 
     }
 
@@ -174,6 +185,22 @@ public class UserServiceImpl implements UserService {
             return new ResponseWrapper<>(successMessage, ResponseMessages.SUCCESS_STATUS, pagedResponse);
         } else {
             return new ResponseWrapper<>(ResponseMessages.NO_RESULTS, ResponseMessages.SUCCESS_STATUS, pagedResponse);
+        }
+    }
+
+    private boolean hasNoUpdatableFields(UserDTO user) {
+        return (user.getUserName() == null || user.getUserName().isBlank()) &&
+                (user.getUserPassword() == null || user.getUserPassword().isBlank()) &&
+                (user.getUserRole() == null || user.getUserRole().isBlank()) &&
+                (user.getUserEmail() == null || user.getUserEmail().isBlank()) &&
+                user.getIsActive() == null;
+    }
+
+    private Role parseRole(String roleString) {
+        try {
+            return Role.valueOf(roleString.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid role: " + roleString);
         }
     }
 }

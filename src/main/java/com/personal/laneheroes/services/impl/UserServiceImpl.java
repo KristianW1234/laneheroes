@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
                 dbUser.setUserName(user.getUserName());
             }
 
-            if (user.getUserPassword() != null){
+            if (user.getUserPassword() != null && !user.getUserPassword().isBlank()){
 
                 dbUser.setUserPassword(PasswordUtil.encode(user.getUserPassword()));
             }

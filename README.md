@@ -143,7 +143,7 @@ laneheroes/backend/
 
 ## **Frontend Integration**
     
-    Coming soon, with a new repository and utilizing TailwindCSS and NextJs
+    Check this repository out: https://github.com/KristianW1234/laneheroes-frontend
 
 
 ## **Contact**

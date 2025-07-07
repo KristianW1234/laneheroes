@@ -139,7 +139,7 @@ laneheroes/backend/
    
 ## **Notes**
 
-   My earlier commit messages can look messy. For the commits until July 3th, please refer to NOTES.MD
+   My earlier commit messages can look messy. For the commits until July 3rd, please refer to NOTES.MD
 
 ## **Frontend Integration**
     

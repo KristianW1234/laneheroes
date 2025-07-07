@@ -93,8 +93,10 @@ laneheroes/backend/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/laneheroes-backend.git
-   cd laneheroes-backend
+   git clone https://github.com/KristianW1234/laneheroes.git
+   cd laneheroes
+
+(It's preferrable if it's put within a 'backend' folder)
 
 2. **Configure Database/Environment**
    Create an .env file within the folder:

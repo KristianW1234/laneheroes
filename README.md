@@ -36,14 +36,13 @@ This project is meant as a **proof of backend engineering skill**, focusing on:
 - Global CORS configuration
 - Clean separation of Entity, DTO, Service, Controller
 - Pagination & filtering
-- Unit tests using **Mockito** (From July 4th)
+- Unit tests using **Mockito** (ADDED at July 4th)
+- Secure login (JWT + password encoding) (ADDED at July 9th) 
 
 ---
 
 ##  Planned Improvements
 
-
-- Secure login (JWT + password encoding)
 - Swagger/OpenAPI documentation
 - Role-based endpoint access (full authorization control)
 - Other entities that will be necessary later (Hero Skills)

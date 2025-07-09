@@ -62,13 +62,25 @@ laneheroes/backend/
 
 │ ├── dto/ # 
 
-│ ├── entity/ # (JPA Entities)
+│ ├── entities/ # (JPA Entities)
+
+│ ├── enums/
+
+│ ├── exception/
 
 │ ├── initializer/ # (Initializers: Automate database-filling when starting up)
 
-│ ├── repository/ # 
+│ ├── repository/ #
 
-│ ├── service/ # (Business Logic)
+│ ├── response/
+
+│ ├── security/
+
+│ ├── services/ # (Business Logic)
+
+│ ├── specifications/ 
+
+│ ├── utilities/
 
 │ └── LaneHeroesApp.java (Main file)
 

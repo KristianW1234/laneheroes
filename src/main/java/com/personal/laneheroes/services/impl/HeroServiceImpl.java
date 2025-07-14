@@ -276,7 +276,9 @@ public class HeroServiceImpl implements HeroService {
     public void uploadInitHeroesFromJSON(String path) throws IOException {
         if (heroRepository.count() > 0) return;
 
-        InputStream inputStream = new FileInputStream(path);
+        //InputStream inputStream = new FileInputStream(path);
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+
 
         List<HeroJsonDTO> heroDTOs = objectMapper.readValue(inputStream, new TypeReference<>() {});
 

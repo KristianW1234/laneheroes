@@ -341,10 +341,10 @@ public class CallsignServiceTest {
      * */
 
     @Test
-    void uploadInitCallsignsFromJSON_test_1() throws URISyntaxException, IOException {
+    void uploadInitCallsignsFromJSON_test_1() throws IOException {
         List<Callsign> callsigns = new ArrayList<>();
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-InitCallsigns.json").toURI());
+        String path = "data/test-InitCallsigns.json";
 
         when(callsignRepository.count()).thenReturn(0L);
         when(callsignRepository.saveAll(any())).thenReturn(callsigns);
@@ -356,9 +356,9 @@ public class CallsignServiceTest {
     }
 
     @Test
-    void uploadInitCallsignsFromJSON_test_2() throws URISyntaxException, IOException {
+    void uploadInitCallsignsFromJSON_test_2() throws IOException {
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-InitCallsigns.json").toURI());
+        String path = "data/test-InitCallsigns.json";
 
         when(callsignRepository.count()).thenReturn(1L);
 

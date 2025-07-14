@@ -217,7 +217,9 @@ public class GameServiceImpl implements GameService {
     public void uploadInitGamesFromJSON(String path) throws IOException {
         if (gameRepository.count() > 0) return;
 
-        InputStream inputStream = new FileInputStream(path);
+        //InputStream inputStream = new FileInputStream(path);
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+
 
         List<GameJsonDTO> gameDTOs = objectMapper.readValue(inputStream, new TypeReference<>() {});
 

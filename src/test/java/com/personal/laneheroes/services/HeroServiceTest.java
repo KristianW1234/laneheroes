@@ -616,13 +616,13 @@ class HeroServiceTest {
      * */
 
     @Test
-    void uploadInitHeroesFromJSON_test_1() throws URISyntaxException, IOException {
+    void uploadInitHeroesFromJSON_test_1() throws  IOException {
         Game game = setupGame();
 
         List<Hero> heroes = new ArrayList<>();
 
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-initHeroes.json").toURI());
+        String path = "data/test-initHeroes.json";
 
         when(heroRepository.count()).thenReturn(0L);
         when(gameRepository.findByGameNameIgnoreCase(any())).thenReturn(Optional.of(game));
@@ -637,10 +637,10 @@ class HeroServiceTest {
     }
 
     @Test
-    void uploadInitHeroesFromJSON_test_2() throws URISyntaxException, IOException {
+    void uploadInitHeroesFromJSON_test_2() throws  IOException {
 
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-initHeroes.json").toURI());
+        String path = "data/test-initHeroes.json";
 
         when(heroRepository.count()).thenReturn(1L);
 

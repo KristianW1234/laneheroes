@@ -306,10 +306,10 @@ public class PlatformServiceTest {
      * */
 
     @Test
-    void uploadInitPlatformsFromJSON_test_1() throws URISyntaxException, IOException {
+    void uploadInitPlatformsFromJSON_test_1() throws IOException {
         List<Platform> platforms = new ArrayList<>();
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-InitPlatforms.json").toURI());
+        String path = "data/test-InitPlatforms.json";
 
         when(platformRepository.count()).thenReturn(0L);
         when(platformRepository.saveAll(any())).thenReturn(platforms);
@@ -321,9 +321,9 @@ public class PlatformServiceTest {
     }
 
     @Test
-    void uploadInitPlatformsFromJSON_test_2() throws URISyntaxException, IOException {
+    void uploadInitPlatformsFromJSON_test_2() throws IOException {
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-InitPlatforms.json").toURI());
+        String path = "data/test-InitPlatforms.json";
 
         when(platformRepository.count()).thenReturn(1L);
 

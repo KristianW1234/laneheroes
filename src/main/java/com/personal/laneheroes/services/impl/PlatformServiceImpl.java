@@ -157,7 +157,9 @@ public class PlatformServiceImpl implements PlatformService {
     public void uploadInitPlatformsFromJSON(String path) throws IOException {
         if (platformRepository.count() > 0) return;
 
-        InputStream input = new FileInputStream(path);
+        //InputStream input = new FileInputStream(path);
+        InputStream input = getClass().getClassLoader().getResourceAsStream(path);
+
         List<Platform> platforms = objectMapper.readValue(input, new TypeReference<>() {});
         platformRepository.saveAll(platforms);
 

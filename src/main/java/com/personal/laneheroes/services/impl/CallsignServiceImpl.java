@@ -168,7 +168,9 @@ public class CallsignServiceImpl implements CallsignService {
     public void uploadInitCallsignsFromJSON(String path) throws IOException {
         if (callsignRepository.count() > 0) return;
 
-        InputStream input = new FileInputStream(path);
+        InputStream input = getClass().getClassLoader().getResourceAsStream(path);
+
+        //InputStream input = new FileInputStream(path);
         List<Callsign> callsigns = objectMapper.readValue(input, new TypeReference<>() {});
         callsignRepository.saveAll(callsigns);
 

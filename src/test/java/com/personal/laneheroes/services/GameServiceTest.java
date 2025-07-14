@@ -664,14 +664,14 @@ public class GameServiceTest {
      * */
 
     @Test
-    void uploadInitGamesFromJSON_test_1() throws URISyntaxException, IOException {
+    void uploadInitGamesFromJSON_test_1() throws IOException {
         Company company = setupCompany();
         Callsign callsign = setupCallsign();
         Platform platform = setupPlatform();
 
         List<Game> games = new ArrayList();
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-initGames.json").toURI());
+        String path = "data/test-initGames.json";
 
         when(gameRepository.count()).thenReturn(0L);
         when(companyRepository.findByCompanyNameIgnoreCase(any())).thenReturn(Optional.of(company));
@@ -689,9 +689,9 @@ public class GameServiceTest {
     }
 
     @Test
-    void uploadInitGamesFromJSON_test_2() throws URISyntaxException, IOException {
+    void uploadInitGamesFromJSON_test_2() throws IOException {
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-initGames.json").toURI());
+        String path = "data/test-initGames.json";
 
         when(gameRepository.count()).thenReturn(1L);
 

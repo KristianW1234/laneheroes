@@ -484,17 +484,17 @@ public class CompanyServiceTest {
      * */
 
     @Test
-    void uploadInitCompaniesFromJSON_test_1() throws URISyntaxException, IOException {
+    void uploadInitCompaniesFromJSON_test_1() throws  IOException {
 
         List<Company> companies = new ArrayList<>();
 
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-initCompanies.json").toURI());
+        String path = "data/test-initCompanies.json";
 
         when(companyRepository.count()).thenReturn(0L);
         when(companyRepository.saveAll(any())).thenReturn(companies);
 
-        companyService.uploadInitCompaniesFromJSON(path.toString());
+        companyService.uploadInitCompaniesFromJSON(path);
 
         verify(companyRepository).count();
         verify(companyRepository).saveAll(any());
@@ -502,10 +502,10 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void uploadInitCompaniesFromJSON_test_2() throws URISyntaxException, IOException {
+    void uploadInitCompaniesFromJSON_test_2() throws  IOException {
 
 
-        Path path = Paths.get(getClass().getClassLoader().getResource("data/test-initCompanies.json").toURI());
+        String path = "data/test-initCompanies.json";
 
         when(companyRepository.count()).thenReturn(1L);
 

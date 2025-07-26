@@ -26,7 +26,8 @@ public class AdminController {
             @RequestParam("callsignFile") MultipartFile callsignFile,
             @RequestParam("platformFile") MultipartFile platformFile,
             @RequestParam("gameFile") MultipartFile gameFile,
-            @RequestParam("heroFile") MultipartFile heroFile) {
+            @RequestParam("heroFile") MultipartFile heroFile,
+            @RequestParam("skillFile") MultipartFile skillFile) {
 
         try {
             File company = Utility.saveTempFile(companyFile);
@@ -34,13 +35,15 @@ public class AdminController {
             File platform = Utility.saveTempFile(platformFile);
             File game = Utility.saveTempFile(gameFile);
             File hero = Utility.saveTempFile(heroFile);
+            File skill = Utility.saveTempFile(skillFile);
 
             String resultMessage = adminService.uploadAllData(
                     company.getAbsolutePath(),
                     callsign.getAbsolutePath(),
                     platform.getAbsolutePath(),
                     game.getAbsolutePath(),
-                    hero.getAbsolutePath()
+                    hero.getAbsolutePath(),
+                    skill.getAbsolutePath()
             );
 
             return ResponseEntity.ok(new ResponseWrapper<>("Upload Complete", ResponseMessages.SUCCESS_STATUS, resultMessage));

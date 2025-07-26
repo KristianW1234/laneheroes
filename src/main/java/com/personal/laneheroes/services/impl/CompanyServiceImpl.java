@@ -109,7 +109,7 @@ public class CompanyServiceImpl implements CompanyService {
             companyRepository.delete(dbCom);
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
                     + ResponseMessages.DELETE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbCom);
+                    ResponseMessages.SUCCESS_STATUS, null);
         } else {
             return new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE + " "
                     + ResponseMessages.DELETE_FAIL,
@@ -208,7 +208,6 @@ public class CompanyServiceImpl implements CompanyService {
         if (companyRepository.count() > 0) return;
 
         InputStream input = getClass().getClassLoader().getResourceAsStream(path);
-        //InputStream input = new FileInputStream(path);
         List<Company> companies = objectMapper.readValue(input, new TypeReference<>() {});
         companyRepository.saveAll(companies);
 

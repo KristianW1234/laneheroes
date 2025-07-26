@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Profile("!test")
 public class BatchInitializer implements CommandLineRunner {
 
-
+    private final SkillService skillService;
     private final HeroService heroService;
     private final GameService gameService;
     private final CompanyService companyService;
@@ -31,6 +31,7 @@ public class BatchInitializer implements CommandLineRunner {
             callsignService.uploadInitCallsignsFromJSON("data/initCallsigns.json");
             gameService.uploadInitGamesFromJSON("data/initGames.json");
             heroService.uploadInitHeroesFromJSON("data/initHeroes.json");
+            skillService.uploadInitSkillsFromJSON("data/initSkills.json");
 
             
         }

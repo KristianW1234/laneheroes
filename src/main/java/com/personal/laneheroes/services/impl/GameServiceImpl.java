@@ -129,7 +129,7 @@ public class GameServiceImpl implements GameService {
             gameRepository.delete(dbGame);
             return new ResponseWrapper<>(ResponseMessages.GAME_SINGLE + " "
                     + ResponseMessages.DELETE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbGame);
+                    ResponseMessages.SUCCESS_STATUS, null);
         } else {
             return new ResponseWrapper<>(ResponseMessages.GAME_SINGLE + " "
                     + ResponseMessages.DELETE_FAIL,
@@ -217,7 +217,6 @@ public class GameServiceImpl implements GameService {
     public void uploadInitGamesFromJSON(String path) throws IOException {
         if (gameRepository.count() > 0) return;
 
-        //InputStream inputStream = new FileInputStream(path);
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
 
 

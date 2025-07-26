@@ -24,6 +24,8 @@ public class AdminServiceImpl implements AdminService {
 
     private final HeroService heroService;
 
+    private final SkillService skillService;
+
     private final CompanyRepository companyRepository;
 
     private final CallsignRepository callsignRepository;
@@ -36,8 +38,10 @@ public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
 
+    private final SkillRepository skillRepository;
+
     @Override
-    public String uploadAllData(String companyPath, String callsignPath, String platformPath, String gamePath, String heroPath) {
+    public String uploadAllData(String companyPath, String callsignPath, String platformPath, String gamePath, String heroPath, String skillPath) {
         ResponseWrapper<UploadResult> companyResult = companyService.uploadCompaniesFromExcel(companyPath);
         int companyTotal = 0;
         if (companyResult.getData().getErrorMessage() == null && companyResult.getData().getSavedCount() > 0){
@@ -67,9 +71,15 @@ public class AdminServiceImpl implements AdminService {
         if (heroResult.getData().getErrorMessage() == null && heroResult.getData().getSavedCount() > 0){
             heroTotal = heroResult.getData().getSavedCount();
         }
+
+        ResponseWrapper<UploadResult> skillResult = skillService.uploadSkillsFromExcel(skillPath);
+        int skillTotal = 0;
+        if (skillResult.getData().getErrorMessage() == null && skillResult.getData().getSavedCount() > 0){
+            skillTotal = skillResult.getData().getSavedCount();
+        }
         return String.format(
-                "%d companies, %d callsigns, %d platforms, %d games, %d heroes saved.",
-                companyTotal, callsignTotal, platformTotal, gameTotal, heroTotal
+                "%d companies, %d callsigns, %d platforms, %d games, %d heroes, %d skills saved.",
+                companyTotal, callsignTotal, platformTotal, gameTotal, heroTotal, skillTotal
         );
     }
 
@@ -82,6 +92,7 @@ public class AdminServiceImpl implements AdminService {
         dto.setGames(gameRepository.count());
         dto.setHeroes(heroRepository.count());
         dto.setUsers(userRepository.count());
+        dto.setSkills(skillRepository.count());
         return dto;
     }
 }

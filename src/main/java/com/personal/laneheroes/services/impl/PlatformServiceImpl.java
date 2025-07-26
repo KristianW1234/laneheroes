@@ -78,11 +78,11 @@ public class PlatformServiceImpl implements PlatformService {
     public ResponseWrapper<Platform> deletePlatform(Long id) {
         Optional<Platform> platformPresence = platformRepository.findById(id);
         if (platformPresence.isPresent()){
-            Platform dbCom = platformPresence.get();
-            platformRepository.delete(dbCom);
+            Platform dbPlat = platformPresence.get();
+            platformRepository.delete(dbPlat);
             return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
                     + ResponseMessages.DELETE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbCom);
+                    ResponseMessages.SUCCESS_STATUS, null);
         } else {
             return new ResponseWrapper<>(ResponseMessages.PLATFORM_SINGLE + " "
                     + ResponseMessages.DELETE_FAIL,
@@ -157,7 +157,6 @@ public class PlatformServiceImpl implements PlatformService {
     public void uploadInitPlatformsFromJSON(String path) throws IOException {
         if (platformRepository.count() > 0) return;
 
-        //InputStream input = new FileInputStream(path);
         InputStream input = getClass().getClassLoader().getResourceAsStream(path);
 
         List<Platform> platforms = objectMapper.readValue(input, new TypeReference<>() {});

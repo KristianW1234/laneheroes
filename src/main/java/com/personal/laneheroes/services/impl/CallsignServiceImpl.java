@@ -84,11 +84,11 @@ public class CallsignServiceImpl implements CallsignService {
     public ResponseWrapper<Callsign> deleteCallsign(Long id) {
         Optional<Callsign> callsignPresence = callsignRepository.findById(id);
         if (callsignPresence.isPresent()){
-            Callsign dbCom = callsignPresence.get();
-            callsignRepository.delete(dbCom);
+            Callsign dbCalSn = callsignPresence.get();
+            callsignRepository.delete(dbCalSn);
             return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
                     + ResponseMessages.DELETE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbCom);
+                    ResponseMessages.SUCCESS_STATUS, null);
         } else {
             return new ResponseWrapper<>(ResponseMessages.CALLSIGN_SINGLE + " "
                     + ResponseMessages.DELETE_FAIL,
@@ -170,7 +170,6 @@ public class CallsignServiceImpl implements CallsignService {
 
         InputStream input = getClass().getClassLoader().getResourceAsStream(path);
 
-        //InputStream input = new FileInputStream(path);
         List<Callsign> callsigns = objectMapper.readValue(input, new TypeReference<>() {});
         callsignRepository.saveAll(callsigns);
 

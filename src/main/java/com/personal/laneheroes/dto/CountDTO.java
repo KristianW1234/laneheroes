@@ -14,5 +14,6 @@ public class CountDTO {
     private Long callsigns;
     private Long companies;
     private Long users;
+    private Long skills;
 
 }

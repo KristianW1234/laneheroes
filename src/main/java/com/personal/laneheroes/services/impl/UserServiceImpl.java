@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
             userRepository.delete(dbUser);
             return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
                     + ResponseMessages.DELETE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbUser);
+                    ResponseMessages.SUCCESS_STATUS, null);
         } else {
             return new ResponseWrapper<>(ResponseMessages.USER_SINGLE + " "
                     + ResponseMessages.DELETE_FAIL,

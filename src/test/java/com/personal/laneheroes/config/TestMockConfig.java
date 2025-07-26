@@ -38,5 +38,10 @@ public class TestMockConfig {
         return Mockito.mock(UserRepository.class);
     }
 
+    @Bean(name="mockSkillRepository")
+    public SkillRepository skillRepository() {
+        return Mockito.mock(SkillRepository.class);
+    }
+
     // Add more mock beans if needed
 }

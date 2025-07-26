@@ -13,6 +13,8 @@ public class ResponseMessages {
     public static final String HERO_PLURAL = "Heroes";
     public static final String USER_SINGLE = "User";
     public static final String USER_PLURAL = "Users";
+    public static final String SKILL_SINGLE = "Skill";
+    public static final String SKILL_PLURAL = "Skills";
 
 
     public static final String FOUND = "found";
@@ -36,4 +38,6 @@ public class ResponseMessages {
 
     public static final String COUNT_SUCCESS = "Row counting succeeds";
     public static final String COUNT_FAIL = "Row counting fails";
+
+    public static final String DELIMITER = "/";
 }

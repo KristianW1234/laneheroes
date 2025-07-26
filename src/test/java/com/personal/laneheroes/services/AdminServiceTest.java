@@ -55,6 +55,11 @@ public class AdminServiceTest {
         public HeroService heroService() {
             return mock(HeroService.class);
         }
+
+        @Bean
+        public SkillService skillService() {
+            return mock(SkillService.class);
+        }
     }
 
     @Autowired
@@ -91,11 +96,17 @@ public class AdminServiceTest {
     private HeroRepository heroRepository;
 
     @Autowired
+    private SkillService skillService;
+
+    @Autowired
+    private SkillRepository skillRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @BeforeEach
     void resetMocks() {
-        reset(heroService, gameService, companyService, callsignService, platformService, heroRepository, gameRepository, companyRepository, callsignRepository, platformRepository, userRepository);
+        reset(heroService, gameService, companyService, callsignService, platformService, skillService, heroRepository, gameRepository, companyRepository, callsignRepository, platformRepository, userRepository, skillRepository);
     }
 
     @Test
@@ -109,18 +120,20 @@ public class AdminServiceTest {
         when(platformService.uploadPlatformsFromExcel(anyString())).thenReturn(genericResult);
         when(gameService.uploadGamesFromExcel(anyString())).thenReturn(genericResult);
         when(heroService.uploadHeroesFromExcel(anyString())).thenReturn(genericResult);
+        when(skillService.uploadSkillsFromExcel(anyString())).thenReturn(genericResult);
 
         String path = "dummy.xlsx";
-        String result = adminService.uploadAllData(path,path,path,path,path);
+        String result = adminService.uploadAllData(path,path,path,path,path, path);
 
         verify(companyService).uploadCompaniesFromExcel(any());
         verify(callsignService).uploadCallsignsFromExcel(any());
         verify(platformService).uploadPlatformsFromExcel(any());
         verify(gameService).uploadGamesFromExcel(any());
         verify(heroService).uploadHeroesFromExcel(any());
+        verify(skillService).uploadSkillsFromExcel(any());
 
         assertNotNull(result);
-        assertEquals(success + " companies, "+success+" callsigns, "+success+" platforms, "+success+" games, "+success+" heroes saved.", result);
+        assertEquals(success + " companies, "+success+" callsigns, "+success+" platforms, "+success+" games, "+success+" heroes, "+success+" skills saved.", result);
 
     }
 
@@ -135,18 +148,20 @@ public class AdminServiceTest {
         when(platformService.uploadPlatformsFromExcel(anyString())).thenReturn(genericResult);
         when(gameService.uploadGamesFromExcel(anyString())).thenReturn(genericResult);
         when(heroService.uploadHeroesFromExcel(anyString())).thenReturn(genericResult);
+        when(skillService.uploadSkillsFromExcel(anyString())).thenReturn(genericResult);
 
         String path = "dummy.xlsx";
-        String result = adminService.uploadAllData(path,path,path,path,path);
+        String result = adminService.uploadAllData(path,path,path,path,path,path);
 
         verify(companyService).uploadCompaniesFromExcel(any());
         verify(callsignService).uploadCallsignsFromExcel(any());
         verify(platformService).uploadPlatformsFromExcel(any());
         verify(gameService).uploadGamesFromExcel(any());
         verify(heroService).uploadHeroesFromExcel(any());
+        verify(skillService).uploadSkillsFromExcel(any());
 
         assertNotNull(result);
-        assertEquals(success + " companies, "+success+" callsigns, "+success+" platforms, "+success+" games, "+success+" heroes saved.", result);
+        assertEquals(success + " companies, "+success+" callsigns, "+success+" platforms, "+success+" games, "+success+" heroes, "+success+" skills saved.", result);
 
     }
 
@@ -161,18 +176,20 @@ public class AdminServiceTest {
         when(platformService.uploadPlatformsFromExcel(anyString())).thenReturn(genericResult);
         when(gameService.uploadGamesFromExcel(anyString())).thenReturn(genericResult);
         when(heroService.uploadHeroesFromExcel(anyString())).thenReturn(genericResult);
+        when(skillService.uploadSkillsFromExcel(anyString())).thenReturn(genericResult);
 
         String path = "dummy.xlsx";
-        String result = adminService.uploadAllData(path,path,path,path,path);
+        String result = adminService.uploadAllData(path,path,path,path,path,path);
 
         verify(companyService).uploadCompaniesFromExcel(any());
         verify(callsignService).uploadCallsignsFromExcel(any());
         verify(platformService).uploadPlatformsFromExcel(any());
         verify(gameService).uploadGamesFromExcel(any());
         verify(heroService).uploadHeroesFromExcel(any());
+        verify(skillService).uploadSkillsFromExcel(any());
 
         assertNotNull(result);
-        assertEquals(success + " companies, "+success+" callsigns, "+success+" platforms, "+success+" games, "+success+" heroes saved.", result);
+        assertEquals(success + " companies, "+success+" callsigns, "+success+" platforms, "+success+" games, "+success+" heroes, "+success+" skills saved.", result);
 
     }
 
@@ -185,6 +202,7 @@ public class AdminServiceTest {
         when(gameRepository.count()).thenReturn(countRes);
         when(heroRepository.count()).thenReturn(countRes);
         when(userRepository.count()).thenReturn(countRes);
+        when(skillRepository.count()).thenReturn(countRes);
 
         CountDTO result = adminService.getAllCounts();
 
@@ -194,6 +212,7 @@ public class AdminServiceTest {
         verify(gameRepository).count();
         verify(heroRepository).count();
         verify(userRepository).count();
+        verify(skillRepository).count();
 
 
         assertNotNull(result);
@@ -203,6 +222,7 @@ public class AdminServiceTest {
         assertEquals(countRes, result.getGames());
         assertEquals(countRes, result.getHeroes());
         assertEquals(countRes, result.getUsers());
+        assertEquals(countRes, result.getSkills());
 
     }
 

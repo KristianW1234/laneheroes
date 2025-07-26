@@ -70,9 +70,11 @@ class AdminControllerTest {
         MockMultipartFile platform = new MockMultipartFile("platformFile", "platform.xlsx", "application/vnd.ms-excel", "fake-data".getBytes());
         MockMultipartFile game = new MockMultipartFile("gameFile", "game.xlsx", "application/vnd.ms-excel", "fake-data".getBytes());
         MockMultipartFile hero = new MockMultipartFile("heroFile", "hero.xlsx", "application/vnd.ms-excel", "fake-data".getBytes());
+        MockMultipartFile skill = new MockMultipartFile("skillFile", "skill.xlsx", "application/vnd.ms-excel", "fake-data".getBytes());
 
         // Mock service call
         when(adminService.uploadAllData(
+                any(String.class),
                 any(String.class),
                 any(String.class),
                 any(String.class),
@@ -96,6 +98,7 @@ class AdminControllerTest {
                         .file(platform)
                         .file(game)
                         .file(hero)
+                        .file(skill)
                         .header("Authorization", "Bearer faketkne")
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isOk())
@@ -109,7 +112,7 @@ class AdminControllerTest {
         MockMultipartFile dummy = new MockMultipartFile("companyFile", "company.xlsx", "application/vnd.ms-excel", "bad".getBytes());
 
         // Send all 5 files
-        when(adminService.uploadAllData(any(), any(), any(), any(), any()))
+        when(adminService.uploadAllData(any(), any(), any(), any(), any(),any()))
                 .thenThrow(new RuntimeException("Boom"));
 
         when(jwtUtil.extractUsername(any())).thenReturn("admin");
@@ -127,6 +130,7 @@ class AdminControllerTest {
                         .file("platformFile", dummy.getBytes())
                         .file("gameFile", dummy.getBytes())
                         .file("heroFile", dummy.getBytes())
+                        .file("skillFile", dummy.getBytes())
                         .header("Authorization", "Bearer faketkne")
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isInternalServerError())

@@ -187,7 +187,7 @@ public class HeroServiceImpl implements HeroService {
             heroRepository.delete(dbHero);
             return new ResponseWrapper<>(ResponseMessages.HERO_SINGLE + " "
                     + ResponseMessages.DELETE_SUCCESS,
-                    ResponseMessages.SUCCESS_STATUS, dbHero);
+                    ResponseMessages.SUCCESS_STATUS, null);
         } else {
             return new ResponseWrapper<>(ResponseMessages.HERO_SINGLE + " "
                     + ResponseMessages.DELETE_FAIL,
@@ -216,10 +216,10 @@ public class HeroServiceImpl implements HeroService {
     public ResponseWrapper<Hero> getHeroById(Long id) {
         Optional<Hero> heroPresence = heroRepository.findById(id);
         return heroPresence.map(
-                        company -> new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE
+                        company -> new ResponseWrapper<>(ResponseMessages.HERO_SINGLE
                                 + " " + ResponseMessages.FOUND,
                                 ResponseMessages.SUCCESS_STATUS, company))
-                .orElseGet(() -> new ResponseWrapper<>(ResponseMessages.COMPANY_SINGLE
+                .orElseGet(() -> new ResponseWrapper<>(ResponseMessages.HERO_SINGLE
                         + " " + ResponseMessages.NOT_FOUND,
                         ResponseMessages.FAIL_STATUS, null));
     }
@@ -276,7 +276,6 @@ public class HeroServiceImpl implements HeroService {
     public void uploadInitHeroesFromJSON(String path) throws IOException {
         if (heroRepository.count() > 0) return;
 
-        //InputStream inputStream = new FileInputStream(path);
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
 
 

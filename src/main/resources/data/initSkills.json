@@ -1,0 +1,910 @@
+[
+ {
+  "skillName": "Vanquisher",
+  "skillDescription": "Attacks deals bonus damage to stunned enemies",
+  "skillSlot": 0,
+  "imgIcon": "dota-innate.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Sven_DOTA",
+  "skillTypes": "INNATE, BUFF"
+ },
+ {
+  "skillName": "Storm Hammer",
+  "skillDescription": "Launches magical gauntlet to deal damage and stun an enemy in an area",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Sven_DOTA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Great Cleave",
+  "skillDescription": "Passively grants splash damage in normal attacks, damaging nearby enemies in each attacks.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Sven_DOTA",
+  "skillTypes": "BUFF, OFFENSIVE"
+ },
+ {
+  "skillName": "Warcry",
+  "skillDescription": "Screams loudly to increase self and allies' defense and movement speed.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Sven_DOTA",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "God's Strength",
+  "skillDescription": "Massively increases bonus attack damage while gaining slow resistance.",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Sven_DOTA",
+  "skillTypes": "BUFF, OFFENSIVE"
+ },
+ {
+  "skillName": "Mortal Will",
+  "skillDescription": "Empowers next basic ability after attacking\/using skills 5 times.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Pantheon_LOL",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Comet Spear",
+  "skillDescription": "Thrusts spear to a line, dealing close range damage. Hold and release to throw the spear in a longer range. Mortal Will increases the damage.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Pantheon_LOL",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Shield Vault",
+  "skillDescription": "Jumps to a target and stun the target with a shield bash. With Mortal Will active, next normal attack becomes a triple strike.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Pantheon_LOL",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Aegis Assault",
+  "skillDescription": "Put shield forward and stab multiple times with spear, damaging enemies in front while protecting from damage from that direction. At the end of channeling, slam the shield to the ground to deal area damage. With Mortal Will active, gain movement speed bonus after channeling.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Pantheon_LOL",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Grand Starfall",
+  "skillDescription": "After a delay, leap to the sky and dive to an area to crash down and deal damage to every enemies there. Immediately maxes out Mortal Will. Passively gives armor penetration.",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Pantheon_LOL",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Illuminating Strike",
+  "skillDescription": "Attacking an enemy 3 times reveal the enemy weaknesses, causing them and nearby enemies to take increased damage.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Amaterasu_SMITE",
+  "skillTypes": "INNATE, DEBUFF"
+ },
+ {
+  "skillName": "Divine Presence",
+  "skillDescription": "Heals self per second and provides an aura to boost nearby allies: Gold aura gives temporary shield and persistent movement speed boost, red aura gives temporary attack speed boost and persistent attack power boost.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Amaterasu_SMITE",
+  "skillTypes": "HEALING, BUFF"
+ },
+ {
+  "skillName": "Heavenly Reflection",
+  "skillDescription": "Charge your mirror, decreasing damage taken while active. Release to launch the mirror and deal damage to the enemies; deals greater damage with longer charge.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Amaterasu_SMITE",
+  "skillTypes": "OFFENSIVE, BUFF"
+ },
+ {
+  "skillName": "Glorious Charge",
+  "skillDescription": "Silences enemies in front of you, then dash forward to deal damage, stopping at the first enemy hit.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Amaterasu_SMITE",
+  "skillTypes": "OFFENSIVE, DEBUFF"
+ },
+ {
+  "skillName": "Dazzling Offensive",
+  "skillDescription": "Gain CC Immunity as you jump and deliver three powerful slashes in a cone, each subsequent hits will be more powerful and inflict Slow or Stun.",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Amaterasu_SMITE",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Raise Skeletons",
+  "skillDescription": "Converts dying enemy minions into skeletal warriors that attacks enemies and explodes when dying.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Xul_HOTS",
+  "skillTypes": "INNATE, HYBRID"
+ },
+ {
+  "skillName": "Spectral Scythe",
+  "skillDescription": "Summons a scythe that travels to you and deal damage to enemies that touches it. Will spawn a skeletal warrior on hit enemies.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Xul_HOTS",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Cursed Strikes",
+  "skillDescription": "Basic attacks temporarily will deal splash damage to a wide area and reduces the attack speed of enemy heroes and summons",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Xul_HOTS",
+  "skillTypes": "OFFENSIVE, BUFF"
+ },
+ {
+  "skillName": "Bone Prison",
+  "skillDescription": "After a delay, targeted enemy will be surrounded with bone prison and rooted. All skeletal warriors will focus on the imprisoned hero. Also deals minor damage to the imprisoned hero.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Xul_HOTS",
+  "skillTypes": "DEBUFF"
+ },
+ {
+  "skillName": "Poison Nova",
+  "skillDescription": "After a very short delay, releases poisonous missiles to surrounding area, dealing damage over time that piles up into a huge damage to heroes that get hit with it.",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Xul_HOTS",
+  "skillTypes": "OFFENSIVE, DEBUFF"
+ },
+ {
+  "skillName": "Skeletal Mages",
+  "skillDescription": "Summons 4 skeletal Frost Mages that form a line and attack nearby enemies while slowing them.",
+  "skillSlot": 4,
+  "imgIcon": "skill4a.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Xul_HOTS",
+  "skillTypes": "HYBRID, DEBUFF"
+ },
+ {
+  "skillName": "Bone Armor",
+  "skillDescription": "Activate to gain a shield scaling with your max health for 3 seconds.",
+  "skillSlot": 5,
+  "imgIcon": "skill5.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Xul_HOTS",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Bone Spear",
+  "skillDescription": "Hurls a bone spear to a line, dealing damage to all enemies in the line.",
+  "skillSlot": 6,
+  "imgIcon": "skill6.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Xul_HOTS",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Piercing Brush",
+  "skillDescription": "Third attack will be modified to deal extra damage and pierce through targets. Reduces ultimate's cooldown timer and can be immediately launched  by colliding with your projectile skills while dashing with your ultimate",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Shangguan_HOK",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Ink Burst",
+  "skillDescription": "Launches explosive ink orb that travels to a line and explodes at the end, dealing damage during travel and explosion periods.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Shangguan_HOK",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Seething Script",
+  "skillDescription": "Summons a magical paint brush from a direction that travels back to you in a smooth zig-zag motion, dealing damage to all that it touches.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Shangguan_HOK",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Finishing Stroke",
+  "skillDescription": "When activated, your movement is turned to a dash. If the dash collides with your other skills, you reset your passive and can dash again. If you can dash up to 3-5 times, leap to the sky and rain down damaging inks to enemies around you while still being able to move. The number of dashes affect how long you stay airborne.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Shangguan_HOK",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Divine Punishment",
+  "skillDescription": "Mark targets who are damaged with your skills. Once the target has 4 marks, the marks will explode, dealing extra damage, slowing them while healing you.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Lauriel_AOV",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "The Wheel",
+  "skillDescription": "Send a light wave forward, dealing damage to all it touches. Once the wave reaches maximum range, the area previously covered will shine and deal damage again to enemies still in the area.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Lauriel_AOV",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Blink",
+  "skillDescription": "Dash to a direction. If there are enemies nearby, launch three orbs of light to nearby enemies, dealing damage and greatly reducing this skill's cooldown.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Lauriel_AOV",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Smite",
+  "skillDescription": "Summons a circle of light for a considerable time in your location. Your first and second skills' cooldowns are heavily reduced as long as you stand in the circle. The circle will deal damage to enemies during its creation and when it fizzles.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Lauriel_AOV",
+  "skillTypes": "BUFF, HYBRID"
+ },
+ {
+  "skillName": "Pursuit",
+  "skillDescription": "After you cast a skill, your next attack will make you dash to your target and deal additional damage",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Alucard_MLBB",
+  "skillTypes": "INNATE, BUFF"
+ },
+ {
+  "skillName": "Groundsplitter",
+  "skillDescription": "Jump to a target area and slam down your sword to the ground, dealing damage to and slowing enemies in the area.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Alucard_MLBB",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Whirling Smash",
+  "skillDescription": "Spins and slashes in a place, dealing damage to surrounding enemies.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Alucard_MLBB",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Fission Wave",
+  "skillDescription": "Permanently gain hybrid lifesteal. On first cast, absorb energies from enemy heroes in an area in front, reducing their movement speed and hybrid defense. Gain hybrid defense for each heroes hit. Reduces cooldown for every of your skills. On second cast, launches a crescent shockwave from your sword to a direction to deal damage.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Alucard_MLBB",
+  "skillTypes": "OFFENSIVE, HYBRID"
+ },
+ {
+  "skillName": "Moon Slash",
+  "skillDescription": "Gain New Moon Blessing stack for hitting enemy heroes or large monsters with basic attacks or skills. After gaining 5 stacks, gain extra lifesteal, normal attack damage and range boost. Duration can be extended by hitting enemy shikigami or large monsters with normal attacks.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Takiyasha-hime_OA",
+  "skillTypes": "INNATE, BUFF"
+ },
+ {
+  "skillName": "Whirlwind Moon",
+  "skillDescription": "After a short delay, swing your blade to deal damage to nearby enemies. Enemies at the edge of your range will receive more damage. Also gain the ability to regenerate your passive stack after x seconds. At maximum stack, the ability deals more damage. Naturally deals bigger damage to large monsters.",
+  "skillSlot": 1,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Takiyasha-hime_OA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Mountain Fog",
+  "skillDescription": "Dash to a direction and slash nearby enemies. The enemy will be knocked up and then slowed for 1 second.",
+  "skillSlot": 2,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Takiyasha-hime_OA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Sleepless Moonrise",
+  "skillDescription": "Launch a crescent projectile to a direction that deals damage to the first enemy hit. Enemies hit will be marked with Lunar Mark. The Lunar Mark will explode if they get damaged again, which will deal extra damage and immobilize the target while giving you a temporary shield",
+  "skillSlot": 3,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Takiyasha-hime_OA",
+  "skillTypes": "OFFENSIVE, BUFF"
+ },
+ {
+  "skillName": "Shadowless Sundown",
+  "skillDescription": "Summon Demon Riders to continuously charge to an enemy Shikigami within a circle from where you stand, dealing damage and slowing them. You can select which type of Demon Riders to summon, which can either have the riders deal additional true damage, dispel crowd control on yourself on cast, increase the slowing effect while increasing your own movement speed, or grant yourself a shield and increase your defenses everytime your Rider hits an enemy.",
+  "skillSlot": 4,
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Takiyasha-hime_OA",
+  "skillTypes": "OFFENSIVE, HYBRID"
+ },
+ {
+  "skillName": "Arcane Missile",
+  "skillDescription": "Fires an arcane wisp that will home onto the closest enemy hero, deals damage and slows them. In Healing Mode, the wisp homes to the closest ally hero, heals them and increases their speed.",
+  "skillSlot": 1,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Artesia_HON",
+  "skillTypes": "HYBRID"
+ },
+ {
+  "skillName": "Dance of Death",
+  "skillDescription": "Channels spell while being able to move. During channeling, you can move through enemies, you continuously fire Arcane Bolt, and your Arcane Wisp goes through creeps with double speed.",
+  "skillSlot": 2,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Artesia_HON",
+  "skillTypes": "BUFF, HYBRID"
+ },
+ {
+  "skillName": "Arcane Bolts",
+  "skillDescription": "On activation, switch between Healing or Damage mode, which will affect the skill and Arcane Bolts. Passively, whenever you cast a spell, 4 bolts of arcane will fly out to nearby allied\/enemy heroes to heal\/damage them (Depending on whether you're in Healing or Damage mode)",
+  "skillSlot": 3,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Artesia_HON",
+  "skillTypes": "HYBRID"
+ },
+ {
+  "skillName": "Essence Projection",
+  "skillDescription": "Summons a projection staff to be planted in an area. The projection will heal nearby allies and also shoot out Arcane Missiles (or Bolts) whenever you cast the skills.",
+  "skillSlot": 4,
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Artesia_HON",
+  "skillTypes": "HYBRID"
+ },
+ {
+  "skillName": "Combustion",
+  "skillDescription": "After dealing 150 damage to an enemy hero, that hero will deal minor damage to nearby enemies. This can be repeated multiple times by dealing 175 damages further.",
+  "skillSlot": 0,
+  "imgIcon": "dota-innate.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Lina_DOTA",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Dragon Slave",
+  "skillDescription": "Unleashes a wave of fire like a dragon breath to an area, dealing damage to every enemies in the path.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Lina_DOTA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Light Strike Array",
+  "skillDescription": "Summons a light strike from the sky to an area, damaging and stunning enemies.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Lina_DOTA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Fiery Soul",
+  "skillDescription": "Passively increases Lina's normal attack power and movement speed whenever she hits an enemy with a spell. Can stack.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Lina_DOTA",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Laguna Blade",
+  "skillDescription": "Fires a highly damaging lightning bolt to a target enemy",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Lina_DOTA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Flame Cloak",
+  "skillDescription": "Activate to immediately maximize Fiery Soul stack. Passively allows unobstructed movement and increases spell damage and resistance.",
+  "skillSlot": 5,
+  "imgIcon": "skill5.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Lina_DOTA",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Frost Shot",
+  "skillDescription": "Attacks and abilities inflict slow. Attacking enemies afflicted with this deal bonus damage scaling with critical strike chance.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Ashe_LOL",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Ranger's Focus",
+  "skillDescription": "Attacks grants a stack. Gaining 4 stacks allows the activation of this ability to temporarily turn your normal attack into multiple focused shots towards your target.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Ashe_LOL",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Volley",
+  "skillDescription": "Fires a volley of arrows in a cone that deals damage to enemies shot.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Ashe_LOL",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Hawkshot",
+  "skillDescription": "Sends a hawk to a line where it will reveal the area around its flying route.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Ashe_LOL",
+  "skillTypes": "HYBRID"
+ },
+ {
+  "skillName": "Enchanted Crystal Arrow",
+  "skillDescription": "Shoots a massive ice arrow that damages and stuns enemies in the area of impact. The longer it has traveled, the greater the damage\/stun period.",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Ashe_LOL",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Battle Fervor",
+  "skillDescription": "Gains stacks of Fervor when dealing or healing damage. The more stacks you have, you get more attack speeds.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "GuanYu_SMITE",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Conviction",
+  "skillDescription": "Heals yourself and nearby allies for a small amount of health while also reducing your and their cooldowns.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "GuanYu_SMITE",
+  "skillTypes": "HEALING"
+ },
+ {
+  "skillName": "Warrior's Will",
+  "skillDescription": "Dash forward and thrust through enemies in your way. If you hit an enemy God, you reduce your cooldown.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "GuanYu_SMITE",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Taolu Assault",
+  "skillDescription": "Swing your blade continuously, dealing physical damage and stealing protection per tick. Swings faster if you have higher attack speed.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "GuanYu_SMITE",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Cavalry Charge",
+  "skillDescription": "Mount on your horse, where you continuously move forward and gain crowd control immunity. Your attack is greatly enhanced in range and damage while on horse. When you dismount, you deliver one last swing that deals great damage and stuns enemies.",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "GuanYu_SMITE",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Vanish",
+  "skillDescription": "Activate to enter Stealth mode, gaining movement speed and changing your abilities. Remain stationary for 1.5 seconds to become Invisible. After being stealthed for 3 seconds, your new skills will have you teleport to the target.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Sinister Strike",
+  "skillDescription": "Dash forward to deal damage to enemies in your way. Stops at the first hero hit to also reduce the cooldown by 1 second.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Ambush",
+  "skillDescription": "Ambush the enemy and instantly deal big damage to your target and reduce their armor.",
+  "skillSlot": 1,
+  "imgIcon": "skill1-alt.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Blade Flurry",
+  "skillDescription": "Brandish your dagger around to deal damage to all enemies nearby.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Cheap Shot",
+  "skillDescription": "Deals minor damage to the enemy, briefly stun them, and causes blindness for 2 seconds afterwards.",
+  "skillSlot": 2,
+  "imgIcon": "skill2-alt.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Eviscerate",
+  "skillDescription": "Each usage of your skills generate Combo points which you can use to activate this skill and deal great damage depending on how many points you have stacked.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Garrote",
+  "skillDescription": "Delivers instant damage to an enemy, which is followed with a bigger damage over time and silencing them temporarily.",
+  "skillSlot": 3,
+  "imgIcon": "skill3-alt.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Smoke Bomb",
+  "skillDescription": "Drop a smoke bomb to cover the area. Within the smoke, you are unrevealable, can pass through units and gain armor and damage reduction, and your attack and ability usage does not break stealth.",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Cloak of Shadows",
+  "skillDescription": "Envelop yourself with a special cloak that removes all damage over time effects, while temporarily becoming unstoppable and reducing magic\/ability damage thrown to you.",
+  "skillSlot": 4,
+  "imgIcon": "skill4a.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Valeera_HOTS",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Demon Soul",
+  "skillDescription": "Deal more damage when attacking a single enemy.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Kaizer_HOK",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Vortex Brand",
+  "skillDescription": "Throw a small blade on a target direction. When it hits an enemy, it bounces to another for up to 4 times, then it returns to you, heals you and increases your attack and movement speed.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Kaizer_HOK",
+  "skillTypes": "HYBRID"
+ },
+ {
+  "skillName": "Blade Tempest",
+  "skillDescription": "On a short dash, deal a double slash. The second slash knocks up the enemy. After this, your next basic attack will deal extra damage while dashing to your enemy. Passively, gain slow HP & Mana and minor movement speed boost recovery once you exit combat.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Kaizer_HOK",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Invincible Warrior",
+  "skillDescription": "Don the cursed armor. Once the equipping is complete, deal damage to nearby enemies. While in armor, you gain attack power, damage reduction and continuously deal damage over time to those near you.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Kaizer_HOK",
+  "skillTypes": "OFFENSIVE, BUFF"
+ },
+ {
+  "skillName": "Shrouded Wings",
+  "skillDescription": "Gain movement speed while moving towards an enemy. Generate energy when not dealing damage. Once the energy is full, you go invisible and gain extra vision. You become visible if the energy diminishes by either attacking enemies or staying too close by an enemy for too long.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Kaine_AOV",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Whirlwind of Blood",
+  "skillDescription": "Spin around and damage nearby enemies with your bloody cape. The enemy with the lowest HP will be hit with the same damage again.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Kaine_AOV",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Bloodied Judgment",
+  "skillDescription": "Launch a bloody spike that deals damage to enemies in the path and stopping when they hit an enemy hero. The enemy is greatly slowed and marked; the mark will explode after a while or you attack them, dealing extra damage, stunning them and healing you.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Kaine_AOV",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Sanguinary End",
+  "skillDescription": "Dash forward while delivering a massive strike that deals massive damage. Throughout the duration, gain crowd control immunity.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Kaine_AOV",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Super Magic",
+  "skillDescription": "Deal extra damage to airborne enemies. Attacks deal magical damage and fills up own Super Magic meter. When the meter is full, the next basic attack gains massive bonus range and homes to the enemy while dealing great damage. Enemies attacked by you will be marked; once the mark stacks to 3, this will affect her ultimate.",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Guinevere_MLBB",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Energy Wave",
+  "skillDescription": "Launch an energy orb on a direction, dealing damage to the first enemy hit and slowing them. Hitting with the skill reduces the cooldown of her other skills.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Guinevere_MLBB",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Spatial Migration",
+  "skillDescription": "Jump and dive to a target area to deal damage and slow enemies, then lift them up airborne while also dealing damage. Can reuse the skill to dash to a direction and leave behind a decoy that stays in place and explodes after a time or being hit several times.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Guinevere_MLBB",
+  "skillTypes": "OFFENSIVE, HYBRID"
+ },
+ {
+  "skillName": "Violet Requiem",
+  "skillDescription": "Float in place and generate a swirling force field that damages nearby enemies over time while gaining crowd control immunity. If an enemy is already airborne, the skill will keep them airborne. If the enemy has 3 marks of Super Magic, the enemy will be launched airborne and be juggled while taking damage.",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Guinevere_MLBB",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Heart Blade",
+  "skillDescription": "After casting a skill, the next 3 basic attacks is considered 'Heart Blade', in which they have increased attack speed and are converted to area of effect damage. The attack also deals bonus damage and heals you. Passively, you gain minor True Damage per attack, and you deal more damage to enemy Shikigami with the highest KO count. Killing an enemy Shikigami will also make you enter 'Pursuit' mode where your next attack deals bonus damage and positions you to the back of the enemy",
+  "skillSlot": 0,
+  "imgIcon": "passive.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "Inugami_OA",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Power Up",
+  "skillDescription": "Block damage from a direction while charging, gaining damage reduction. After the charge time ends or is interrupted, launch a sword wave to deal damage to enemies in its path and slows down enemies (scaling with how long the skill is charged). Charging for quite some time also gives you one stack of 'Pursuit'.",
+  "skillSlot": 1,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Inugami_OA",
+  "skillTypes": "HYBRID"
+ },
+ {
+  "skillName": "Sky Slash",
+  "skillDescription": "Perform a short leaping slash to a direction, dealing damage that can also procure a critical hit.",
+  "skillSlot": 2,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Inugami_OA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Rising Wind",
+  "skillDescription": "Accelerate your movement speed temporarily and gains one 'Pursuit' stack.",
+  "skillSlot": 3,
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "Inugami_OA",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Burning Rage",
+  "skillDescription": "Enters 'Soul Burn' mode. During this duration, every attacks are counted as 'Heart Blade' and you gain movement speed and slow immunity. Duration can be extended by attacking enemies.",
+  "skillSlot": 4,
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "Inugami_OA",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Blueheart Floe",
+  "skillDescription": "Gains natural increased mana regeneration",
+  "skillSlot": 0,
+  "imgIcon": "dota-innate.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "CrystalMaiden_DOTA",
+  "skillTypes": "INNATE"
+ },
+ {
+  "skillName": "Crystal Nova",
+  "skillDescription": "Creates an icy explosion in an area, dealing damage and slowing down enemies.",
+  "skillSlot": 1,
+  "imgIcon": "skill1.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "CrystalMaiden_DOTA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Frostbite",
+  "skillDescription": "Encases a target enemy in ice, immobilizing them and dealing damage over time.",
+  "skillSlot": 2,
+  "imgIcon": "skill2.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "CrystalMaiden_DOTA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Arcane Aura",
+  "skillDescription": "Gives every allies increased mana regeneration, while nearby allies will get increased regeneration",
+  "skillSlot": 3,
+  "imgIcon": "skill3.png",
+  "isPassive": "Y",
+  "isUltimate": "N",
+  "hero": "CrystalMaiden_DOTA",
+  "skillTypes": "BUFF"
+ },
+ {
+  "skillName": "Freezing Field",
+  "skillDescription": "Summons 100 ice explosion in an area around you at random location, slowing enemies and dealing massive damage. This skill is channeled",
+  "skillSlot": 4,
+  "imgIcon": "skill4.png",
+  "isPassive": "N",
+  "isUltimate": "Y",
+  "hero": "CrystalMaiden_DOTA",
+  "skillTypes": "OFFENSIVE"
+ },
+ {
+  "skillName": "Crystal Clone",
+  "skillDescription": "Dash backwards while leaving behind a clone. After the clone expires or is destroyed, it will inflict Frostbite to all enemies in the area.",
+  "skillSlot": 5,
+  "imgIcon": "skill5.png",
+  "isPassive": "N",
+  "isUltimate": "N",
+  "hero": "CrystalMaiden_DOTA",
+  "skillTypes": "OFFENSIVE"
+ }
+]

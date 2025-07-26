@@ -1,11 +1,15 @@
 package com.personal.laneheroes.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.personal.laneheroes.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="hero")
@@ -57,4 +61,8 @@ public class Hero {
 
     @Column(name= "TITLE_DISPLAY")
     private String displayByTitle;
+
+    @OneToMany(mappedBy = "hero", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Skill> skills = new ArrayList<>();
 }

@@ -6,7 +6,7 @@
   "imgIcon": "dota-innate.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Sven_DOTA",
+  "heroCode": "Sven_DOTA",
   "skillTypes": "INNATE, BUFF"
  },
  {
@@ -16,8 +16,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Sven_DOTA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Sven_DOTA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Great Cleave",
@@ -26,8 +26,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Sven_DOTA",
-  "skillTypes": "BUFF, OFFENSIVE"
+  "heroCode": "Sven_DOTA",
+  "skillTypes": "BUFF, DAMAGE"
  },
  {
   "skillName": "Warcry",
@@ -36,7 +36,7 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Sven_DOTA",
+  "heroCode": "Sven_DOTA",
   "skillTypes": "BUFF"
  },
  {
@@ -46,8 +46,8 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Sven_DOTA",
-  "skillTypes": "BUFF, OFFENSIVE"
+  "heroCode": "Sven_DOTA",
+  "skillTypes": "BUFF, DAMAGE"
  },
  {
   "skillName": "Mortal Will",
@@ -56,7 +56,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Pantheon_LOL",
+  "heroCode": "Pantheon_LOL",
   "skillTypes": "INNATE"
  },
  {
@@ -66,8 +66,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Pantheon_LOL",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Pantheon_LOL",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Shield Vault",
@@ -76,8 +76,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Pantheon_LOL",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Pantheon_LOL",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Aegis Assault",
@@ -86,8 +86,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Pantheon_LOL",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Pantheon_LOL",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Grand Starfall",
@@ -96,8 +96,8 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Pantheon_LOL",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Pantheon_LOL",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Illuminating Strike",
@@ -106,7 +106,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Amaterasu_SMITE",
+  "heroCode": "Amaterasu_SMITE",
   "skillTypes": "INNATE, DEBUFF"
  },
  {
@@ -116,7 +116,7 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Amaterasu_SMITE",
+  "heroCode": "Amaterasu_SMITE",
   "skillTypes": "HEALING, BUFF"
  },
  {
@@ -126,8 +126,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Amaterasu_SMITE",
-  "skillTypes": "OFFENSIVE, BUFF"
+  "heroCode": "Amaterasu_SMITE",
+  "skillTypes": "DAMAGE, BUFF"
  },
  {
   "skillName": "Glorious Charge",
@@ -136,8 +136,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Amaterasu_SMITE",
-  "skillTypes": "OFFENSIVE, DEBUFF"
+  "heroCode": "Amaterasu_SMITE",
+  "skillTypes": "DAMAGE, DEBUFF"
  },
  {
   "skillName": "Dazzling Offensive",
@@ -146,8 +146,8 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Amaterasu_SMITE",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Amaterasu_SMITE",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Raise Skeletons",
@@ -156,8 +156,8 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Xul_HOTS",
-  "skillTypes": "INNATE, HYBRID"
+  "heroCode": "Xul_HOTS",
+  "skillTypes": "INNATE"
  },
  {
   "skillName": "Spectral Scythe",
@@ -166,8 +166,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Xul_HOTS",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Xul_HOTS",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Cursed Strikes",
@@ -176,8 +176,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Xul_HOTS",
-  "skillTypes": "OFFENSIVE, BUFF"
+  "heroCode": "Xul_HOTS",
+  "skillTypes": "DAMAGE, BUFF"
  },
  {
   "skillName": "Bone Prison",
@@ -186,7 +186,7 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Xul_HOTS",
+  "heroCode": "Xul_HOTS",
   "skillTypes": "DEBUFF"
  },
  {
@@ -196,8 +196,8 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Xul_HOTS",
-  "skillTypes": "OFFENSIVE, DEBUFF"
+  "heroCode": "Xul_HOTS",
+  "skillTypes": "DAMAGE, DEBUFF"
  },
  {
   "skillName": "Skeletal Mages",
@@ -206,8 +206,8 @@
   "imgIcon": "skill4a.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Xul_HOTS",
-  "skillTypes": "HYBRID, DEBUFF"
+  "heroCode": "Xul_HOTS",
+  "skillTypes": "DEBUFF"
  },
  {
   "skillName": "Bone Armor",
@@ -216,7 +216,7 @@
   "imgIcon": "skill5.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Xul_HOTS",
+  "heroCode": "Xul_HOTS",
   "skillTypes": "BUFF"
  },
  {
@@ -226,8 +226,8 @@
   "imgIcon": "skill6.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Xul_HOTS",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Xul_HOTS",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Piercing Brush",
@@ -236,7 +236,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Shangguan_HOK",
+  "heroCode": "Shangguan_HOK",
   "skillTypes": "INNATE"
  },
  {
@@ -246,8 +246,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Shangguan_HOK",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Shangguan_HOK",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Seething Script",
@@ -256,8 +256,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Shangguan_HOK",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Shangguan_HOK",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Finishing Stroke",
@@ -266,8 +266,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Shangguan_HOK",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Shangguan_HOK",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Divine Punishment",
@@ -276,7 +276,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Lauriel_AOV",
+  "heroCode": "Lauriel_AOV",
   "skillTypes": "INNATE"
  },
  {
@@ -286,8 +286,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Lauriel_AOV",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Lauriel_AOV",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Blink",
@@ -296,8 +296,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Lauriel_AOV",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Lauriel_AOV",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Smite",
@@ -306,8 +306,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Lauriel_AOV",
-  "skillTypes": "BUFF, HYBRID"
+  "heroCode": "Lauriel_AOV",
+  "skillTypes": "BUFF"
  },
  {
   "skillName": "Pursuit",
@@ -316,7 +316,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Alucard_MLBB",
+  "heroCode": "Alucard_MLBB",
   "skillTypes": "INNATE, BUFF"
  },
  {
@@ -326,8 +326,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Alucard_MLBB",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Alucard_MLBB",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Whirling Smash",
@@ -336,8 +336,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Alucard_MLBB",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Alucard_MLBB",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Fission Wave",
@@ -346,8 +346,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Alucard_MLBB",
-  "skillTypes": "OFFENSIVE, HYBRID"
+  "heroCode": "Alucard_MLBB",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Moon Slash",
@@ -356,80 +356,88 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Takiyasha-hime_OA",
+  "heroCode": "Takiyasha-hime_OA",
   "skillTypes": "INNATE, BUFF"
  },
  {
   "skillName": "Whirlwind Moon",
   "skillDescription": "After a short delay, swing your blade to deal damage to nearby enemies. Enemies at the edge of your range will receive more damage. Also gain the ability to regenerate your passive stack after x seconds. At maximum stack, the ability deals more damage. Naturally deals bigger damage to large monsters.",
   "skillSlot": 1,
+  "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Takiyasha-hime_OA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Takiyasha-hime_OA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Mountain Fog",
   "skillDescription": "Dash to a direction and slash nearby enemies. The enemy will be knocked up and then slowed for 1 second.",
   "skillSlot": 2,
+  "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Takiyasha-hime_OA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Takiyasha-hime_OA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Sleepless Moonrise",
   "skillDescription": "Launch a crescent projectile to a direction that deals damage to the first enemy hit. Enemies hit will be marked with Lunar Mark. The Lunar Mark will explode if they get damaged again, which will deal extra damage and immobilize the target while giving you a temporary shield",
   "skillSlot": 3,
+  "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Takiyasha-hime_OA",
-  "skillTypes": "OFFENSIVE, BUFF"
+  "heroCode": "Takiyasha-hime_OA",
+  "skillTypes": "DAMAGE, BUFF"
  },
  {
   "skillName": "Shadowless Sundown",
   "skillDescription": "Summon Demon Riders to continuously charge to an enemy Shikigami within a circle from where you stand, dealing damage and slowing them. You can select which type of Demon Riders to summon, which can either have the riders deal additional true damage, dispel crowd control on yourself on cast, increase the slowing effect while increasing your own movement speed, or grant yourself a shield and increase your defenses everytime your Rider hits an enemy.",
   "skillSlot": 4,
+  "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Takiyasha-hime_OA",
-  "skillTypes": "OFFENSIVE, HYBRID"
+  "heroCode": "Takiyasha-hime_OA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Arcane Missile",
   "skillDescription": "Fires an arcane wisp that will home onto the closest enemy hero, deals damage and slows them. In Healing Mode, the wisp homes to the closest ally hero, heals them and increases their speed.",
   "skillSlot": 1,
+  "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Artesia_HON",
-  "skillTypes": "HYBRID"
+  "heroCode": "Artesia_HON",
+  "skillTypes": "DAMAGE, HEALING"
  },
  {
   "skillName": "Dance of Death",
   "skillDescription": "Channels spell while being able to move. During channeling, you can move through enemies, you continuously fire Arcane Bolt, and your Arcane Wisp goes through creeps with double speed.",
   "skillSlot": 2,
+  "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Artesia_HON",
-  "skillTypes": "BUFF, HYBRID"
+  "heroCode": "Artesia_HON",
+  "skillTypes": "BUFF"
  },
  {
   "skillName": "Arcane Bolts",
   "skillDescription": "On activation, switch between Healing or Damage mode, which will affect the skill and Arcane Bolts. Passively, whenever you cast a spell, 4 bolts of arcane will fly out to nearby allied\/enemy heroes to heal\/damage them (Depending on whether you're in Healing or Damage mode)",
   "skillSlot": 3,
+  "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Artesia_HON",
-  "skillTypes": "HYBRID"
+  "heroCode": "Artesia_HON",
+  "skillTypes": "DAMAGE, HEALING"
  },
  {
   "skillName": "Essence Projection",
   "skillDescription": "Summons a projection staff to be planted in an area. The projection will heal nearby allies and also shoot out Arcane Missiles (or Bolts) whenever you cast the skills.",
   "skillSlot": 4,
+  "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Artesia_HON",
-  "skillTypes": "HYBRID"
+  "heroCode": "Artesia_HON",
+  "skillTypes": "SUMMON"
  },
  {
   "skillName": "Combustion",
@@ -438,7 +446,7 @@
   "imgIcon": "dota-innate.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Lina_DOTA",
+  "heroCode": "Lina_DOTA",
   "skillTypes": "INNATE"
  },
  {
@@ -448,8 +456,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Lina_DOTA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Lina_DOTA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Light Strike Array",
@@ -458,8 +466,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Lina_DOTA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Lina_DOTA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Fiery Soul",
@@ -468,7 +476,7 @@
   "imgIcon": "skill3.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Lina_DOTA",
+  "heroCode": "Lina_DOTA",
   "skillTypes": "BUFF"
  },
  {
@@ -478,8 +486,8 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Lina_DOTA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Lina_DOTA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Flame Cloak",
@@ -488,7 +496,7 @@
   "imgIcon": "skill5.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Lina_DOTA",
+  "heroCode": "Lina_DOTA",
   "skillTypes": "BUFF"
  },
  {
@@ -498,7 +506,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Ashe_LOL",
+  "heroCode": "Ashe_LOL",
   "skillTypes": "INNATE"
  },
  {
@@ -508,7 +516,7 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Ashe_LOL",
+  "heroCode": "Ashe_LOL",
   "skillTypes": "BUFF"
  },
  {
@@ -518,8 +526,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Ashe_LOL",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Ashe_LOL",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Hawkshot",
@@ -528,8 +536,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Ashe_LOL",
-  "skillTypes": "HYBRID"
+  "heroCode": "Ashe_LOL",
+  "skillTypes": "UTILITY"
  },
  {
   "skillName": "Enchanted Crystal Arrow",
@@ -538,8 +546,8 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Ashe_LOL",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Ashe_LOL",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Battle Fervor",
@@ -548,7 +556,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "GuanYu_SMITE",
+  "heroCode": "GuanYu_SMITE",
   "skillTypes": "INNATE"
  },
  {
@@ -558,7 +566,7 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "GuanYu_SMITE",
+  "heroCode": "GuanYu_SMITE",
   "skillTypes": "HEALING"
  },
  {
@@ -568,8 +576,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "GuanYu_SMITE",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "GuanYu_SMITE",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Taolu Assault",
@@ -578,8 +586,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "GuanYu_SMITE",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "GuanYu_SMITE",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Cavalry Charge",
@@ -588,8 +596,8 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "GuanYu_SMITE",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "GuanYu_SMITE",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Vanish",
@@ -598,7 +606,7 @@
   "imgIcon": "passive.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Valeera_HOTS",
+  "heroCode": "Valeera_HOTS",
   "skillTypes": "INNATE"
  },
  {
@@ -608,8 +616,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Valeera_HOTS",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Valeera_HOTS",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Ambush",
@@ -618,8 +626,8 @@
   "imgIcon": "skill1-alt.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Valeera_HOTS",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Valeera_HOTS",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Blade Flurry",
@@ -628,8 +636,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Valeera_HOTS",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Valeera_HOTS",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Cheap Shot",
@@ -638,8 +646,8 @@
   "imgIcon": "skill2-alt.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Valeera_HOTS",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Valeera_HOTS",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Eviscerate",
@@ -648,8 +656,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Valeera_HOTS",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Valeera_HOTS",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Garrote",
@@ -658,8 +666,8 @@
   "imgIcon": "skill3-alt.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Valeera_HOTS",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Valeera_HOTS",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Smoke Bomb",
@@ -668,7 +676,7 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Valeera_HOTS",
+  "heroCode": "Valeera_HOTS",
   "skillTypes": "BUFF"
  },
  {
@@ -678,7 +686,7 @@
   "imgIcon": "skill4a.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Valeera_HOTS",
+  "heroCode": "Valeera_HOTS",
   "skillTypes": "BUFF"
  },
  {
@@ -688,7 +696,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Kaizer_HOK",
+  "heroCode": "Kaizer_HOK",
   "skillTypes": "INNATE"
  },
  {
@@ -698,8 +706,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Kaizer_HOK",
-  "skillTypes": "HYBRID"
+  "heroCode": "Kaizer_HOK",
+  "skillTypes": "DAMAGE, HEALING"
  },
  {
   "skillName": "Blade Tempest",
@@ -708,8 +716,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Kaizer_HOK",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Kaizer_HOK",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Invincible Warrior",
@@ -718,8 +726,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Kaizer_HOK",
-  "skillTypes": "OFFENSIVE, BUFF"
+  "heroCode": "Kaizer_HOK",
+  "skillTypes": "DAMAGE, BUFF"
  },
  {
   "skillName": "Shrouded Wings",
@@ -728,7 +736,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Kaine_AOV",
+  "heroCode": "Kaine_AOV",
   "skillTypes": "INNATE"
  },
  {
@@ -738,8 +746,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Kaine_AOV",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Kaine_AOV",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Bloodied Judgment",
@@ -748,8 +756,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Kaine_AOV",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Kaine_AOV",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Sanguinary End",
@@ -758,8 +766,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Kaine_AOV",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Kaine_AOV",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Super Magic",
@@ -768,7 +776,7 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Guinevere_MLBB",
+  "heroCode": "Guinevere_MLBB",
   "skillTypes": "INNATE"
  },
  {
@@ -778,8 +786,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Guinevere_MLBB",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Guinevere_MLBB",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Spatial Migration",
@@ -788,8 +796,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Guinevere_MLBB",
-  "skillTypes": "OFFENSIVE, HYBRID"
+  "heroCode": "Guinevere_MLBB",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Violet Requiem",
@@ -798,8 +806,8 @@
   "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Guinevere_MLBB",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Guinevere_MLBB",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Heart Blade",
@@ -808,43 +816,47 @@
   "imgIcon": "passive.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "Inugami_OA",
+  "heroCode": "Inugami_OA",
   "skillTypes": "INNATE"
  },
  {
   "skillName": "Power Up",
   "skillDescription": "Block damage from a direction while charging, gaining damage reduction. After the charge time ends or is interrupted, launch a sword wave to deal damage to enemies in its path and slows down enemies (scaling with how long the skill is charged). Charging for quite some time also gives you one stack of 'Pursuit'.",
   "skillSlot": 1,
+  "imgIcon": "skill1.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Inugami_OA",
-  "skillTypes": "HYBRID"
+  "heroCode": "Inugami_OA",
+  "skillTypes": "DAMAGE, UTILITY"
  },
  {
   "skillName": "Sky Slash",
   "skillDescription": "Perform a short leaping slash to a direction, dealing damage that can also procure a critical hit.",
   "skillSlot": 2,
+  "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Inugami_OA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "Inugami_OA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Rising Wind",
   "skillDescription": "Accelerate your movement speed temporarily and gains one 'Pursuit' stack.",
   "skillSlot": 3,
+  "imgIcon": "skill3.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "Inugami_OA",
+  "heroCode": "Inugami_OA",
   "skillTypes": "BUFF"
  },
  {
   "skillName": "Burning Rage",
   "skillDescription": "Enters 'Soul Burn' mode. During this duration, every attacks are counted as 'Heart Blade' and you gain movement speed and slow immunity. Duration can be extended by attacking enemies.",
   "skillSlot": 4,
+  "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "Inugami_OA",
+  "heroCode": "Inugami_OA",
   "skillTypes": "BUFF"
  },
  {
@@ -854,7 +866,7 @@
   "imgIcon": "dota-innate.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "CrystalMaiden_DOTA",
+  "heroCode": "CrystalMaiden_DOTA",
   "skillTypes": "INNATE"
  },
  {
@@ -864,8 +876,8 @@
   "imgIcon": "skill1.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "CrystalMaiden_DOTA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "CrystalMaiden_DOTA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Frostbite",
@@ -874,8 +886,8 @@
   "imgIcon": "skill2.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "CrystalMaiden_DOTA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "CrystalMaiden_DOTA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Arcane Aura",
@@ -884,7 +896,7 @@
   "imgIcon": "skill3.png",
   "isPassive": "Y",
   "isUltimate": "N",
-  "hero": "CrystalMaiden_DOTA",
+  "heroCode": "CrystalMaiden_DOTA",
   "skillTypes": "BUFF"
  },
  {
@@ -894,8 +906,8 @@
   "imgIcon": "skill4.png",
   "isPassive": "N",
   "isUltimate": "Y",
-  "hero": "CrystalMaiden_DOTA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "CrystalMaiden_DOTA",
+  "skillTypes": "DAMAGE"
  },
  {
   "skillName": "Crystal Clone",
@@ -904,7 +916,7 @@
   "imgIcon": "skill5.png",
   "isPassive": "N",
   "isUltimate": "N",
-  "hero": "CrystalMaiden_DOTA",
-  "skillTypes": "OFFENSIVE"
+  "heroCode": "CrystalMaiden_DOTA",
+  "skillTypes": "DAMAGE"
  }
 ]

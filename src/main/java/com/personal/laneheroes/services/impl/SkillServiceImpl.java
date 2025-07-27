@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -51,7 +52,7 @@ public class SkillServiceImpl implements SkillService {
     private String imageDir;
 
     @Override
-    public ResponseWrapper<Skill> addSkill(Skill skill, MultipartFile imgFile) {
+    public ResponseWrapper<Skill> addSkill(SkillJsonDTO skill, MultipartFile imgFile) {
         Skill dbSkill = new Skill();
         ResponseWrapper<?>[] responseHolder = new ResponseWrapper<?>[1];
 
@@ -59,16 +60,19 @@ public class SkillServiceImpl implements SkillService {
             return (ResponseWrapper<Skill>) responseHolder[0];
         }
 
-        Hero dbHero = heroService.getHeroById(skill.getHero().getId()).getData();
+        Hero dbHero = heroService.getHeroById(Long.parseLong(skill.getHeroId())).getData();
 
         dbSkill.setSkillName(skill.getSkillName());
         dbSkill.setSkillSlot(skill.getSkillSlot());
         dbSkill.setSkillDescription(skill.getSkillDescription());
         dbSkill.setIsPassive(skill.getIsPassive());
         dbSkill.setIsUltimate(skill.getIsUltimate());
-        dbSkill.setSkillTypes(skill.getSkillTypes());
+        dbSkill.setHero(dbHero);
 
-        boolean isDotaPassive = dbHero.getGame().getGameCode().equalsIgnoreCase("dota") && skill.getSkillTypes().contains(SkillType.INNATE);
+
+        dbSkill.setSkillTypes(convertStringToSkillTypeList(skill.getSkillTypes()));
+
+        boolean isDotaPassive = dbHero.getGame().getGameCode().equalsIgnoreCase("dota") && dbSkill.getSkillTypes().contains(SkillType.INNATE);
         if (isDotaPassive){
             dbSkill.setImgIcon("dota-innate.png");
         } else if (imgFile != null && !imgFile.isEmpty()){
@@ -90,8 +94,8 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public ResponseWrapper<Skill> updateSkill(Skill skill, MultipartFile imgFile){
-        Optional<Skill> skillPresence = skillRepository.findById(skill.getId());
+    public ResponseWrapper<Skill> updateSkill(SkillJsonDTO skill, MultipartFile imgFile){
+        Optional<Skill> skillPresence = skillRepository.findById(Long.parseLong(skill.getId()));
         if (skillPresence.isEmpty()){
             return new ResponseWrapper<>(ResponseMessages.SKILL_SINGLE + " "
                     + ResponseMessages.UPDATE_FAIL,
@@ -101,7 +105,7 @@ public class SkillServiceImpl implements SkillService {
         ResponseWrapper<?>[] responseHolder = new ResponseWrapper<?>[1];
 
 
-
+        boolean isDotaPassive = false;
 
         if (!assignRelatedEntities(skill, dbSkill, ResponseMessages.UPDATE_FAIL, responseHolder)) {
             return (ResponseWrapper<Skill>) responseHolder[0];
@@ -128,17 +132,21 @@ public class SkillServiceImpl implements SkillService {
         }
 
         if (skill.getSkillTypes() != null){
-            dbSkill.setSkillTypes(skill.getSkillTypes());
+            dbSkill.setSkillTypes(convertStringToSkillTypeList(skill.getSkillTypes()));
         }
 
-        Hero dbHero = heroService.getHeroById(dbSkill.getHero().getId()).getData();
 
-        boolean isDotaPassive = dbHero.getGame().getGameCode().equalsIgnoreCase("dota") && dbSkill.getSkillTypes().contains(SkillType.INNATE);
+
+        if (skill.getHeroId() != null){
+            dbSkill.setHero(heroService.getHeroById(Long.parseLong(skill.getHeroId())).getData());
+            isDotaPassive = dbSkill.getHero().getGame().getGameCode().equalsIgnoreCase("dota") && dbSkill.getSkillTypes().contains(SkillType.INNATE);
+        }
+
         if (isDotaPassive){
             dbSkill.setImgIcon("dota-innate.png");
         } else if (imgFile != null && !imgFile.isEmpty()){
-            String name = dbHero.getHeroCode().split("_")[0];
-            String folderPath = "skill"+ResponseMessages.DELIMITER+dbHero.getGame().getGameCode().toLowerCase()+ResponseMessages.DELIMITER+name.toLowerCase();
+            String name = dbSkill.getHero().getHeroCode().split("_")[0];
+            String folderPath = "skill"+ResponseMessages.DELIMITER+dbSkill.getHero().getGame().getGameCode().toLowerCase()+ResponseMessages.DELIMITER+name.toLowerCase();
             ResponseWrapper<String> uploadResult = Utility.uploadFile(imgFile, imageDir, folderPath);
             if (uploadResult.getStatus().equals(ResponseMessages.SUCCESS_STATUS)){
                 dbSkill.setImgIcon(uploadResult.getData());
@@ -169,8 +177,9 @@ public class SkillServiceImpl implements SkillService {
 
 
     @Override
-    public ResponseWrapper<List<Skill>> getAllSkills() {
+    public ResponseWrapper<List<SkillJsonDTO>> getAllSkills() {
         List<Skill> list = skillRepository.findAll();
+        List<SkillJsonDTO> dtos = new ArrayList<>();
         if (!list.isEmpty()){
             String successMessage = ResponseMessages.SEARCH_RESULTS + ": " + list.size() + " ";
             if (list.size() > 1){
@@ -178,40 +187,53 @@ public class SkillServiceImpl implements SkillService {
             } else {
                 successMessage += ResponseMessages.SKILL_SINGLE.toLowerCase();
             }
-            return new ResponseWrapper<>(successMessage, ResponseMessages.SUCCESS_STATUS, list);
+            for (Skill s : list){
+                dtos.add(convertSkillToDTO(s));
+            }
+            return new ResponseWrapper<>(successMessage, ResponseMessages.SUCCESS_STATUS, dtos);
         } else {
-            return new ResponseWrapper<>(ResponseMessages.NO_RESULTS,  ResponseMessages.SUCCESS_STATUS, list);
+            return new ResponseWrapper<>(ResponseMessages.NO_RESULTS,  ResponseMessages.SUCCESS_STATUS, dtos);
         }
     }
 
     @Override
-    public ResponseWrapper<Skill> getSkillById(Long id) {
+    public ResponseWrapper<SkillJsonDTO> getSkillById(Long id) {
         Optional<Skill> skillPresence = skillRepository.findById(id);
-        return skillPresence.map(
-                        skill -> new ResponseWrapper<>(ResponseMessages.SKILL_SINGLE
-                                + " " + ResponseMessages.FOUND,
-                                ResponseMessages.SUCCESS_STATUS, skill))
-                .orElseGet(() -> new ResponseWrapper<>(ResponseMessages.SKILL_SINGLE
-                        + " " + ResponseMessages.NOT_FOUND,
-                        ResponseMessages.FAIL_STATUS, null));
+        if (skillPresence.isEmpty()){
+            return new ResponseWrapper<>(ResponseMessages.SKILL_SINGLE
+                    + " " + ResponseMessages.NOT_FOUND,
+                    ResponseMessages.FAIL_STATUS, null);
+        }
+
+        SkillJsonDTO dto = convertSkillToDTO(skillPresence.get());
+
+        return new ResponseWrapper<>(ResponseMessages.SKILL_SINGLE
+                + " " + ResponseMessages.FOUND,
+                ResponseMessages.SUCCESS_STATUS, dto);
     }
 
     @Override
-    public ResponseWrapper<PagedResponse<Skill>> searchSkills(String name, Long heroId, Pageable pageable) {
+    public ResponseWrapper<PagedResponse<SkillJsonDTO>> searchSkills(String name, Long heroId, Pageable pageable) {
         Specification<Skill> spec = SkillSpecification.withFilters(name, heroId);
         Page<Skill> resultPage = skillRepository.findAll(spec, pageable);
-        PagedResponse<Skill> pagedResponse = new PagedResponse<>(resultPage);
 
         if (resultPage.hasContent()) {
+            // Convert only if there's content
+            Page<SkillJsonDTO> dtoPage = resultPage.map(this::convertSkillToDTO);
+            PagedResponse<SkillJsonDTO> pagedResponse = new PagedResponse<>(dtoPage);
+
             String successMessage = ResponseMessages.SEARCH_RESULTS + ": " + resultPage.getNumberOfElements() + " ";
             if (resultPage.getNumberOfElements() > 1) {
                 successMessage += ResponseMessages.SKILL_PLURAL.toLowerCase() + " out of " + resultPage.getTotalElements() + " " + ResponseMessages.SKILL_PLURAL.toLowerCase();
             } else {
                 successMessage += ResponseMessages.SKILL_SINGLE.toLowerCase() + " out of " + resultPage.getTotalElements() + " " + ResponseMessages.SKILL_SINGLE.toLowerCase();
             }
+
             return new ResponseWrapper<>(successMessage, ResponseMessages.SUCCESS_STATUS, pagedResponse);
         } else {
-            return new ResponseWrapper<>(ResponseMessages.NO_RESULTS, ResponseMessages.SUCCESS_STATUS, pagedResponse);
+            // Handle no content separately
+            PagedResponse<SkillJsonDTO> emptyResponse = new PagedResponse<>(Page.empty(pageable));
+            return new ResponseWrapper<>(ResponseMessages.NO_RESULTS, ResponseMessages.SUCCESS_STATUS, emptyResponse);
         }
     }
 
@@ -255,8 +277,8 @@ public class SkillServiceImpl implements SkillService {
         List<Skill> skills = new ArrayList<>();
 
         for (SkillJsonDTO dto : skillDTOs) {
-            Hero hero = heroRepository.findByHeroCodeIgnoreCase(dto.hero)
-                    .orElseThrow(() -> new RuntimeException("Hero not found: " + dto.hero));
+            Hero hero = heroRepository.findByHeroCodeIgnoreCase(dto.getHeroCode())
+                    .orElseThrow(() -> new RuntimeException("Hero not found: " + dto.getHeroCode()));
 
 
             Skill skill = new Skill();
@@ -266,6 +288,7 @@ public class SkillServiceImpl implements SkillService {
             skill.setSkillDescription(dto.skillDescription);
             skill.setIsPassive(dto.isPassive);
             skill.setIsUltimate(dto.isUltimate);
+            skill.setImgIcon(dto.imgIcon);
             skill.setSkillTypes(convertStringToSkillTypeList(dto.skillTypes));
             skill.setHero(hero);
 
@@ -285,12 +308,18 @@ public class SkillServiceImpl implements SkillService {
         return false;
     }
 
-    private boolean assignRelatedEntities(Skill source, Skill target, String failMsg, ResponseWrapper<?>[] responseHolder) {
-        if (source.getHero() != null) {
-            Optional<Hero> hero = Utility.getValidEntityById(
-                    heroRepository, source.getHero().getId(),
-                    ResponseMessages.HERO_SINGLE, failMsg, responseHolder);
-            if (hero.isEmpty()) return false;
+    private boolean assignRelatedEntities(SkillJsonDTO sourceDto, Skill target, String failMsg, ResponseWrapper<?>[] responseHolder) {
+        if (sourceDto.getHeroCode() != null && !sourceDto.getHeroCode().isBlank()) {
+            // Lookup hero using heroCode (String)
+            Optional<Hero> hero = heroRepository.findByHeroCodeIgnoreCase(sourceDto.getHeroCode());
+            if (hero.isEmpty()) {
+                responseHolder[0] = new ResponseWrapper<>(
+                        ResponseMessages.HERO_SINGLE + " " + failMsg + ": ID is invalid",
+                        ResponseMessages.FAIL_STATUS,
+                        null
+                );
+                return false;
+            }
             target.setHero(hero.get());
         }
 
@@ -357,6 +386,32 @@ public class SkillServiceImpl implements SkillService {
             }
         }
         return skillTypes;
+    }
+
+    private SkillJsonDTO convertSkillToDTO(Skill skill) {
+        SkillJsonDTO dto = new SkillJsonDTO();
+
+        dto.id = Long.toString(skill.getId());
+        dto.skillName = skill.getSkillName();
+        dto.skillDescription = skill.getSkillDescription();
+        dto.skillSlot = skill.getSkillSlot();
+        dto.imgIcon = skill.getImgIcon();
+        dto.isPassive = skill.getIsPassive();
+        dto.isUltimate = skill.getIsUltimate();
+
+        // Skill types to comma-separated or list string
+        dto.skillTypes = skill.getSkillTypes().stream()
+                .map(Enum::name)
+                .collect(Collectors.joining(","));  // or use List<String> in DTO if you prefer
+
+        // Hero (store hero code or ID, up to you)
+        if (skill.getHero() != null){
+            dto.heroCode = skill.getHero().getHeroCode();
+            dto.heroId = Long.toString(skill.getHero().getId());
+            dto.heroImgIcon = skill.getHero().getImgIcon();
+        }
+
+        return dto;
     }
 
 

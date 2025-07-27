@@ -9,14 +9,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SkillJsonDTO {
+    public String id;
     public String skillName;
     public String skillDescription;
-    public int skillSlot;
+    public Integer skillSlot;
     public String imgIcon;
     public String isPassive;
     public String isUltimate;
     public String skillTypes;
-    public String hero;
+    public String heroCode;
+    public String heroId;
+    public String heroImgIcon;
 
 }
 

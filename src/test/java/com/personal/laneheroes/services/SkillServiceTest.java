@@ -2,6 +2,7 @@ package com.personal.laneheroes.services;
 
 import com.personal.laneheroes.config.TestMockConfig;
 import com.personal.laneheroes.dto.PagedResponse;
+import com.personal.laneheroes.dto.SkillJsonDTO;
 import com.personal.laneheroes.dto.UploadResult;
 import com.personal.laneheroes.entities.*;
 import com.personal.laneheroes.enums.SkillType;
@@ -76,6 +77,20 @@ public class SkillServiceTest {
         return skill;
     }
 
+    SkillJsonDTO setupSkillJson(Hero hero, String skillType){
+        SkillJsonDTO skill = new SkillJsonDTO();
+        skill.setId("1");
+        skill.setSkillName("This Skill Exists");
+        skill.setSkillDescription("Description");
+        skill.setSkillSlot(0);
+        skill.setIsPassive("Y");
+        skill.setIsUltimate("N");
+        skill.setSkillTypes(skillType);
+        skill.setHeroCode(hero.getHeroCode());
+        skill.setHeroId(Long.toString(hero.getId()));
+        return skill;
+    }
+
     Hero setupHero(String code){
         Hero hero = new Hero();
         hero.setId(1L);
@@ -109,13 +124,16 @@ public class SkillServiceTest {
     void addSkill_test_1(){
         MockMultipartFile mockFile = setupFile("skill-icon.png", "fake image content".getBytes());
         Hero hero = setupHero("TG");
-        Skill skill = setupSkill(hero, SkillType.OFFENSIVE);
+        Skill skill = setupSkill(hero, SkillType.DAMAGE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.addSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.addSkill(skillJson, mockFile);
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -124,11 +142,11 @@ public class SkillServiceTest {
     void addSkill_test_2(){
         MockMultipartFile mockFile = setupFile("skill-icon.png", "fake image content".getBytes());
         Hero hero = setupHero("TG");
-        Skill skill = setupSkill(hero, SkillType.OFFENSIVE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
-        when(heroRepository.findById(any())).thenReturn(Optional.empty());
-        ResponseWrapper<Skill> trial = skillService.addSkill(skill, mockFile);
-        verify(heroRepository).findById(any());
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.empty());
+        ResponseWrapper<Skill> trial = skillService.addSkill(skillJson, mockFile);
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.FAIL_STATUS, trial.getStatus());
     }
@@ -138,12 +156,15 @@ public class SkillServiceTest {
         MockMultipartFile mockFile = setupFile("skill-icon.png", "fake image content".getBytes());
         Hero hero = setupHero("TG");
         Skill skill = setupSkill(hero, SkillType.INNATE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.addSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.addSkill(skillJson, mockFile);
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -153,12 +174,15 @@ public class SkillServiceTest {
         MockMultipartFile mockFile = setupFile("skill-icon.png", "fake image content".getBytes());
         Hero hero = setupHero("dota");
         Skill skill = setupSkill(hero, SkillType.INNATE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "INNATE");
 
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.addSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.addSkill(skillJson, mockFile);
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -168,12 +192,15 @@ public class SkillServiceTest {
         MockMultipartFile mockFile = setupFile("skill-icon.doc", "fake image content".getBytes());
         Hero hero = setupHero("EG");
         Skill skill = setupSkill(hero, SkillType.INNATE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.addSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.addSkill(skillJson, mockFile);
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -183,12 +210,15 @@ public class SkillServiceTest {
         MockMultipartFile mockFile = setupFile("skill-icon.png", new byte[0]);
         Hero hero = setupHero("EG");
         Skill skill = setupSkill(hero, SkillType.INNATE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.addSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.addSkill(skillJson, mockFile);
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -198,12 +228,15 @@ public class SkillServiceTest {
         MockMultipartFile mockFile = setupFile("skill-icon.png", new byte[0]);
         Hero hero = setupHero("EG");
         Skill skill = setupSkill(hero, SkillType.INNATE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.addSkill(skill, null);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.addSkill(skillJson, null);
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -218,15 +251,18 @@ public class SkillServiceTest {
     void updateSkill_test_1(){
         MockMultipartFile mockFile = setupFile("skill-icon.png", "fake image content".getBytes());
         Hero hero = setupHero("TG");
-        Skill skill = setupSkill(hero, SkillType.OFFENSIVE);
+        Skill skill = setupSkill(hero, SkillType.DAMAGE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
         when(skillRepository.findById(any())).thenReturn(Optional.of(skill));
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.updateSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.updateSkill(skillJson, mockFile);
         verify(skillRepository).findById(any());
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -235,10 +271,10 @@ public class SkillServiceTest {
     void updateSkill_test_2(){
         MockMultipartFile mockFile = setupFile("skill-icon.png", "fake image content".getBytes());
         Hero hero = setupHero("TG");
-        Skill skill = setupSkill(hero, SkillType.OFFENSIVE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
         when(skillRepository.findById(any())).thenReturn(Optional.empty());
-        ResponseWrapper<Skill> trial = skillService.updateSkill(skill, mockFile);
+        ResponseWrapper<Skill> trial = skillService.updateSkill(skillJson, mockFile);
         verify(skillRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.FAIL_STATUS, trial.getStatus());
@@ -248,13 +284,14 @@ public class SkillServiceTest {
     void updateSkill_test_3(){
         MockMultipartFile mockFile = setupFile("skill-icon.png", "fake image content".getBytes());
         Hero hero = setupHero("TG");
-        Skill skill = setupSkill(hero, SkillType.OFFENSIVE);
+        Skill skill = setupSkill(hero, SkillType.DAMAGE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
 
         when(skillRepository.findById(any())).thenReturn(Optional.of(skill));
-        when(heroRepository.findById(any())).thenReturn(Optional.empty());
-        ResponseWrapper<Skill> trial = skillService.updateSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.empty());
+        ResponseWrapper<Skill> trial = skillService.updateSkill(skillJson, mockFile);
         verify(skillRepository).findById(any());
-        verify(heroRepository).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.FAIL_STATUS, trial.getStatus());
     }
@@ -263,7 +300,8 @@ public class SkillServiceTest {
     void updateSkill_test_4(){
         MockMultipartFile mockFile = setupFile("skill-icon.doc", "fake image content".getBytes());
         Hero hero = setupHero("TG");
-        Skill skill = setupSkill(hero, SkillType.OFFENSIVE);
+        Skill skill = setupSkill(hero, SkillType.DAMAGE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
         skill.setSkillName(null);
         skill.setSkillDescription(null);
         skill.setIsPassive(null);
@@ -271,14 +309,23 @@ public class SkillServiceTest {
         skill.setSkillSlot(null);
         skill.setSkillTypes(null);
 
+        skillJson.setSkillName(null);
+        skillJson.setSkillDescription(null);
+        skillJson.setIsPassive(null);
+        skillJson.setIsUltimate(null);
+        skillJson.setSkillSlot(null);
+        skillJson.setSkillTypes(null);
+
 
         when(skillRepository.findById(any())).thenReturn(Optional.of(skill));
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.updateSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.updateSkill(skillJson, mockFile);
         verify(skillRepository).findById(any());
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -287,7 +334,9 @@ public class SkillServiceTest {
     void updateSkill_test_5(){
         MockMultipartFile mockFile = setupFile("", new byte[0]);
         Hero hero = setupHero("TG");
-        Skill skill = setupSkill(hero, SkillType.OFFENSIVE);
+        Skill skill = setupSkill(hero, SkillType.DAMAGE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
+
         skill.setSkillName(null);
         skill.setSkillDescription(null);
         skill.setIsPassive(null);
@@ -295,14 +344,23 @@ public class SkillServiceTest {
         skill.setSkillSlot(null);
         skill.setSkillTypes(null);
 
+        skillJson.setSkillName(null);
+        skillJson.setSkillDescription(null);
+        skillJson.setIsPassive(null);
+        skillJson.setIsUltimate(null);
+        skillJson.setSkillSlot(null);
+        skillJson.setSkillTypes(null);
+
 
         when(skillRepository.findById(any())).thenReturn(Optional.of(skill));
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.updateSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.updateSkill(skillJson, mockFile);
         verify(skillRepository).findById(any());
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -310,7 +368,9 @@ public class SkillServiceTest {
     @Test
     void updateSkill_test_6(){
         Hero hero = setupHero("TG");
-        Skill skill = setupSkill(hero, SkillType.OFFENSIVE);
+        Skill skill = setupSkill(hero, SkillType.DAMAGE);
+        SkillJsonDTO skillJson = setupSkillJson(hero, "DAMAGE");
+
         skill.setSkillName(null);
         skill.setSkillDescription(null);
         skill.setIsPassive(null);
@@ -318,14 +378,22 @@ public class SkillServiceTest {
         skill.setSkillSlot(null);
         skill.setSkillTypes(null);
 
+        skillJson.setSkillName(null);
+        skillJson.setSkillDescription(null);
+        skillJson.setIsPassive(null);
+        skillJson.setIsUltimate(null);
+        skillJson.setSkillSlot(null);
+        skillJson.setSkillTypes(null);
+        skillJson.setHeroId(null);
+
 
         when(skillRepository.findById(any())).thenReturn(Optional.of(skill));
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
-        when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.updateSkill(skill, null);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.updateSkill(skillJson, null);
         verify(skillRepository).findById(any());
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -336,20 +404,31 @@ public class SkillServiceTest {
         Hero hero = setupHero("dota");
 
         Skill skill = setupSkill(hero, SkillType.INNATE);
+
+        SkillJsonDTO skillJson = setupSkillJson(hero, "INNATE");
+
         skill.setSkillName(null);
         skill.setSkillDescription(null);
         skill.setIsPassive(null);
         skill.setIsUltimate(null);
         skill.setSkillSlot(null);
 
+        skillJson.setSkillName(null);
+        skillJson.setSkillDescription(null);
+        skillJson.setIsPassive(null);
+        skillJson.setIsUltimate(null);
+        skillJson.setSkillSlot(null);
+
 
         when(skillRepository.findById(any())).thenReturn(Optional.of(skill));
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
         when(heroRepository.findById(any())).thenReturn(Optional.of(hero));
-        ResponseWrapper<Skill> trial = skillService.updateSkill(skill, mockFile);
+        when(heroRepository.findByHeroCodeIgnoreCase(any())).thenReturn(Optional.of(hero));
+        ResponseWrapper<Skill> trial = skillService.updateSkill(skillJson, mockFile);
         verify(skillRepository).findById(any());
         verify(skillRepository).save(any(Skill.class));
-        verify(heroRepository, times(2)).findById(any());
+        verify(heroRepository).findByHeroCodeIgnoreCase(any());
+        verify(heroRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
     }
@@ -393,7 +472,7 @@ public class SkillServiceTest {
     void getAllSkills_test_1(){
         Hero hero = setupHero("EG");
         Skill skill = setupSkill(hero, SkillType.INNATE);
-        Skill skill2 = setupSkill(hero, SkillType.OFFENSIVE);
+        Skill skill2 = setupSkill(hero, SkillType.DAMAGE);
 
 
         List<Skill> skills = new ArrayList();
@@ -402,7 +481,7 @@ public class SkillServiceTest {
 
         when(skillRepository.findAll()).thenReturn(skills);
 
-        ResponseWrapper<List<Skill>> trial = skillService.getAllSkills();
+        ResponseWrapper<List<SkillJsonDTO>> trial = skillService.getAllSkills();
 
         verify(skillRepository).findAll();
         assertNotNull(trial);
@@ -419,7 +498,7 @@ public class SkillServiceTest {
 
         when(skillRepository.findAll()).thenReturn(skills);
 
-        ResponseWrapper<List<Skill>> trial = skillService.getAllSkills();
+        ResponseWrapper<List<SkillJsonDTO>> trial = skillService.getAllSkills();
 
         verify(skillRepository).findAll();
         assertNotNull(trial);
@@ -432,7 +511,7 @@ public class SkillServiceTest {
 
         when(skillRepository.findAll()).thenReturn(skills);
 
-        ResponseWrapper<List<Skill>> trial = skillService.getAllSkills();
+        ResponseWrapper<List<SkillJsonDTO>> trial = skillService.getAllSkills();
 
         verify(skillRepository).findAll();
         assertNotNull(trial);
@@ -451,7 +530,7 @@ public class SkillServiceTest {
         Skill skill = setupSkill(hero, SkillType.INNATE);
 
         when(skillRepository.findById(any())).thenReturn(Optional.of(skill));
-        ResponseWrapper<Skill> trial = skillService.getSkillById(skill.getId());
+        ResponseWrapper<SkillJsonDTO> trial = skillService.getSkillById(skill.getId());
         verify(skillRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.SUCCESS_STATUS, trial.getStatus());
@@ -461,7 +540,7 @@ public class SkillServiceTest {
     void getSkillById_test_2(){
 
         when(skillRepository.findById(any())).thenReturn(Optional.empty());
-        ResponseWrapper<Skill> trial = skillService.getSkillById(any());
+        ResponseWrapper<SkillJsonDTO> trial = skillService.getSkillById(any());
         verify(skillRepository).findById(any());
         assertNotNull(trial);
         assertEquals(ResponseMessages.FAIL_STATUS, trial.getStatus());
@@ -477,7 +556,7 @@ public class SkillServiceTest {
     void searchSkills_test_1(){
         Hero hero = setupHero("EG");
         Skill skill = setupSkill(hero, SkillType.INNATE);
-        Skill skill2 = setupSkill(hero, SkillType.OFFENSIVE);
+        Skill skill2 = setupSkill(hero, SkillType.DAMAGE);
 
         List<Skill> skills = new ArrayList();
         skills.add(skill);
@@ -488,7 +567,7 @@ public class SkillServiceTest {
         when(skillRepository.findAll(any(Specification.class), any(Pageable.class)))
                 .thenReturn(skillPage);
 
-        ResponseWrapper<PagedResponse<Skill>> trial
+        ResponseWrapper<PagedResponse<SkillJsonDTO>> trial
                 = skillService.searchSkills("skill-name", null, PageRequest.of(0, 10));
 
         verify(skillRepository).findAll(any(Specification.class), any(Pageable.class));
@@ -509,7 +588,7 @@ public class SkillServiceTest {
         when(skillRepository.findAll(any(Specification.class), any(Pageable.class)))
                 .thenReturn(skillPage);
 
-        ResponseWrapper<PagedResponse<Skill>> trial
+        ResponseWrapper<PagedResponse<SkillJsonDTO>> trial
                 = skillService.searchSkills("skill-name", null,  PageRequest.of(0, 10));
 
         verify(skillRepository).findAll(any(Specification.class), any(Pageable.class));
@@ -527,7 +606,7 @@ public class SkillServiceTest {
         when(skillRepository.findAll(any(Specification.class), any(Pageable.class)))
                 .thenReturn(skillPage);
 
-        ResponseWrapper<PagedResponse<Skill>> trial
+        ResponseWrapper<PagedResponse<SkillJsonDTO>> trial
                 = skillService.searchSkills("skill-name", null, PageRequest.of(0, 10));
 
         verify(skillRepository).findAll(any(Specification.class), any(Pageable.class));

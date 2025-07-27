@@ -17,7 +17,7 @@
     "isPassive": "N",
     "isUltimate": "N",
     "hero": "hero_EG",
-    "skillTypes": "OFFENSIVE"
+    "skillTypes": "DAMAGE"
   },
   {
     "skillName": "Skill-A-2",
@@ -27,7 +27,7 @@
     "isPassive": "Y",
     "isUltimate": "N",
     "hero": "hero_EG",
-    "skillTypes": "BUFF, OFFENSIVE"
+    "skillTypes": "BUFF, DAMAGE"
   },
   {
     "skillName": "Skill-A-3",
@@ -47,7 +47,7 @@
     "isPassive": "N",
     "isUltimate": "Y",
     "hero": "hero_EG",
-    "skillTypes": "BUFF, OFFENSIVE"
+    "skillTypes": "BUFF, DAMAGE"
   },
   {
     "skillName": "Passive-B-1",
@@ -67,7 +67,7 @@
     "isPassive": "N",
     "isUltimate": "N",
     "hero": "hero2_EG",
-    "skillTypes": "OFFENSIVE"
+    "skillTypes": "DAMAGE"
   },
   {
     "skillName": "Skill-B-2",
@@ -77,7 +77,7 @@
     "isPassive": "N",
     "isUltimate": "N",
     "hero": "hero2_EG",
-    "skillTypes": "OFFENSIVE"
+    "skillTypes": "DAMAGE"
   },
   {
     "skillName": "Skill-B-3",
@@ -87,6 +87,6 @@
     "isPassive": "N",
     "isUltimate": "N",
     "hero": "hero2_EG",
-    "skillTypes": "OFFENSIVE"
+    "skillTypes": "DAMAGE"
   }
 ]

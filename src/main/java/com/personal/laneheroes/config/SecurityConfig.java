@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
+                /*.authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/laneheroes/api/auth/**",
                                 "/laneHeroes/api/auth/**",
@@ -38,7 +38,7 @@ public class SecurityConfig {
                                 "/laneHeroes/images/**"
                         ).permitAll()
                         .anyRequest().authenticated()
-                )
+                )*/
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

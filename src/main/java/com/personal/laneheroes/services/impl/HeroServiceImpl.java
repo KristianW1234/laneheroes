@@ -15,7 +15,6 @@ import com.personal.laneheroes.specifications.HeroSpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +34,6 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class HeroServiceImpl implements HeroService {
 
 
@@ -46,7 +44,11 @@ public class HeroServiceImpl implements HeroService {
 
     private final ObjectMapper objectMapper;
 
-
+    public HeroServiceImpl(HeroRepository heroRepository, GameRepository gameRepository, ObjectMapper objectMapper) {
+        this.heroRepository = heroRepository;
+        this.gameRepository = gameRepository;
+        this.objectMapper = objectMapper;
+    }
 
     @Value("${image-dir}")
     private String imageDir;
@@ -284,19 +286,19 @@ public class HeroServiceImpl implements HeroService {
         List<Hero> heroes = new ArrayList<>();
 
         for (HeroJsonDTO dto : heroDTOs) {
-            Game game = gameRepository.findByGameNameIgnoreCase(dto.game)
-                    .orElseThrow(() -> new RuntimeException("Game not found: " + dto.game));
+            Game game = gameRepository.findByGameNameIgnoreCase(dto.getGame())
+                    .orElseThrow(() -> new RuntimeException("Game not found: " + dto.getGame()));
 
             Hero hero = new Hero();
-            hero.setHeroCode(dto.heroCode);
-            hero.setHeroName(dto.heroName);
-            hero.setHeroTitle(dto.heroTitle);
-            hero.setHeroGender(dto.heroGender);
+            hero.setHeroCode(dto.getHeroCode());
+            hero.setHeroName(dto.getHeroName());
+            hero.setHeroTitle(dto.getHeroTitle());
+            hero.setHeroGender(dto.getHeroGender());
             hero.setGame(game);
-            hero.setImgIcon(dto.imgIcon);
-            hero.setHeroDescription(dto.heroDescription);
-            hero.setHeroLore(dto.heroLore);
-            hero.setDisplayByTitle(dto.displayByTitle);
+            hero.setImgIcon(dto.getImgIcon());
+            hero.setHeroDescription(dto.getHeroDescription());
+            hero.setHeroLore(dto.getHeroLore());
+            hero.setDisplayByTitle(dto.getDisplayByTitle());
 
             heroes.add(hero);
         }

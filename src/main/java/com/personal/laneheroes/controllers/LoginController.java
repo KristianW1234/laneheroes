@@ -7,7 +7,6 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.LoginService;
 import com.personal.laneheroes.utilities.JwtUtil;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,12 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/laneHeroes/api/auth")
-@RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
+
+    public LoginController(LoginService loginService, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
+        this.loginService = loginService;
+        this.jwtUtil = jwtUtil;
+        this.authenticationManager = authenticationManager;
+    }
 
     /*@PostMapping("/login")
     public ResponseEntity<ResponseWrapper<LoginResponse>> login(@RequestBody @Valid LoginRequest loginRequest) {

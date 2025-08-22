@@ -6,7 +6,6 @@ import com.personal.laneheroes.enums.Gender;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.HeroService;
 import com.personal.laneheroes.utilities.Utility;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +15,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/hero")
-@RequiredArgsConstructor
 public class HeroController {
 
     private final HeroService heroService;
+
+    public HeroController(HeroService heroService) {
+        this.heroService = heroService;
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<Hero>>> getAllHeroes() {

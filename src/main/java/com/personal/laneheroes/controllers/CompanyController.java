@@ -5,7 +5,6 @@ import com.personal.laneheroes.entities.Company;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.CompanyService;
 import com.personal.laneheroes.utilities.Utility;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +14,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/company")
-@RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService companyService;
+
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<Company>>> getAllCompanies() {

@@ -5,7 +5,6 @@ import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +15,12 @@ import java.io.File;
 
 @RestController
 @RequestMapping("/laneHeroes/api/admin")
-@RequiredArgsConstructor
 public class AdminController {
     private final AdminService adminService;
+
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
     @PostMapping(value = "/batch-upload-all", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseWrapper<String>> uploadAllData(

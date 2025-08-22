@@ -17,9 +17,9 @@ import com.personal.laneheroes.specifications.GameSpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +37,6 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
@@ -49,6 +48,15 @@ public class GameServiceImpl implements GameService {
     private final CompanyRepository companyRepository;
 
     private final ObjectMapper objectMapper;
+
+    @Autowired
+    public GameServiceImpl(GameRepository gameRepository, CallsignRepository callsignRepository, PlatformRepository platformRepository, CompanyRepository companyRepository, ObjectMapper objectMapper) {
+        this.gameRepository = gameRepository;
+        this.callsignRepository = callsignRepository;
+        this.platformRepository = platformRepository;
+        this.companyRepository = companyRepository;
+        this.objectMapper = objectMapper;
+    }
 
     @Value("${image-dir}")
     private String imageDir;
@@ -225,19 +233,19 @@ public class GameServiceImpl implements GameService {
         List<Game> games = new ArrayList<>();
 
         for (GameJsonDTO dto : gameDTOs) {
-            Company company = companyRepository.findByCompanyNameIgnoreCase(dto.company)
-                    .orElseThrow(() -> new RuntimeException("Company not found: " + dto.company));
+            Company company = companyRepository.findByCompanyNameIgnoreCase(dto.getCompany())
+                    .orElseThrow(() -> new RuntimeException("Company not found: " + dto.getCompany()));
 
-            Callsign callsign = callsignRepository.findByCallsignIgnoreCase(dto.callsign)
-                    .orElseThrow(() -> new RuntimeException("Callsign not found: " + dto.callsign));
+            Callsign callsign = callsignRepository.findByCallsignIgnoreCase(dto.getCallsign())
+                    .orElseThrow(() -> new RuntimeException("Callsign not found: " + dto.getCallsign()));
 
-            Platform platform = platformRepository.findByPlatformNameIgnoreCase(dto.platform)
-                    .orElseThrow(() -> new RuntimeException("Platform not found: " + dto.platform));
+            Platform platform = platformRepository.findByPlatformNameIgnoreCase(dto.getPlatform())
+                    .orElseThrow(() -> new RuntimeException("Platform not found: " + dto.getPlatform()));
 
             Game game = new Game();
-            game.setGameCode(dto.gameCode);
-            game.setGameName(dto.gameName);
-            game.setImgIcon(dto.imgIcon);
+            game.setGameCode(dto.getGameCode());
+            game.setGameName(dto.getGameName());
+            game.setImgIcon(dto.getImgIcon());
             game.setCompany(company);
             game.setCallsign(callsign);
             game.setPlatform(platform);

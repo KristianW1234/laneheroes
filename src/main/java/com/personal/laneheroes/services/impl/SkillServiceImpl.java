@@ -16,9 +16,9 @@ import com.personal.laneheroes.specifications.SkillSpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class SkillServiceImpl implements SkillService {
 
     private final SkillRepository skillRepository;
@@ -47,6 +46,14 @@ public class SkillServiceImpl implements SkillService {
     private final ObjectMapper objectMapper;
 
     private final HeroService heroService;
+
+    @Autowired
+    public SkillServiceImpl(SkillRepository skillRepository, HeroRepository heroRepository, ObjectMapper objectMapper, HeroService heroService) {
+        this.skillRepository = skillRepository;
+        this.heroRepository = heroRepository;
+        this.objectMapper = objectMapper;
+        this.heroService = heroService;
+    }
 
     @Value("${image-dir}")
     private String imageDir;
@@ -283,13 +290,13 @@ public class SkillServiceImpl implements SkillService {
 
             Skill skill = new Skill();
 
-            skill.setSkillName(dto.skillName);
-            skill.setSkillSlot(dto.skillSlot);
-            skill.setSkillDescription(dto.skillDescription);
-            skill.setIsPassive(dto.isPassive);
-            skill.setIsUltimate(dto.isUltimate);
-            skill.setImgIcon(dto.imgIcon);
-            skill.setSkillTypes(convertStringToSkillTypeList(dto.skillTypes));
+            skill.setSkillName(dto.getSkillName());
+            skill.setSkillSlot(dto.getSkillSlot());
+            skill.setSkillDescription(dto.getSkillDescription());
+            skill.setIsPassive(dto.getIsPassive());
+            skill.setIsUltimate(dto.getIsUltimate());
+            skill.setImgIcon(dto.getImgIcon());
+            skill.setSkillTypes(convertStringToSkillTypeList(dto.getSkillTypes()));
             skill.setHero(hero);
 
             skills.add(skill);
@@ -391,24 +398,24 @@ public class SkillServiceImpl implements SkillService {
     private SkillJsonDTO convertSkillToDTO(Skill skill) {
         SkillJsonDTO dto = new SkillJsonDTO();
 
-        dto.id = Long.toString(skill.getId());
-        dto.skillName = skill.getSkillName();
-        dto.skillDescription = skill.getSkillDescription();
-        dto.skillSlot = skill.getSkillSlot();
-        dto.imgIcon = skill.getImgIcon();
-        dto.isPassive = skill.getIsPassive();
-        dto.isUltimate = skill.getIsUltimate();
+        dto.setId(Long.toString(skill.getId()));
+        dto.setSkillName(skill.getSkillName());
+        dto.setSkillDescription(skill.getSkillDescription());
+        dto.setSkillSlot(skill.getSkillSlot());
+        dto.setImgIcon(skill.getImgIcon());
+        dto.setIsPassive(skill.getIsPassive());
+        dto.setIsUltimate(skill.getIsUltimate());
 
         // Skill types to comma-separated or list string
-        dto.skillTypes = skill.getSkillTypes().stream()
+        dto.setSkillTypes(skill.getSkillTypes().stream()
                 .map(Enum::name)
-                .collect(Collectors.joining(","));  // or use List<String> in DTO if you prefer
+                .collect(Collectors.joining(",")));  // or use List<String> in DTO if you prefer);
 
         // Hero (store hero code or ID, up to you)
         if (skill.getHero() != null){
-            dto.heroCode = skill.getHero().getHeroCode();
-            dto.heroId = Long.toString(skill.getHero().getId());
-            dto.heroImgIcon = skill.getHero().getImgIcon();
+            dto.setHeroCode(skill.getHero().getHeroCode());
+            dto.setHeroId(Long.toString(skill.getHero().getId()));
+            dto.setHeroImgIcon(skill.getHero().getImgIcon());
         }
 
         return dto;

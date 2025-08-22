@@ -6,12 +6,11 @@ import com.personal.laneheroes.repositories.*;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.*;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
     private final CompanyService companyService;
@@ -39,6 +38,23 @@ public class AdminServiceImpl implements AdminService {
     private final UserRepository userRepository;
 
     private final SkillRepository skillRepository;
+
+    @Autowired
+    public AdminServiceImpl(CompanyService companyService, CallsignService callsignService, PlatformService platformService, GameService gameService, HeroService heroService, SkillService skillService, CompanyRepository companyRepository, CallsignRepository callsignRepository, PlatformRepository platformRepository, GameRepository gameRepository, HeroRepository heroRepository, UserRepository userRepository, SkillRepository skillRepository) {
+        this.companyService = companyService;
+        this.callsignService = callsignService;
+        this.platformService = platformService;
+        this.gameService = gameService;
+        this.heroService = heroService;
+        this.skillService = skillService;
+        this.companyRepository = companyRepository;
+        this.callsignRepository = callsignRepository;
+        this.platformRepository = platformRepository;
+        this.gameRepository = gameRepository;
+        this.heroRepository = heroRepository;
+        this.userRepository = userRepository;
+        this.skillRepository = skillRepository;
+    }
 
     @Override
     public String uploadAllData(String companyPath, String callsignPath, String platformPath, String gamePath, String heroPath, String skillPath) {

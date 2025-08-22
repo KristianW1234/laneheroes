@@ -4,7 +4,6 @@ import com.personal.laneheroes.entities.Callsign;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.CallsignService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/callsign")
-@RequiredArgsConstructor
 public class CallsignController {
     private final CallsignService callsignService;
+
+    public CallsignController(CallsignService callsignService) {
+        this.callsignService = callsignService;
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<Callsign>>> getAllCallsigns() {

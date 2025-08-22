@@ -9,12 +9,12 @@ import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.CallsignService;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -26,13 +26,17 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CallsignServiceImpl implements CallsignService {
 
     private final CallsignRepository callsignRepository;
 
     private final ObjectMapper objectMapper;
 
+    @Autowired
+    public CallsignServiceImpl(CallsignRepository callsignRepository, ObjectMapper objectMapper) {
+        this.callsignRepository = callsignRepository;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public ResponseWrapper<Callsign> addCallsign(Callsign callsign) {

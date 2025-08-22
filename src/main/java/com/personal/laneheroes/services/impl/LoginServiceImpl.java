@@ -9,18 +9,19 @@ import com.personal.laneheroes.services.LoginService;
 import com.personal.laneheroes.utilities.PasswordUtil;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
     private final UserRepository userRepository;
 
+    public LoginServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public ResponseWrapper<LoginResponse> authenticate(LoginRequest request) {

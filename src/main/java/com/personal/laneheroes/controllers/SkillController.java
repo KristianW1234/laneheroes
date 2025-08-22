@@ -6,7 +6,6 @@ import com.personal.laneheroes.entities.Skill;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.SkillService;
 import com.personal.laneheroes.utilities.Utility;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +15,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/skill")
-@RequiredArgsConstructor
 public class SkillController {
 
     private final SkillService skillService;
+
+    public SkillController(SkillService skillService) {
+        this.skillService = skillService;
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<SkillJsonDTO>>> getAllSkills() {

@@ -3,17 +3,9 @@ package com.personal.laneheroes.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 @Entity
 @Table(name="game")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Accessors(chain = true)
 public class Game {
 
     @Id
@@ -46,4 +38,60 @@ public class Game {
 
     @Column(name = "IMG_ICON")
     private String imgIcon;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public Callsign getCallsign() {
+        return callsign;
+    }
+
+    public void setCallsign(Callsign callsign) {
+        this.callsign = callsign;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
+    }
+
+    public String getGameCode() {
+        return gameCode;
+    }
+
+    public void setGameCode(String gameCode) {
+        this.gameCode = gameCode;
+    }
+
+    public String getImgIcon() {
+        return imgIcon;
+    }
+
+    public void setImgIcon(String imgIcon) {
+        this.imgIcon = imgIcon;
+    }
 }

@@ -4,7 +4,6 @@ import com.personal.laneheroes.entities.User;
 import com.personal.laneheroes.enums.Role;
 import com.personal.laneheroes.repositories.UserRepository;
 import com.personal.laneheroes.utilities.PasswordUtil;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -13,12 +12,14 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-@RequiredArgsConstructor
 @Profile("!test")
 public class AdminInitializer implements CommandLineRunner {
 
-
     private final UserRepository userRepository;
+
+    public AdminInitializer(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlMode;

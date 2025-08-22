@@ -5,7 +5,6 @@ import com.personal.laneheroes.entities.Game;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.GameService;
 import com.personal.laneheroes.utilities.Utility;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/game")
-@RequiredArgsConstructor
 public class GameController {
 
     private final GameService gameService;
+
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<Game>>> getAllGames() {

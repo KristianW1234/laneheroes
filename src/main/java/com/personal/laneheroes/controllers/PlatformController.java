@@ -4,7 +4,6 @@ import com.personal.laneheroes.entities.Platform;
 import com.personal.laneheroes.response.ResponseWrapper;
 import com.personal.laneheroes.services.PlatformService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/laneHeroes/platform")
-@RequiredArgsConstructor
 public class PlatformController {
     private final PlatformService platformService;
+
+    public PlatformController(PlatformService platformService) {
+        this.platformService = platformService;
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseWrapper<List<Platform>>> getAllPlatforms() {

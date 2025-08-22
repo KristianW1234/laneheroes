@@ -2,17 +2,9 @@ package com.personal.laneheroes.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 @Entity
 @Table(name="callsign")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Accessors(chain = true)
 public class Callsign {
     @Id
     @Basic(optional = false)
@@ -29,4 +21,27 @@ public class Callsign {
     @NotBlank
     private String callsignPlural;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCallsign() {
+        return callsign;
+    }
+
+    public void setCallsign(String callsign) {
+        this.callsign = callsign;
+    }
+
+    public String getCallsignPlural() {
+        return callsignPlural;
+    }
+
+    public void setCallsignPlural(String callsignPlural) {
+        this.callsignPlural = callsignPlural;
+    }
 }

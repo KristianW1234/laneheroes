@@ -12,12 +12,12 @@ import com.personal.laneheroes.specifications.CompanySpecification;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import com.personal.laneheroes.utilities.Utility;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,12 +34,17 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
 
     private final ObjectMapper objectMapper;
+
+    @Autowired
+    public CompanyServiceImpl(CompanyRepository companyRepository, ObjectMapper objectMapper) {
+        this.companyRepository = companyRepository;
+        this.objectMapper = objectMapper;
+    }
 
     @Value("${image-dir}")
     private String imageDir;

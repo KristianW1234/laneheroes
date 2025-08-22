@@ -1,16 +1,30 @@
 package com.personal.laneheroes.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class UploadResult {
     private int savedCount;
     private String errorMessage;
 
+    public UploadResult(int savedCount, String errorMessage) {
+        this.savedCount = savedCount;
+        this.errorMessage = errorMessage;
+    }
+
+    public int getSavedCount() {
+        return savedCount;
+    }
+
+    public void setSavedCount(int savedCount) {
+        this.savedCount = savedCount;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public static UploadResult success(int count) {
         return new UploadResult(count, null);

@@ -1,7 +1,7 @@
 package com.personal.laneheroes.initializer;
 
 import com.personal.laneheroes.services.*;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@RequiredArgsConstructor
 @Profile("!test")
 public class BatchInitializer implements CommandLineRunner {
 
@@ -19,6 +18,16 @@ public class BatchInitializer implements CommandLineRunner {
     private final CompanyService companyService;
     private final PlatformService platformService;
     private final CallsignService callsignService;
+
+    @Autowired
+    public BatchInitializer(SkillService skillService, HeroService heroService, GameService gameService, CompanyService companyService, PlatformService platformService, CallsignService callsignService) {
+        this.skillService = skillService;
+        this.heroService = heroService;
+        this.gameService = gameService;
+        this.companyService = companyService;
+        this.platformService = platformService;
+        this.callsignService = callsignService;
+    }
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlMode;

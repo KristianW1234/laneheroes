@@ -11,7 +11,6 @@ import com.personal.laneheroes.specifications.UserSpecification;
 import com.personal.laneheroes.utilities.PasswordUtil;
 import com.personal.laneheroes.utilities.ResponseMessages;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,13 +22,14 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     
     private final UserRepository userRepository;
 
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    
     @Override
     public ResponseWrapper<User> addUser(UserDTO user) {
         if (user.getUserName() == null || user.getUserName().isBlank() ||

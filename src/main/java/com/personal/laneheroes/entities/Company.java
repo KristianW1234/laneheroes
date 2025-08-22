@@ -2,18 +2,10 @@ package com.personal.laneheroes.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 
 @Entity
 @Table(name="company")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Accessors(chain = true)
 public class Company {
     @Id
     @Basic(optional = false)
@@ -28,4 +20,28 @@ public class Company {
 
     @Column(name = "IMG_ICON")
     private String imgIcon;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getImgIcon() {
+        return imgIcon;
+    }
+
+    public void setImgIcon(String imgIcon) {
+        this.imgIcon = imgIcon;
+    }
 }

@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend/db/init:/docker-entrypoint-initdb.d  # note: adjust path since it's now relative to top-level
+
+  backend:
+    build: ./backend  # tell it where your backend Dockerfile is
+    environment:
+      DB_URL: ${DB_URL_DOCKER}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      IMG_DIR: ${IMG_DIR_DOCKER}
+      FRONTEND_URL: ${FRONTEND_URL_DOCKER}
+      JWT_SECRET: ${JWT_SECRET}
+      DDL_AUTO: ${DDL_AUTO_DOCKER}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend  # tell it where your frontend Dockerfile is
+    environment:
+      NEXT_PUBLIC_USE_DOCKER: true
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL_DOCKER}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

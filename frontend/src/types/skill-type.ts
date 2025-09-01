@@ -1,0 +1,10 @@
+export enum SkillType {
+  DAMAGE = 'DAMAGE',
+  CROWD_CONTROL = 'CROWD_CONTROL',
+  BUFF = 'BUFF',
+  DEBUFF = 'DEBUFF',
+  MOBILITY = 'MOBILITY',
+  HEALING = 'HEALING',
+  SUMMON = 'SUMMON',
+  INNATE = 'INNATE'
+}

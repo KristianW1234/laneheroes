@@ -1,0 +1,18 @@
+[
+ {
+  "gameName": "This Game Exists",
+  "callsign": "Hero",
+  "company": "This Company",
+  "platform": "PC",
+  "gameCode": "GE",
+  "imgIcon": "game-icon.png"
+ },
+ {
+  "gameName": "This Game Does Not Exist",
+  "callsign": "Hero",
+  "company": "This Company",
+  "platform": "PC",
+  "gameCode": "GDNE",
+  "imgIcon": "game-icon.png"
+ }
+]

@@ -13,11 +13,11 @@ import { Callsign } from '@/types/callsign';
 import { Company } from '@/types/company';
 import { User } from '@/types/user';
 import { Skill } from '@/types/skill';
-import axios from 'axios';
+
 import toast from 'react-hot-toast';
 import { baseURL } from '@/utils/constants';
 import { ReferenceDataContext } from "@/contexts/ReferenceDataContext";
-import { getAxiosHeaders } from '@/utils/axiosHeaders';
+
 import { getFetchHeaders } from '@/utils/fetchHeaders';
 import { isTokenExpired } from '@/utils/auth'
 
@@ -152,20 +152,30 @@ export default function MainPage() {
     setModalProps(null);
   };
 
-  const handleAdd = async (subject: string, formData : FormData) =>{
-    try{
-      console.log("Upload Add with formData: ", formData);
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
+  const handleAdd = async (subject: string, formData: FormData) => {
+    try {
+      const response = await fetch(
+        `${baseURL}/${subject.toLowerCase()}/add`,
+        {
+          method: "POST",
+          headers: getFetchHeaders(),
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Add failed: ${response.status}`);
       }
-      const response = await axios.post(`${baseURL}/`+subject.toLowerCase()+`/add`, formData, {headers: getAxiosHeaders()});
-      console.log("Response from add: ", response);
-      toast.success(subject+ " added!");
-    }catch(error){
+
+      const data = await response.json();
+      console.log("Response from add: ", data);
+
+      toast.success(subject + " added!");
+    } catch (error) {
       console.error("Failed to add " + subject.toLowerCase() + ":", error);
-      toast.error("Failed to add " + subject.toLowerCase() );
+      toast.error("Failed to add " + subject.toLowerCase());
     }
-  }
+  };
 
   type AddPayloads = {
     Platform: { platformName: string };
@@ -181,9 +191,22 @@ export default function MainPage() {
     data: AddPayloads[T]
   ) => {
     try {
-      await axios.post(`${baseURL}/`+subject.toLowerCase()+`/add`, data, {headers: getAxiosHeaders()});
+      const response = await fetch(`${baseURL}/${subject.toLowerCase()}/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...getFetchHeaders(), // if you need auth tokens etc.
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
       toast.success(`${subject} added!`);
-    } catch {
+    } catch (error) {
+      console.error("Error adding " + subject, error);
       toast.error(`Failed to add ${subject.toLowerCase()}.`);
     }
   };

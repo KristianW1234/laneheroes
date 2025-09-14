@@ -13,7 +13,6 @@ import SkillCard from "@/components/cards/SkillCard";
 import { Skill } from "@/types/skill";
 import { useEffect, useState } from "react";
 import { baseURL } from "@/utils/constants";
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useContext } from "react";
 import { ReferenceDataContext } from "@/contexts/ReferenceDataContext";
@@ -23,7 +22,6 @@ import UserSearch from "@/components/form/UserSearch";
 import SkillSearch from "@/components/form/SkillSearch";
 import UserView from "@/components/views/UserView";
 import { cardPerPage } from "@/utils/constants";
-import { getAxiosHeaders } from "@/utils/axiosHeaders";
 import { getFetchHeaders } from "@/utils/fetchHeaders";
 
 interface ViewProps {
@@ -463,8 +461,25 @@ export default function View({ subject, onModalOpen, onRegisterRefresh }: ViewPr
   };
 
   const executeUpdate = async (formData: FormData) => {
-    await axios.patch(`${baseURL}/`+ subject.toLowerCase() +`/update`, formData, {headers: getAxiosHeaders()});
-    toast.success(subject + " updated!");
+    try {
+      const response = await fetch(
+        `${baseURL}/${subject.toLowerCase()}/update`,
+        {
+          method: "PATCH",
+          headers: getFetchHeaders(),
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Update failed: ${response.status}`);
+      }
+
+      toast.success(subject + " updated!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update " + subject);
+    }
   };
 
   const handleDelete = (item: acceptableItems) => {
@@ -529,8 +544,24 @@ export default function View({ subject, onModalOpen, onRegisterRefresh }: ViewPr
   };
 
   const executeDelete = async (formData: FormData) => {
-    await axios.delete(`${baseURL}/`+ subject.toLowerCase() +`/delete/${formData}`, {headers: getAxiosHeaders()});
-    toast.success(subject + " deleted!");
+    try {
+      const response = await fetch(
+        `${baseURL}/${subject.toLowerCase()}/delete/${formData}`,
+        {
+          method: "DELETE",
+          headers: getFetchHeaders(),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Delete failed: ${response.status}`);
+      }
+
+      toast.success(subject + " deleted!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete " + subject);
+    }
   };
 
   return (

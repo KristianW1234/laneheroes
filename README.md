@@ -20,7 +20,7 @@ This project is meant as a **proof of backend and frontend engineering skill**, 
 - Responsive UI using React and TailwindCSS
 - Modular component design
 - Dynamic form handling and validation
-- RESTful API integration with Axios
+- RESTful API integration 
 - Simple Login/Logout system
 - Smooth user experience with optimistic UI and feedback (Toast, Modal, etc.)
 
@@ -42,7 +42,7 @@ This project is meant as a **proof of backend and frontend engineering skill**, 
 - **TypeScript**
 - **React.js (with Next.js)**
 - **Tailwind CSS**
-- **Axios**
+
 - **React-Hot-Toast**
 
 ---
@@ -225,7 +225,6 @@ laneheroes/frontend/
 - TypeScript (pre-configured in project)
 - React.js with Next.js
 - Installed modules/libraries (automatically installed via npm install):
-- - axios — for API requests
 - - react-hot-toast — for notifications
 - - @tailwindcss — for styling
 - Modern Web Browser (e.g., Chrome, Firefox)
